@@ -1,3 +1,4 @@
+#mostly copy paste from the RDM example
 from typing import TYPE_CHECKING
 import numpy as np
 

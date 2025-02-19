@@ -26,17 +26,17 @@ class BatteryParser(MatchingParser):
     ) -> None:
         logger.info('BatteryParser.parse', parameter=configuration.parameter)
 
-        # Read CSV file
+        # reading CSV file
         try:
             df = pd.read_csv(mainfile)
         except Exception as e:
             logger.error(f"Failed to read CSV file: {e}")
             return
 
-        # Dictionary to store material data
+        # dictionary to store material data
         battery_data = {}
 
-        # Iterate over rows and create BatteryProperties sections
+        # iterate over rows and create BatteryProperties sections
         for _, row in df.iterrows():
             material_name = row.get("Name", "Unknown Material")
             property_type = row.get("Property")
@@ -44,14 +44,14 @@ class BatteryParser(MatchingParser):
             doi = row.get("DOI", "No DOI Available")
             journal = row.get("Journal", "Unknown Journal")
 
-            # Initialize material entry if not exists
+            # check material entry if not exists
             if material_name not in battery_data:
                 battery_data[material_name] = archive.m_create(BatteryProperties)
                 battery_data[material_name].material_name = material_name
                 battery_data[material_name].DOI = doi
                 battery_data[material_name].journal = journal
 
-            # Assign extracted values based on property type
+            # check extracted values based on property type
             if property_type == "Capacity":
                 battery_data[material_name].capacity = float(value) if pd.notna(value) else None
             elif property_type == "Voltage":
@@ -63,6 +63,6 @@ class BatteryParser(MatchingParser):
             elif property_type == "Conductivity":
                 battery_data[material_name].conductivity = float(value) if pd.notna(value) else None
 
-        # Log the parsed data
+        # log the parsed data
         for material, entry in battery_data.items():
             logger.info(f"Parsed entry: {material}, {entry.capacity}, {entry.voltage}")

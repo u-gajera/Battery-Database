@@ -14,17 +14,15 @@ configuration = None
 if hasattr(config, "get_plugin_entry_point") and callable(config.get_plugin_entry_point):
     configuration = config.get_plugin_entry_point('schema_package_entry_point')
 
-
 class BatteryNormalizer(Normalizer):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         logger.info('BatteryNormalizer.normalize', parameter=configuration.parameter)
 
-        # Extract the BatteryProperties section
         battery_data = archive.section(BatteryProperties)
 
         if battery_data is not None:
-            # Handle missing values
+            # missing values
             if not battery_data.material_name or battery_data.material_name.strip() == "":
                 battery_data.material_name = "Unknown Material"
 
@@ -34,7 +32,6 @@ class BatteryNormalizer(Normalizer):
             if not battery_data.journal or battery_data.journal.strip() == "":
                 battery_data.journal = "Unknown Journal"
 
-            # Ensure numerical values are within reasonable limits
             battery_data.capacity = np.nan if not battery_data.capacity or battery_data.capacity == "" else battery_data.capacity
             battery_data.voltage = np.nan if not battery_data.voltage or battery_data.voltage == "" else battery_data.voltage
             battery_data.coulombic_efficiency = np.nan if not battery_data.coulombic_efficiency or battery_data.coulombic_efficiency == "" else battery_data.coulombic_efficiency
