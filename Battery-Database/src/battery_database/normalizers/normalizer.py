@@ -9,7 +9,10 @@ if TYPE_CHECKING:
 from nomad.config import config
 from nomad.normalizing import Normalizer
 
-configuration = config.get_plugin_entry_point('schema_package_entry_point')
+#configuration = config.get_plugin_entry_point('schema_package_entry_point')
+configuration = None
+if hasattr(config, "get_plugin_entry_point") and callable(config.get_plugin_entry_point):
+    configuration = config.get_plugin_entry_point('schema_package_entry_point')
 
 
 class BatteryNormalizer(Normalizer):
