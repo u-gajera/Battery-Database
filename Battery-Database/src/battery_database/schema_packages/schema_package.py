@@ -10,16 +10,15 @@ from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
 from nomad.metainfo import Quantity, SchemaPackage
 
-configuration = config.get_plugin_entry_point(
-    'battery_database.schema_packages:schema_package_entry_point'
-)
+configuration = config.get_plugin_entry_point('schema_package_entry_point')
+
 
 m_package = SchemaPackage()
 
 
 class BatteryProperties(Schema):
     """
-    A schema describing key properties of battery materials, extracted from 
+    A schema describing key properties of battery materials, extracted from
     experimental data or computational simulations.
     """
 
