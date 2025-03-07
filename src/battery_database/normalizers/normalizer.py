@@ -37,4 +37,4 @@ class BatteryNormalizer(Normalizer):
             battery_data.coulombic_efficiency = np.nan if not battery_data.coulombic_efficiency or battery_data.coulombic_efficiency == "" else battery_data.coulombic_efficiency
             battery_data.energy_density = np.nan if not battery_data.energy_density or battery_data.energy_density == "" else battery_data.energy_density
             battery_data.conductivity = np.nan if not battery_data.conductivity or battery_data.conductivity == "" else battery_data.conductivity
-
+            #print(battery_data)

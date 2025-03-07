@@ -50,6 +50,7 @@ class BatteryParser(MatchingParser):
                 battery_data[material_name].material_name = material_name
                 battery_data[material_name].DOI = doi
                 battery_data[material_name].journal = journal
+                #print(battery_data[material_name].material_name)
 
             # check extracted values based on property type
             if property_type == "Capacity":
@@ -60,6 +61,7 @@ class BatteryParser(MatchingParser):
                 battery_data[material_name].coulombic_efficiency = float(value) if pd.notna(value) else None
             elif property_type == "Energy Density":
                 battery_data[material_name].energy_density = float(value) if pd.notna(value) else None
+                #print(battery_data[material_name].energy_density)
             elif property_type == "Conductivity":
                 battery_data[material_name].conductivity = float(value) if pd.notna(value) else None
 
