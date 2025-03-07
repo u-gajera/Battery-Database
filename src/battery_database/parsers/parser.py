@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import TYPE_CHECKING
 #from schema_packages.schema_package import BatteryProperties
-from battery_database.schema_packages.schema_package import BatteryProperties
+from nomad_battery_database.schema_packages.schema_package import BatteryProperties
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import EntryArchive

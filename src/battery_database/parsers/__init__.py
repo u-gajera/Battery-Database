@@ -1,4 +1,4 @@
-from battery_database.parsers.parser import BatteryParser
+from nomad_battery_database.parsers.parser import BatteryParser
 
 __all__ = ["BatteryParser"]
 
