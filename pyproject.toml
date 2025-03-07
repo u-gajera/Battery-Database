@@ -131,7 +131,6 @@ where = ["src"]
 [project.entry-points.'nomad.plugin']
 parser_entry_point = "nomad_battery_database.parsers.parser:BatteryParser"
 schema_package_entry_point = "nomad_battery_database.schema_packages.schema_package:BatteryProperties"
-normalizer_entry_point = "nomad_battery_database.normalizers.normalizer:BatteryNormalizer"
 #app_entry_point = "nomad_battery_database.apps:app_entry_point"
 
 [tool.cruft]

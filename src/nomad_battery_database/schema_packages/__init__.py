@@ -1,9 +1,14 @@
-from nomad_battery_database.schema_packages.schema_package import m_package
+from nomad.config.models.plugins import SchemaPackageEntryPoint
 
-__all__ = ["m_package"]
 
-class NewSchemaPackageEntryPoint(SchemaPackageEntryPoint):
-    parameter: int = Field(0, description='Custom configuration parameter')
-
+class BatterySchemaEntryPoint(SchemaPackageEntryPoint):
     def load(self):
+        from nomad_battery_database.schema_packages.schema_package import m_package
+
         return m_package
+
+
+schema = BatterySchemaEntryPoint(
+    name='NOMAD Battery Schema',
+    description='A module containing schemas for the NOMAD battery database.',
+)
