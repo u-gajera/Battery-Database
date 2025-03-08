@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"  # backend used for buidling the package
 # project metadata
 # ======================
 [project]
-name = "Battery-Database"  # name of the project
+name = "nomad-battery-database"  # name of the project
 description = "app for battery database"  # short discription of project
 version = "0.1.0"  # project verison
 readme = "README.md"  # path to readme file
@@ -35,7 +35,6 @@ authors = [
 maintainers = [
     { name = "Uday Gajera", email = "uday.gajera@physik.hu-berlin.de" },
 ]
-license = { file = "LICENSE" }
 # ======================
 # project dependencies
 # ======================
@@ -51,9 +50,9 @@ Repository = "https://github.com/u-gajera/Battery-Database"
 [project.optional-dependencies]
 dev = ["ruff", "pytest", "structlog"]
 
-# ======================
-# ruff configuration (linter & formatter)
-# ======================
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
 exclude = [
     ".bzr",
     ".direnv",
@@ -130,10 +129,9 @@ where = ["src"]
 # nomad plugin entry points
 # ======================
 [project.entry-points.'nomad.plugin']
-parser_entry_point = "battery_database.parsers.parser:BatteryParser"
-schema_package_entry_point = "battery_database.schema_packages.schema_package:BatteryProperties"
-normalizer_entry_point = "battery_database.normalizers.normalizer:BatteryNormalizer"
-#app_entry_point = "battery_database.apps:app_entry_point"
+parser_entry_point = "nomad_battery_database.parsers.parser:BatteryParser"
+schema_package_entry_point = "nomad_battery_database.schema_packages.schema_package:BatteryProperties"
+#app_entry_point = "nomad_battery_database.apps:app_entry_point"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues

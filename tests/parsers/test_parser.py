@@ -2,7 +2,7 @@ import os
 import pytest
 import logging
 from nomad.datamodel import EntryArchive
-from battery_database.schema_packages.schema_package import BatteryProperties
+from nomad_battery_database.schema_packages.schema_package import BatteryProperties
 
 # Define test file path
 TEST_FILE_PATH = os.path.join(os.path.dirname(__file__), "../data/test_battery_data.csv")

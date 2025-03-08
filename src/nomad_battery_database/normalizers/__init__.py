@@ -1,4 +1,4 @@
-from battery_database.normalizers.normalizer import BatteryNormalizer
+from nomad_battery_database.normalizers.normalizer import BatteryNormalizer
 
 __all__ = ["BatteryNormalizer"]
 
