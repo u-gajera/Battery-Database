@@ -11,11 +11,6 @@ from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
 from nomad.metainfo import Quantity, SchemaPackage
 
-#configuration = config.get_plugin_entry_point('schema_package_entry_point')
-configuration = None
-if hasattr(config, "get_plugin_entry_point") and callable(config.get_plugin_entry_point):
-    configuration = config.get_plugin_entry_point('schema_package_entry_point')
-
 
 m_package = SchemaPackage()
 
@@ -75,7 +70,6 @@ class BatteryProperties(Schema):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        logger.info('BatteryProperties.normalize', parameter=configuration.parameter)
 
 
 m_package.__init_metainfo__()

@@ -10,11 +10,6 @@ if TYPE_CHECKING:
 from nomad.config import config
 from nomad.parsing.parser import MatchingParser
 
-#configuration = config.get_plugin_entry_point('schema_package_entry_point')
-configuration = None
-if hasattr(config, "get_plugin_entry_point") and callable(config.get_plugin_entry_point):
-    configuration = config.get_plugin_entry_point('schema_package_entry_point')
-
 
 class BatteryParser(MatchingParser):
     def parse(
@@ -24,8 +19,6 @@ class BatteryParser(MatchingParser):
         logger: 'BoundLogger',
         child_archives: dict[str, 'EntryArchive'] = None,
     ) -> None:
-        logger.info('BatteryParser.parse', parameter=configuration.parameter)
-
         # reading CSV file
         try:
             df = pd.read_csv(mainfile)
