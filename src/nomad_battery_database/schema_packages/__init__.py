@@ -8,7 +8,7 @@ class BatterySchemaEntryPoint(SchemaPackageEntryPoint):
         return m_package
 
 
-schema = BatterySchemaEntryPoint(
+battery = BatterySchemaEntryPoint(
     name='NOMAD Battery Schema',
     description='A module containing schemas for the NOMAD battery database.',
 )
