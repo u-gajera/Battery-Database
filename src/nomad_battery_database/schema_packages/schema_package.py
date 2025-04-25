@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
 
-# from nomad.metainfo import Quantity, SchemaPackage, SubSection
+from nomad.metainfo import Quantity, SchemaPackage #, SubSection
 # from nomad.datamodel.datamodel import EntryArchive
 
 m_package = SchemaPackage()
