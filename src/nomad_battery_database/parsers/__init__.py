@@ -12,14 +12,14 @@ class BatteryParserEntryPoint(ParserEntryPoint):
 battery_parser = BatteryParserEntryPoint(
     name='BatteryParser',
     description='Parse excel files containing battery data from publications.',
-    mainfile_name_re=r'.+\.xlsx',
+    mainfile_name_re=r'.+\.csv',
     mainfile_mime_re='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    mainfile_contents_dict={
-        'Sheet1': {
-            '__has_all_keys': [
-                'some_key_1',
-            ]
-        },
-    },
+    # mainfile_contents_dict={
+    #     'Sheet1': {
+    #         '__has_all_keys': [
+    #             'some_key_1',
+    #         ]
+    #     },
+    # },
 )
 

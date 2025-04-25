@@ -9,11 +9,10 @@ if TYPE_CHECKING:
 from nomad.config import config
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
-from nomad.metainfo import Quantity, SchemaPackage
-
+# from nomad.metainfo import Quantity, SchemaPackage, SubSection
+# from nomad.datamodel.datamodel import EntryArchive
 
 m_package = SchemaPackage()
-
 
 class BatteryProperties(Schema):
     """
@@ -71,5 +70,8 @@ class BatteryProperties(Schema):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
 
+# EntryArchive.battery_properties = SubSection(
+#     sub_section=BatteryProperties, repeats=True
+# )
 
 m_package.__init_metainfo__()
