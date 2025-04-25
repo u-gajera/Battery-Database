@@ -1,10 +1,12 @@
-import os
-import pytest
 import logging
+import os
+
 import numpy as np
+import pytest
 from nomad.datamodel import EntryArchive
-from src.nomad_battery_database.parsers.parser import BatteryParser
+
 from src.nomad_battery_database.normalizers.normalizer import BatteryNormalizer
+from src.nomad_battery_database.parsers.parser import BatteryParser
 
 # Define test file path
 TEST_FILE_PATH = os.path.join(os.path.dirname(__file__), "../data/test_battery_data.csv")

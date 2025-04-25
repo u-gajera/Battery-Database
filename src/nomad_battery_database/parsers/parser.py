@@ -1,5 +1,7 @@
-import pandas as pd
 from typing import TYPE_CHECKING
+
+import pandas as pd
+
 #from schema_packages.schema_package import BatteryProperties
 from nomad_battery_database.schema_packages.schema_package import BatteryProperties
 
@@ -7,7 +9,6 @@ if TYPE_CHECKING:
     from nomad.datamodel.datamodel import EntryArchive
     from structlog.stdlib import BoundLogger
 
-from nomad.config import config
 from nomad.parsing.parser import MatchingParser
 
 

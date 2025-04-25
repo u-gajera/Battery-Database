@@ -1,5 +1,6 @@
-import nomad.config
 import importlib.metadata
+
+import nomad.config
 
 # nomad config is set up
 if getattr(nomad.config, "plugins", None) is None:
