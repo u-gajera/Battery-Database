@@ -1,25 +1,22 @@
 #mostly copy paste from the RDM example
 from typing import TYPE_CHECKING
-
 import numpy as np
-
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import EntryArchive
     from structlog.stdlib import BoundLogger
 
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
-
-from nomad.metainfo import Quantity, SchemaPackage #, SubSection
-# from nomad.datamodel.datamodel import EntryArchive
+from nomad.metainfo import (
+    Quantity,
+    SchemaPackage,
+    Section,
+    SubSection,
+) 
 
 m_package = SchemaPackage()
 
 class BatteryProperties(Schema):
-    """
-    A schema describing key properties of battery materials, extracted from
-    experimental data or computational simulations.
-    """
 
     material_name = Quantity(
         type=str,
@@ -71,8 +68,11 @@ class BatteryProperties(Schema):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
 
-# EntryArchive.battery_properties = SubSection(
-#     sub_section=BatteryProperties, repeats=True
-# )
-
+class BatteryDatabase(Schema):
+    m_def = Section(
+        label='Battery database',
+        extends=['nomad.datamodel.data.EntryData'],  # makes it valid for archive.data
+    )
+    batteries = SubSection(sub_section=BatteryProperties, repeats=True)
+    
 m_package.__init_metainfo__()
