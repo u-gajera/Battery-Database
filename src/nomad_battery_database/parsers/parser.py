@@ -1,7 +1,12 @@
 from typing import TYPE_CHECKING
+
 import pandas as pd
-from nomad_battery_database.schema_packages.schema_package import BatteryProperties, BatteryDatabase
 from nomad.parsing.parser import MatchingParser
+
+from nomad_battery_database.schema_packages.schema_package import (
+    BatteryDatabase,
+    BatteryProperties,
+)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import EntryArchive

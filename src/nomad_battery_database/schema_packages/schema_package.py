@@ -1,6 +1,8 @@
 #mostly copy paste from the RDM example
 from typing import TYPE_CHECKING
+
 import numpy as np
+
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import EntryArchive
     from structlog.stdlib import BoundLogger
@@ -12,7 +14,7 @@ from nomad.metainfo import (
     SchemaPackage,
     Section,
     SubSection,
-) 
+)
 
 m_package = SchemaPackage()
 
