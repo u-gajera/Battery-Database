@@ -61,6 +61,7 @@ class BatteryProperties(Schema):
 
     # ------------------------------------------------------------------
     # raw values and units
+    # raw values are 
     # ------------------------------------------------------------------
     capacity_raw_value = Quantity(type=np.float64, description="Raw capacity value.")
     capacity_raw_unit = Quantity(type=str, description="Raw capacity unit.")
@@ -122,11 +123,10 @@ class BatteryProperties(Schema):
         if self.conductivity_value is not None:
             self.conductivity = self.conductivity_value
 
-
 class BatteryDatabase(Schema):
     m_def = Section(label="Battery database", 
                     extends=["nomad.datamodel.data.EntryData"])
-    batteries = SubSection(sub_section=BatteryProperties, 
+    Material_entries = SubSection(sub_section=BatteryProperties, 
                            repeats=True)
 
 m_package.__init_metainfo__()
