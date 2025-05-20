@@ -27,11 +27,11 @@ battery_app = AppEntryPoint(
         label="Battery Database",
         path="batterydb",
         category="Experiments",
-        description="Curated electro-chemical properties from the literature.",
+        description="Curated electro-chemical battery properties from the literature.",
         readme=("Uploads are single YAML files parsed by the battery-database "
                 "plugin.  Use the filters on the left or the search bar on top."),
 
-        # -------------------------------- search index ----------------------
+        # -------------------------------- searching index ----------------------
         search_quantities=SearchQuantities(
             include=[f"*#{SCHEMA}"],   # load *all* scalar quantities in one go
         ),
@@ -68,7 +68,7 @@ battery_app = AppEntryPoint(
             Column(quantity="upload_create_time", label="Upload time"),
         ],
 
-        # -------------------------------- left-hand menu --------------------
+        # -------------------------------- left-hand menu (not working) --------------------
         menu=Menu(
             title="Battery filters",
             items=[

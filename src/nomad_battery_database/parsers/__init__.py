@@ -1,25 +1,23 @@
+from pydantic import Field
 from nomad.config.models.plugins import ParserEntryPoint
 
-
-class BatteryParserEntryPoint(ParserEntryPoint):
-
-    def load(self):
-        from nomad_battery_database.parsers.parser import BatteryParser
-
-        return BatteryParser()
+__all__ = ["battery_db_parser"]
 
 
-battery_parser = BatteryParserEntryPoint(
-    name='BatteryParser',
-    description='Parse excel files containing battery data from publications.',
-    mainfile_name_re=r'.+\.csv',
-    mainfile_mime_re='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    # mainfile_contents_dict={
-    #     'Sheet1': {
-    #         '__has_all_keys': [
-    #             'some_key_1',
-    #         ]
-    #     },
-    # },
+class BatteryDBParserEntryPoint(ParserEntryPoint):
+    """Entry‑point for the battery CSV/YAML parser."""
+
+    # Allow overriding the regex via `pyproject.toml` if desired
+    mainfile_name_re: str | None = Field(default=r".*\.(csv|ya?ml)$", description="Regex to match mainfiles.")
+
+    def load(self):  # noqa: D401 – NOMAD API signature
+        from .battery_db import BatteryParser  # local import to avoid heavy deps at import time
+
+        # Pass any configured Pydantic fields to the parser constructor
+        return BatteryParser(**self.dict())
+
+
+battery_db_parser = BatteryDBParserEntryPoint(  # noqa: N818 – plugin convention
+    name="battery_db",
+    description="Parser for curated battery database CSV and YAML files.",
 )
-

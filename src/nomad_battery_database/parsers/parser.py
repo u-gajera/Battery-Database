@@ -1,3 +1,4 @@
+# working fine for the csv parsing
 from typing import TYPE_CHECKING
 import pandas as pd
 
@@ -12,7 +13,7 @@ class BatteryParser(MatchingParser):
     name = "battery_csv_parser"
     code_name = "battery-csv"
     domain = "battery-database"
-    # ----------------------- extra helpers ------------------------------
+    # ----------------------- extra helpers ----
     @staticmethod
     def _to_float(v):
         try:
@@ -24,7 +25,7 @@ class BatteryParser(MatchingParser):
     def _to_str(v):
         return str(v) if pd.notna(v) else None
 
-    # ------------------ main parse ------------------------------
+    # ------------------ main parse ------------
     def parse(
         self,
         mainfile: str,
@@ -51,7 +52,7 @@ class BatteryParser(MatchingParser):
         for _, row in df.iterrows():
             section: BatteryProperties = archive.data.m_create(BatteryProperties)
 
-            # --- identifiers ---
+            # ---job identifiers ---
             section.material_name = self._to_str(row.get("Name"))
             section.extracted_name = self._to_str(row.get("Extracted_name"))
 
@@ -77,13 +78,13 @@ class BatteryParser(MatchingParser):
                 unit_col = f"{csv_label}_Unit"
                 value_col = f"{csv_label}_Value"
 
-                # fetch values
+                # fetching values
                 raw_unit_val = self._to_str(row.get(raw_unit_col))
                 raw_value_val = self._to_float(row.get(raw_value_col))
                 unit_val = self._to_str(row.get(unit_col))
                 value_val = self._to_float(row.get(value_col))
 
-                # populate section using setattr (dot‑notation does not allow dynamic names)
+                # populate section using setattr as nomad(dot‑notation does not allow dynamic names)
                 setattr(section, f"{attr_base}_raw_unit", raw_unit_val)
                 setattr(section, f"{attr_base}_raw_value", raw_value_val)
                 setattr(section, f"{attr_base}_unit", unit_val)
