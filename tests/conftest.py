@@ -1,11 +1,12 @@
-import pytest
 import nomad
+import pytest
 from nomad.config.models.config import Plugins
 
 # import your plugin entry points
 from nomad_battery_database import battery_app
 from nomad_battery_database.parsers import battery_parser
 from nomad_battery_database.schema_packages.battery_schema import m_package
+
 
 @pytest.fixture(autouse=True)
 def init_nomad_plugins():
