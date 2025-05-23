@@ -11,13 +11,13 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
     mainfile_name_re: str | None = Field(default=r".*\.(csv|ya?ml)$", description="Regex to match mainfiles.")
 
     def load(self):  # noqa: D401 – NOMAD API signature
-        from .battery_db import BatteryParser  # local import to avoid heavy deps at import time
+        from .battery_parser import BatteryParser  # local import to avoid heavy deps at import time
 
         # Pass any configured Pydantic fields to the parser constructor
         return BatteryParser(**self.dict())
 
 
 battery_db_parser = BatteryDBParserEntryPoint(  # noqa: N818 – plugin convention
-    name="battery_db",
+    name='battery_parser',
     description="Parser for curated battery database CSV and YAML files.",
 )

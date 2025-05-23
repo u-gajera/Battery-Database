@@ -7,7 +7,7 @@ class BatteryDBSchemaEntryPoint(SchemaPackageEntryPoint):
     """Entry‑point that returns the *battery* schema package instance."""
 
     def load(self):  # noqa: D401 – NOMAD API
-        from .battery import m_package
+        from .battery_schema import m_package
 
         return m_package
 
