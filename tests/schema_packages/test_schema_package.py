@@ -17,5 +17,11 @@ def test_schema_package():
     normalize_all(entry_archive)
 
     # Check if schema was applied correctly
-    assert isinstance(entry_archive.section(BatteryProperties), BatteryProperties), "Schema not applied correctly"
+    battery_section = entry_archive.section(BatteryProperties)
+
+    # Check if it's an instance of BatteryProperties
+    is_valid = isinstance(battery_section, BatteryProperties)
+
+    # Assert with a clear error message if not valid
+    assert is_valid, "Schema not applied correctly"
 

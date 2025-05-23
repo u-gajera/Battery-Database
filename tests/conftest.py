@@ -5,7 +5,7 @@ import nomad.config
 # nomad config is set up
 if getattr(nomad.config, "plugins", None) is None:
     print("initializing nomad plugins manually...")
-    nomad.config.plugins = nomad.config.models.config.Plugins()  # to create an empty plugins object
+    nomad.config.plugins = nomad.config.models.config.Plugins() 
 
     # to register installed entry points
     for entry_point in importlib.metadata.entry_points().select(group="nomad.plugin"):

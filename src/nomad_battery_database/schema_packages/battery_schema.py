@@ -1,4 +1,5 @@
-import ast  # Ensure ast is imported
+#import ast  # Ensure ast is imported
+import ast
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -13,10 +14,11 @@ if TYPE_CHECKING:  # pragma: no cover
 m_package = SchemaPackage()
 
 class BatteryProperties(Schema):
-    """Data extracted from one publication / one material."""
+    """ Metadata extracted from **one** publication / **one** material."""
 
     # bibliographic
-    material_name = Quantity(type=str, a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity))
+    material_name = Quantity(type=str, 
+                    a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity))
     extracted_name = Quantity(type=str) # String representation of list of dicts
     chemical_formula_hill = Quantity(type=str)
     elements = Quantity(type=str)
@@ -55,109 +57,95 @@ class BatteryProperties(Schema):
     elements = Quantity(
         type=str,
         shape=['*'],
-        description='A list of unique chemical elements present in the material, derived from extracted_name.',
+        description='A list of unique chemical elements present in the material, ' \
+                    'derived from extracted_name.',
         a_eln=ELNAnnotation(label='Elements Present')
     )
 
-    def normalize(self, archive: "EntryArchive", logger: "BoundLogger") -> None:  # noqa: D401
+    def _parse_elements(self, raw, entry_log_prefix, logger) -> list[str] | None:
+        """
+        Extract a list of unique element symbols from extracted_name.
+        Expects a stringified list of dicts or a list of dicts.
+        """
+        if not raw:
+            return None
+
+        try:
+            if isinstance(raw, str):
+                parts = ast.literal_eval(raw)
+            elif isinstance(raw, list):
+                parts = raw
+            else:
+                return None
+
+            totals = {}
+            for part in parts:
+                if isinstance(part, dict):
+                    for elem in part:
+                        totals[elem] = totals.get(elem, 0) + 1
+
+            return sorted(totals)
+        except Exception as e:
+            logger.warning(
+                f"{entry_log_prefix}Failed to parse elements from extracted_name: {e}"
+            )
+            return None
+
+    def normalize(
+        self,
+        archive: "EntryArchive",
+        logger: "BoundLogger",
+    ) -> None:  # noqa: D401
         super().normalize(archive, logger)
 
-        entry_log_prefix = f"[EntryID: {archive.metadata.entry_id if archive.metadata else 'N/A'}] "
+        # Build a short prefix once, then reuse it.
+        entry_id = archive.metadata.entry_id if archive.metadata else "N/A"
+        entry_log_prefix = f"[EntryID: {entry_id}] "
+
         logger.info(
             f"{entry_log_prefix}Starting normalization of BatteryProperties. "
-            f"Initial extracted_name: '{self.extracted_name}', type: {type(self.extracted_name)}"
+            f"Initial extracted_name: '{self.extracted_name}', "
+            f"type: {type(self.extracted_name)}"
         )
 
-        parsed_list_for_elements = []
-        if self.extracted_name and isinstance(self.extracted_name, str):
-            try:
-                # The extracted_name is a string like "[{'Fe': '1'}, {'O': '1'}]"
-                evaluated_content = ast.literal_eval(self.extracted_name)
+        # 1) Parse elements from extracted_name in one helper 
+        self.elements = self._parse_elements(self.extracted_name, 
+                                             entry_log_prefix, 
+                                             logger) or []
 
-                if isinstance(evaluated_content, list):
-                    parsed_list_for_elements = evaluated_content
-                    logger.info(
-                        f"{entry_log_prefix}Successfully parsed 'extracted_name' string into a list: {parsed_list_for_elements}"
-                    )
-                else:
-                    logger.warning(
-                        f"{entry_log_prefix}'extracted_name' string ('{self.extracted_name}') "
-                        f"did not evaluate to a list. Evaluated type: {type(evaluated_content)}"
-                    )
-            except (ValueError, SyntaxError) as e:
-                logger.warning(
-                    f"{entry_log_prefix}SyntaxError or ValueError while parsing 'extracted_name' string "
-                    f"'{self.extracted_name}': {e}"
-                )
-            except Exception as e:
-                logger.error(
-                    f"{entry_log_prefix}Unexpected error while parsing 'extracted_name' string "
-                    f"'{self.extracted_name}': {e}"
-                )
-        elif self.extracted_name:
-            logger.warning(
-                f"{entry_log_prefix}'extracted_name' was present but not a string as expected in normalize. "
-                f"Value: '{self.extracted_name}', Type: {type(self.extracted_name)}. "
-                "This might indicate an issue with how it was set by the parser or schema type coercion."
-            )
-        else:
-            logger.info(f"{entry_log_prefix}'extracted_name' is empty or None. No elements will be derived.")
+        # 2) Bulk-assign all “_raw_value” → clean fields
+        for raw, clean in [
+            ("capacity_raw_value", "capacity"),
+            ("voltage_raw_value", "voltage"),
+            ("coulombic_efficiency_raw_value", "coulombic_efficiency"),
+            ("energy_density_raw_value", "energy_density"),
+            ("conductivity_raw_value", "conductivity"),
+        ]:
+            val = getattr(self, raw, None)
+            if val is not None:
+                setattr(self, clean, val)
 
-        unique_elements = set()
-        if parsed_list_for_elements: # Proceed only if parsing was successful and yielded a list
-            for item in parsed_list_for_elements:
-                if isinstance(item, dict):
-                    for element_symbol in item.keys():
-                        if isinstance(element_symbol, str) and element_symbol.isalpha(): # Basic check for valid element symbol
-                            unique_elements.add(element_symbol)
-                        else:
-                            logger.warning(
-                                f"{entry_log_prefix}Invalid or non-string element key found in parsed list item: "
-                                f"'{element_symbol}' in item '{item}'"
-                            )
-                else:
-                    logger.warning(
-                        f"{entry_log_prefix}Item in parsed 'extracted_name' list is not a dict: '{item}'"
-                    )
+        # 3) If you have “_raw_unit” fields, assign those too
+        for raw_u, clean in [
+            ("capacity_raw_unit", "capacity"),
+            ("voltage_raw_unit", "voltage"),
+            ("energy_density_raw_unit", "energy_density"),
+            ("conductivity_raw_unit", "conductivity"),
+        ]:
+            unit = getattr(self, raw_u, None)
+            if unit and getattr(self, clean, None) is not None:
+                getattr(self, clean).unit = unit
 
-            if unique_elements:
-                self.elements = sorted(list(unique_elements))
-                logger.info(
-                    f"{entry_log_prefix}Successfully populated 'self.elements': {self.elements}"
-                )
-            else:
-                logger.info(
-                    f"{entry_log_prefix}No unique elements derived from parsed list: {parsed_list_for_elements}. "
-                    "'self.elements' will be empty."
-                )
-        elif self.extracted_name: # If extracted_name was present but parsing failed or yielded no valid structure
-            logger.warning(
-                f"{entry_log_prefix}'self.elements' not populated because 'extracted_name' parsing "
-                f"failed or yielded no parsable structure. Original 'extracted_name': '{self.extracted_name}'"
-            )
-
-        # If self.elements was not set, ensure it's an empty list to avoid None values if expected to be list
-        if self.elements is None:
-            self.elements = []
-            logger.info(f"{entry_log_prefix}Ensuring 'self.elements' is an empty list as it was not populated.")
-
-
-        # Normalize other properties (as before)
-        if self.capacity_raw_value is not None:
-            self.capacity = self.capacity_raw_value
-        if self.voltage_raw_value is not None:
-            self.voltage = self.voltage_raw_value
-        if self.coulombic_efficiency_raw_value is not None:
-            self.coulombic_efficiency = self.coulombic_efficiency_raw_value
-        if self.energy_density_raw_value is not None:
-            self.energy_density = self.energy_density_raw_value
-        if self.conductivity_raw_value is not None:
-            self.conductivity = self.conductivity_raw_value
+        logger.info(f"{entry_log_prefix}Finished normalization of BatteryProperties.")
 
 class BatteryDatabase(Schema):
-    m_def = Section(label="Battery database", extends=["nomad.datamodel.data.EntryData"])
-    Material_entries = SubSection(sub_section=BatteryProperties, repeats=True)
+    m_def = Section(label="Battery database", 
+                    extends=["nomad.datamodel.data.EntryData"])
+    Material_entries = SubSection(sub_section=BatteryProperties, 
+                                  repeats=True)
 
 m_package.__init_metainfo__()
 
-__all__ = ["m_package", "BatteryProperties", "BatteryDatabase"]
+__all__ = ["m_package", 
+           "BatteryProperties", 
+           "BatteryDatabase"]

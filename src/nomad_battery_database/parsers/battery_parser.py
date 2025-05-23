@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import ast
 from pathlib import Path
-from typing import Union
+from typing import Any
 
 import pandas as pd
 import yaml
@@ -14,84 +14,78 @@ from nomad_battery_database.schema_packages.battery_schema import (
     BatteryProperties,
 )
 
-
 # ----------------------------------------------------------
 # Chemistry util – build Hill formula from the 'Extracted_name' column
 # ----------------------------------------------------------
-def _hill_from_extracted(raw: Union[str, list, None]) -> str | None: # Modified type hint
-    """
-    Convert the string representation of ``Extracted_name`` (a list of
-    element-count dicts) or an actual list of dicts to an IUPAC Hill-ordered formula, e.g.::
+COUNT_TOLERANCE: float = 1e-2
 
-        "[{'Cu': '1.0', 'O': '1.0'}, {'C': '1.0'}]"  ->  "CCuO"
-        or
-        [{'Cu': '1.0', 'O': '1.0'}, {'C': '1.0'}]  ->  "CCuO"
+def _safe_literal_eval(raw: str) -> list[dict[str, Any]] | None:
+    try:
+        evaluated = ast.literal_eval(raw)
+        if isinstance(evaluated, list):
+            return evaluated
+    except (ValueError, SyntaxError, TypeError):
+        pass
+    return None
 
-    Returns *None* when the input is missing or cannot be parsed.
-    """
-    if not raw:
+def _normalize_parts(raw: str | list | None) -> list[dict[str, Any]] | None:
+    if raw is None:
         return None
-
-    parts: list[dict]
     if isinstance(raw, str):
-        try:
-            evaluated_raw = ast.literal_eval(raw)
-            if not isinstance(evaluated_raw, list):
-                # Potentially log a warning here if you have a logger instance
-                return None
-            parts = evaluated_raw
-        except (ValueError, SyntaxError, TypeError): # Added TypeError for safety
-            # Potentially log a warning here
-            return None
-    elif isinstance(raw, list):
-        parts = raw # Assume it's already in the correct list-of-dicts format
-    else:
-        # Potentially log a warning for unexpected type
-        return None
+        return _safe_literal_eval(raw)
+    if isinstance(raw, list):
+        return raw
+    return None
 
-    # merge element counts (floats possible, but Hill ignores decimals)
+def _merge_element_counts(parts: list[dict[str, Any]]) -> dict[str, float] | None:
     totals: dict[str, float] = {}
-    for part_item in parts: # Renamed 'part' to 'part_item' to avoid conflict if 'parts' was a dict before
-        if not isinstance(part_item, dict):
-            # Potentially log a warning if an item in parts is not a dict
-            continue # Or return None if strictness is required
-        for elem, cnt in part_item.items():
+    for part in parts:
+        if not isinstance(part, dict):
+            continue
+        for elem, cnt in part.items():
             try:
-                # Ensure cnt is string before float conversion if it could be numeric
                 n = float(str(cnt))
             except (ValueError, TypeError):
-                # non-numeric count → abort gracefully
                 return None
             totals[elem] = totals.get(elem, 0.0) + n
+    return totals
 
-    # order: C, H, then alphabetically
+def _format_formula(totals: dict[str, float]) -> str | None:
     elems = []
     if "C" in totals:
         elems.append("C")
         if "H" in totals:
             elems.append("H")
-    for elem in sorted(totals):
-        if elem not in {"C", "H"}:
-            elems.append(elem)
+    elems += [e for e in sorted(totals) if e not in {"C", "H"}]
 
-    # build string (omit count when it is 1±0.01)
     formula = ""
     for el in elems:
         n = totals[el]
-        if abs(n - 1) < 1e-2:
+        if abs(n - 1.0) < COUNT_TOLERANCE:
             formula += el
         else:
-            # drop trailing .0 for integers
             formula += f"{el}{int(n) if n.is_integer() else n}"
     return formula or None
 
+def _hill_from_extracted(raw: str | list | None) -> str | None:
+    """
+    Convert the string representation of ``Extracted_name`` to a Hill-ordered formula.
+    """
+    parts = _normalize_parts(raw)
+    if not parts:
+        return None
+    totals = _merge_element_counts(parts)
+    if totals is None:
+        return None
+
+    return _format_formula(totals)
 
 
 # ----------------------------------------------------------
 class BatteryParser(MatchingParser):
     """Parse CSV or YAML files from the curated battery database."""
 
-    def __init__(self, **kwargs):  # kwargs populated by EntryPoint (e.g. regex)
+    def __init__(self, **kwargs):  
         super().__init__(**kwargs)
 
     # ----------------------------------------------------------
@@ -120,31 +114,40 @@ class BatteryParser(MatchingParser):
         for idx, row in df.iterrows():
             props = BatteryParser._row_to_props(row)
             db.Material_entries.append(props)
-            logger and logger.debug("added CSV row", row_index=idx, material=props.material_name)
+            logger and logger.debug("added CSV row", 
+                                    row_index=idx, 
+                                    material=props.material_name)
 
     @staticmethod
     def _parse_yaml(path: Path, archive: EntryArchive, logger=None) -> None:
         with path.open("r", encoding="utf-8") as fh:
             mapping = yaml.safe_load(fh) or {}
-        db = archive.data = BatteryDatabase() # Create one BatteryDatabase per YAML file
+        db = archive.data = BatteryDatabase() 
 
         # Assuming a single YAML file corresponds to one material entry for now
         # If a YAML can contain multiple entries, this part needs adjustment
-        if isinstance(mapping, list) and all(isinstance(item, dict) for item in mapping):
+        if isinstance(mapping, list) and all(isinstance(item, 
+                                                        dict) for item in mapping):
             # This handles if the YAML root is a list of material entries
             for idx, entry_map in enumerate(mapping):
                 props = BatteryProperties()
                 BatteryParser._update_from_mapping(props, entry_map)
                 db.Material_entries.append(props)
-                logger and logger.info("parsed YAML entry", file=path.name, entry_index=idx, material=props.material_name)
+                logger and logger.info("parsed YAML entry", 
+                                       file=path.name, 
+                                       entry_index=idx, 
+                                       material=props.material_name)
         elif isinstance(mapping, dict):
             # This handles if the YAML root is a single material entry
             props = BatteryProperties()
             BatteryParser._update_from_mapping(props, mapping)
             db.Material_entries.append(props)
-            logger and logger.info("parsed YAML", file=path.name, material=props.material_name)
+            logger and logger.info("parsed YAML", 
+                                   file=path.name, 
+                                   material=props.material_name)
         else:
-            logger and logger.error("Unsupported YAML structure", file=path.name, type=type(mapping))
+            logger and logger.error("Unsupported YAML structure", 
+                                    file=path.name, type=type(mapping))
 
 
     # ---------- util ----------
@@ -192,7 +195,7 @@ class BatteryParser(MatchingParser):
         # ---------- derived chemistry ----------
         # This is called before Metainfo stringifies extracted_name if it was a list
         if props.extracted_name and not props.chemical_formula_hill:
-            hill = _hill_from_extracted(props.extracted_name) # props.extracted_name could be str or list here
+            hill = _hill_from_extracted(props.extracted_name) 
             if hill:
                 props.chemical_formula_hill = hill
         # numbers --------------------------------------------------------
@@ -217,7 +220,6 @@ class BatteryParser(MatchingParser):
         for key, value in mapping.items():
             attr = _col_to_attr(key)
             if hasattr(props, attr):
-                # Special handling for _raw_value fields that might be strings needing float conversion
                 if attr.endswith("_raw_value") and isinstance(value, str):
                     num = BatteryParser._safe_float(value)
                     if num is not None:
@@ -225,12 +227,12 @@ class BatteryParser(MatchingParser):
                     # else: value is kept as string if _safe_float returns None,
                     # Metainfo will try to coerce or raise error if type is float64
                 else:
-                    setattr(props, attr, value) # value can be list here for extracted_name
+                    setattr(props, attr, value) # value can be list for extracted_name
 
         # compute Hill formula once all attributes are set
         # This is called before Metainfo stringifies extracted_name if it was a list
         if props.extracted_name and not props.chemical_formula_hill:
-            # props.extracted_name will be what was in 'value' from mapping (str or list)
+            # props.extracted_name will be what was in 'value' from (str or list)
             hill = _hill_from_extracted(props.extracted_name)
             if hill:
                 props.chemical_formula_hill = hill
@@ -254,4 +256,3 @@ def _col_to_attr(column: str) -> str:
 # Note on _parse_yaml: The provided example YAML seems to represent a single material.
 # If a YAML file could contain a list of materials at its root, _parse_yaml might need
 # to iterate through that list and create multiple BatteryProperties instances.
-# I've added a basic check for this, assuming either a root dict or a root list of dicts.

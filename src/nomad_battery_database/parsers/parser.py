@@ -88,7 +88,6 @@ class BatteryParser(MatchingParser):
                 unit_val = self._to_str(row.get(unit_col))
                 value_val = self._to_float(row.get(value_col))
 
-                # populate section using setattr as nomad(dot‑notation does not allow dynamic names)
                 setattr(section, f"{attr_base}_raw_unit", raw_unit_val)
                 setattr(section, f"{attr_base}_raw_value", raw_value_val)
                 setattr(section, f"{attr_base}_unit", unit_val)

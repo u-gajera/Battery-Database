@@ -1,9 +1,5 @@
-"""
-Battery-database GUI app (YAML uploads).
-
-[project.entry-points."nomad.plugin"]
-battery_app = "nomad_battery_database.apps:battery_app"
-"""
+# -*- -*-
+from __future__ import annotations
 
 from nomad.config.models.plugins import AppEntryPoint
 from nomad.config.models.ui import (
@@ -11,23 +7,19 @@ from nomad.config.models.ui import (
     Column,
     Dashboard,
     Layout,
-    Menu,  # Ensure Menu is imported
-    MenuItemHistogram,  # Ensure MenuItemHistogram is imported
-    MenuItemPeriodicTable,  # Ensure MenuItemPeriodicTable is imported
-    MenuItemTerms,  # Ensure MenuItemTerms is imported
     SearchQuantities,
     WidgetPeriodicTable,
 )
 
-# fully-qualified name of the schema section
+# Fully‑qualified name of the schema we want to expose in the UI.
 SCHEMA = "nomad_battery_database.schema_packages.battery_schema.BatteryProperties"
 
 battery_app = AppEntryPoint(
     name="battery_app",
-    description="Explore capacity, voltage, CE, … extracted from single-file YAML uploads.",
+    description="Explore Properties from single-file YAML uploads.",
     app=App(
         # ------------------------------------------------ overview ----------
-        label="Battery Database",
+        label="Curated Battery Database",
         path="batterydb",
         category="Experiments",
         description="Curated electro-chemical battery properties from the literature.",
@@ -42,11 +34,9 @@ battery_app = AppEntryPoint(
                 f"data.Material_entries.elements#{SCHEMA}",
             ],
         ),
-
         # -------------------------------- fixed filters ---------------------
         filters_locked={
-            "section_defs.definition_qualified_name": [SCHEMA], # Focus on entries with BatteryProperties
-            # "mainfile~": [".yaml$", ".yml$"], # You might want to enable this if only YAMLs are expected
+            "section_defs.definition_qualified_name": [SCHEMA], 
         },
 
         # -------------------------------- result table ----------------------
@@ -78,7 +68,7 @@ battery_app = AppEntryPoint(
             Column(
                 quantity=f"data.Material_entries[*].chemical_formula_hill#{SCHEMA}",
                 label="Formula (Hill)",
-                selected=True, # Make it selected by default as it's useful
+                selected=True, 
             ),
             Column(quantity="entry_id", label="Entry ID"),
             Column(quantity="upload_create_time", label="Upload time"),

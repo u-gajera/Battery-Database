@@ -28,7 +28,11 @@ def pivot_battery_data(input_file: str, output_file: str) -> None:
     df_pivot = df_pivot.reset_index()
     
     # Extract metadata columns and drop duplicates to get one row per compound
-    meta_cols = [c for c in df.columns if c not in ['Property','Value','Raw_value','Raw_unit','Unit']]
+    meta_cols = [c for c in df.columns if c not in ['Property',
+                                                    'Value',
+                                                    'Raw_value',
+                                                    'Raw_unit',
+                                                    'Unit']]
     df_meta = df[meta_cols].drop_duplicates(subset='Name')
     
     # Merge metadata with pivoted measurements
