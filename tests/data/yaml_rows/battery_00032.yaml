@@ -1,0 +1,12 @@
+Name: Li2Sen
+Extracted_name: '[{''Li'': ''2.0'', ''Se'': ''n''}]'
+DOI: 10.1039/C6TA05029H
+Tag: CDE
+Title: 'An in situ formed Se/CMK-3 composite for rechargeable lithium-ion batteries with long-term cycling performance  '
+Journal: Journal of Materials Chemistry A
+Date: 2016/08/30
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: 2.0 , 1.6 and 1.4
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 2.0

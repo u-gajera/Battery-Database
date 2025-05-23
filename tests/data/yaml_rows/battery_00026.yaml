@@ -1,0 +1,13 @@
+Name: LFP / PEG / ZnO
+Extracted_name: '[{''Li'': ''1.0'', ''Fe'': ''1.0'', ''P'': ''1.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.jallcom.2012.10.092
+Specifier: discharge capacity
+Tag: CDE
+Title: ZNOINCORPORATEDLIFEPO4FORHIGHRATEELECTROCHEMICALPERFORMANCEINLITHIUMIONRECHARGEABLEBATTERIES
+Journal: Journal of Alloys and Compounds
+Date: '2012-10-29'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: '158.9'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 158.9

@@ -1,0 +1,13 @@
+Name: AlCl3
+Extracted_name: '[{''Al'': ''1.0'', ''Cl'': ''3.0''}]'
+DOI: 10.1016/j.apsusc.2018.02.003
+Specifier: capacity
+Tag: CDE
+Title: SUNLIGHTCHARGEDELECTROCHROMICBATTERYBASEDHYBRIDFILMTUNGSTENOXIDEPOLYANILINE
+Journal: Applied Surface Science
+Date: '2018-02-03'
+Correctness: F2
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 8.25 , 11.13 , 18.46 , 20.87 , 27.50 and 36.78
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 27.5

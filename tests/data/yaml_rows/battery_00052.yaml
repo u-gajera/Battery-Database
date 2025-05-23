@@ -1,0 +1,13 @@
+Name: MnO2
+Extracted_name: '[{''Mn'': ''1.0'', ''O'': ''2.0''}]'
+DOI: 10.1016/j.jtice.2019.01.019
+Tag: CDE
+Warning: L
+Title: DIRECTELECTROSYNTHESISMNO2NANOPARTICLESOVERNICKELFOAMSPENTALKALINEBATTERYCATHODESUPERCAPACITORPERFORMANCE
+Journal: Journal of the Taiwan Institute of Chemical Engineers
+Date: '2019-01-30'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: 0.8 and 0.5
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 0.8

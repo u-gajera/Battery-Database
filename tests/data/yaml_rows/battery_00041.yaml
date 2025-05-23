@@ -1,0 +1,14 @@
+Name: LiFeSO4F
+Extracted_name: '[{''Li'': ''1.0'', ''Fe'': ''1.0'', ''S'': ''1.0'', ''O'': ''4.0'', ''F'': ''1.0''}]'
+DOI: 10.1016/j.jpowsour.2019.02.039
+Specifier: potential
+Tag: CDE
+Warning: R
+Title: ELECTRONICCHANGESINPOLY34ETHYLENEDIOXYTHIOPHENECOATEDLIFESO4FDURINGELECTROCHEMICALLITHIUMEXTRACTION
+Journal: Journal of Power Sources
+Date: '2019-02-16'
+Correctness: T
+Voltage_Raw_unit: V vs. Li+
+Voltage_Raw_value: '3.6'
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 3.6

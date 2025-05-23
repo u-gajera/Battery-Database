@@ -1,0 +1,17 @@
+Name: LiMn2O4
+Extracted_name: '[{''Li'': ''1.0'', ''Mn'': ''2.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.apt.2013.05.015
+Specifier: capacity
+Tag: CDE
+Title: SOLUTIONCOMBUSTIONSYNTHESISLIMN2O4FINEPOWDERSFORLITHIUMIONBATTERIES
+Journal: Advanced Powder Technology
+Date: '2013-06-05'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Voltage_Raw_unit: V
+Capacity_Raw_value: '80'
+Voltage_Raw_value: '4.5'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Voltage_Unit: Volt^(1.0)
+Capacity_Value: 80.0
+Voltage_Value: 4.5

@@ -1,0 +1,14 @@
+Name: NaFePO4
+Extracted_name: '[{''Na'': ''1.0'', ''Fe'': ''1.0'', ''P'': ''1.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.electacta.2017.02.107
+Specifier: theoretical capacity
+Tag: CDE
+Warning: R
+Title: INSITUPREPARATIONELECTROCHEMICALCHARACTERIZATIONSUBMICRONSIZEDNAFEPO4CATHODEMATERIALFORSODIUMIONBATTERIES
+Journal: Electrochimica Acta
+Date: '2017-03-02'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: '154'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 154.0

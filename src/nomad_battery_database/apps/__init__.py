@@ -9,18 +9,18 @@ from nomad.config.models.plugins import AppEntryPoint
 from nomad.config.models.ui import (
     App,
     Column,
-    Menu, # Ensure Menu is imported
-    MenuItemHistogram, # Ensure MenuItemHistogram is imported
-    MenuItemPeriodicTable, # Ensure MenuItemPeriodicTable is imported
-    MenuItemTerms, # Ensure MenuItemTerms is imported
-    SearchQuantities,
     Dashboard,
-    WidgetPeriodicTable,
     Layout,
+    Menu,  # Ensure Menu is imported
+    MenuItemHistogram,  # Ensure MenuItemHistogram is imported
+    MenuItemPeriodicTable,  # Ensure MenuItemPeriodicTable is imported
+    MenuItemTerms,  # Ensure MenuItemTerms is imported
+    SearchQuantities,
+    WidgetPeriodicTable,
 )
 
 # fully-qualified name of the schema section
-SCHEMA = "nomad_battery_database.schema_packages.battery.BatteryProperties"
+SCHEMA = "nomad_battery_database.schema_packages.battery_schema.BatteryProperties"
 
 battery_app = AppEntryPoint(
     name="battery_app",

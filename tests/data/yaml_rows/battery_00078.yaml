@@ -1,0 +1,12 @@
+Name: SrLi2Ti6O14
+Extracted_name: '[{''Sr'': ''1.0'', ''Li'': ''2.0'', ''Ti'': ''6.0'', ''O'': ''14.0''}]'
+DOI: 10.1016/j.jpowsour.2016.05.018
+Tag: CDE
+Title: SR095IN005LI2TI6O14AHIGHPERFORMANCELITHIUMHOSTMATERIAL
+Journal: Journal of Power Sources
+Date: '2016-05-12'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: '1.39'
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 1.39

@@ -1,0 +1,13 @@
+Name: ZnGa2O4
+Extracted_name: '[{''Zn'': ''1.0'', ''Ga'': ''2.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.electacta.2017.03.122
+Specifier: coulombic
+Tag: CDE
+Title: STRUCTURALREGULATIONZNGA2O4NANOCUBESFORACHIEVINGHIGHCAPACITYSTABLERATECAPABILITYANODEMATERIALLITHIUMIONBATTERIES
+Journal: Electrochimica Acta
+Date: '2017-03-18'
+Correctness: T
+Coulombic Efficiency_Raw_unit: '%'
+Coulombic Efficiency_Raw_value: 98.64 98.08 97.49
+Coulombic Efficiency_Unit: Percent^(1.0)
+Coulombic Efficiency_Value: 98.08

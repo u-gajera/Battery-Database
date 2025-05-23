@@ -1,0 +1,13 @@
+Name: Li1.2Mn0.4Ni0.16Co0.24O2
+Extracted_name: '[{''Li'': ''1.2'', ''Mn'': ''0.4'', ''Ni'': ''0.16'', ''Co'': ''0.24'', ''O'': ''2.0''}]'
+DOI: 10.1016/j.jpowsour.2013.09.052
+Specifier: capacity
+Tag: CDE
+Title: AREVIEWBLENDEDCATHODEMATERIALSFORUSEINLIIONBATTERIES
+Journal: Journal of Power Sources
+Date: '2013-10-05'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: ∼ 230
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 230.0

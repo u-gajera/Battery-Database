@@ -1,0 +1,14 @@
+Name: Carbon
+Extracted_name: '[{''C'': ''12.0'', ''H'': ''22.0'', ''O'': ''11.0''}]'
+DOI: 10.1016/j.jallcom.2014.06.050
+Specifier: discharge specific capacities
+Tag: CDE
+Info: '{''current_value'': ''0.1'', ''current_units'': ''Ag−1''}'
+Title: EFFECTDIFFERENTCARBONSOURCESELECTROCHEMICALPROPERTIESLI2ZNTI3O8CANODEMATERIALINLITHIUMIONBATTERIES
+Journal: Journal of Alloys and Compounds
+Date: '2014-06-16'
+Correctness: F3
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 190.9 , 242.9 , 286.5 and 214.3
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 242.9

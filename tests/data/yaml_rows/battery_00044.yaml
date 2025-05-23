@@ -1,0 +1,14 @@
+Name: LiNi0.8Co0.2O2
+Extracted_name: '[{''Li'': ''1.0'', ''Ni'': ''0.8'', ''Co'': ''0.2'', ''O'': ''2.0''}]'
+DOI: 10.1016/j.ssi.2006.11.017
+Specifier: discharge capacities
+Tag: CDE
+Info: '{''current_value'': ''25 , 100 and 200'', ''current_units'': ''mAg−1''}'
+Title: EFFECTSSNDOPINGSTRUCTURALELECTROCHEMICALPROPERTIESLINI08CO02O2CATHODEMATERIALS
+Journal: Solid State Ionics
+Date: '2007-01-16'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 189 , 182 and 150
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 189.0

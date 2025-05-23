@@ -1,0 +1,14 @@
+Name: 40-CuO / C
+Extracted_name: '[{''Cu'': ''1.0'', ''O'': ''1.0''}, {''C'': ''1.0''}]'
+DOI: 10.1039/C4NR06432A
+Specifier: discharge capacity
+Tag: CDE
+Info: '{''cycle_value'': ''50'', ''cycle_units'': ''cycles''}'
+Title: 'Micro-nanostructured CuO/C spheres as high-performance anode materials for Na-ion batteries  '
+Journal: Nanoscale
+Date: 2015/01/28
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: '217'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 217.0

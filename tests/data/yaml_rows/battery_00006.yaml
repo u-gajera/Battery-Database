@@ -1,0 +1,14 @@
+Name: Carbon / silicon / TiOx−3 composite
+Extracted_name: '[{''Si'': ''1.0''}, {''Ti'': ''1.0'', ''O'': ''x-3''}]'
+DOI: 10.1016/j.compositesa.2017.06.028
+Specifier: discharge capacities
+Tag: CDE
+Info: '{''cycle_value'': ''subsequent'', ''cycle_units'': ''cycles''}'
+Title: BIOINSPIREDSANDWICHSTRUCTUREDCARBONSILICONTITANIUMOXIDENANOFIBERSCOMPOSITEANODEMATERIALFORLITHIUMIONBATTERIES
+Journal: 'Composites Part A: Applied Science and Manufacturing'
+Date: '2017-06-24'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 791.7 , 663.8 , 523.6 , 401.4 , 256.2 and 176.2
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 791.7

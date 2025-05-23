@@ -1,0 +1,13 @@
+Name: TiP2O7 / LiMn2O4
+Extracted_name: '[{''Ti'': ''1.0'', ''P'': ''2.0'', ''O'': ''7.0''}, {''Li'': ''1.0'', ''Mn'': ''2.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.electacta.2006.10.010
+Tag: CDE
+Warning: L
+Title: ELECTROCHEMICALPROPERTIESTIP2O7LITI2PO43ANODEMATERIALFORLITHIUMIONBATTERYAQUEOUSSOLUTIONELECTROLYTE
+Journal: Electrochimica Acta
+Date: '2006-11-27'
+Correctness: F3
+Voltage_Raw_unit: V
+Voltage_Raw_value: 0.90 and 1.85
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 0.9

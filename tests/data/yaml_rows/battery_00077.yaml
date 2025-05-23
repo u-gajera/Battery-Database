@@ -1,0 +1,13 @@
+Name: SrLi1.9Na0.1Ti6O14 electrode
+Extracted_name: '[{''Sr'': ''1.0'', ''Li'': ''1.9'', ''Na'': ''0.1'', ''Ti'': ''6.0'', ''O'': ''14.0''}]'
+DOI: 10.1016/j.electacta.2018.01.201
+Specifier: capacity
+Tag: CDE
+Title: EFFECTLITHIUMSITEDOPINGENHANCINGLITHIUMSTORAGEPERFORMANCESRLI2TI6O14
+Journal: Electrochimica Acta
+Date: '2018-02-01'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: '261'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 261.0

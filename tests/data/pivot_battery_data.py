@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def pivot_battery_data(input_file: str, output_file: str) -> None:
     """
     Reads a CSV file with battery property records and pivots the

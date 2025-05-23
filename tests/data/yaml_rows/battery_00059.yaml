@@ -1,0 +1,13 @@
+Name: Ni1Co3 / CN-3
+Extracted_name: '[{''Ni'': ''1.0'', ''Co'': ''3.0''}, {''C'': ''1.0'', ''N'': ''1.0''}]'
+DOI: 10.1016/j.electacta.2018.05.069
+Tag: CDE
+Warning: L
+Title: NICODOPEDCNNANOCOMPOSITESFORCATHODICCATALYSTSZNAIRBATTERIESINNEUTRALMEDIA
+Journal: Electrochimica Acta
+Date: '2018-05-11'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: – 0.6
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 0.6

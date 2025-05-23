@@ -1,0 +1,12 @@
+Name: Sb2O3
+Extracted_name: '[{''Sb'': ''2.0'', ''O'': ''3.0''}]'
+DOI: 10.1016/j.matlet.2011.01.013
+Tag: CDE
+Title: LI3SBO4ANEWHIGHRATEANODEMATERIALFORLITHIUMIONBATTERIES
+Journal: Materials Letters
+Date: '2011-01-15'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: – 1.5
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 1.5

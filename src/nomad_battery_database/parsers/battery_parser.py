@@ -1,13 +1,19 @@
 from __future__ import annotations
+
+import ast
 from pathlib import Path
-from typing import Iterator, Union # Added Union
+from typing import Union
 
 import pandas as pd
 import yaml
 from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
-import ast
-from nomad_battery_database.schema_packages.battery_schema import BatteryDatabase, BatteryProperties
+
+from nomad_battery_database.schema_packages.battery_schema import (
+    BatteryDatabase,
+    BatteryProperties,
+)
+
 
 # ----------------------------------------------------------
 # Chemistry util – build Hill formula from the 'Extracted_name' column

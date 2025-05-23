@@ -1,11 +1,10 @@
+import ast  # Ensure ast is imported
 from typing import TYPE_CHECKING
+
 import numpy as np
-import ast # Ensure ast is imported
-
 from nomad.datamodel.data import Schema
-from nomad.metainfo import Quantity, SchemaPackage, Section, SubSection
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
-
+from nomad.metainfo import Quantity, SchemaPackage, Section, SubSection
 
 if TYPE_CHECKING:  # pragma: no cover
     from nomad.datamodel import EntryArchive

@@ -1,9 +1,13 @@
 # working fine for the csv parsing
 from typing import TYPE_CHECKING
-import pandas as pd
 
+import pandas as pd
 from nomad.parsing.parser import MatchingParser
-from nomad_battery_database.schema_packages.schema_package import BatteryDatabase, BatteryProperties
+
+from nomad_battery_database.schema_packages.schema_package import (
+    BatteryDatabase,
+    BatteryProperties,
+)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import EntryArchive

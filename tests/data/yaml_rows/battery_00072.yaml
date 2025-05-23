@@ -1,0 +1,12 @@
+Name: Sn / C
+Extracted_name: '[{''Sn'': ''1.0''}, {''C'': ''1.0''}]'
+DOI: 10.1016/j.elecom.2010.06.015
+Tag: CDE
+Title: RETICULARSNNANOPARTICLEDISPERSEDPANBASEDCARBONNANOFIBERSFORANODEMATERIALINRECHARGEABLELITHIUMIONBATTERIES
+Journal: Electrochemistry Communications
+Date: '2010-06-18'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 1211.7 and 993
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 993.0

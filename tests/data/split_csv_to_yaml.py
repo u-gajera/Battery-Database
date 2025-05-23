@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 CSV → YAML *without* any NOMAD dependency
 ========================================
@@ -30,7 +29,6 @@ from __future__ import annotations
 
 import argparse
 import re
-import sys
 from pathlib import Path
 from typing import Set
 

@@ -1,0 +1,13 @@
+Name: Pt oxide
+Extracted_name: '[{''Pt'': ''1.0'', ''O'': ''2.0''}]'
+DOI: 10.1016/0079-6816(95)00040-6
+Tag: CDE
+Warning: L
+Title: ELECTROCHEMICALOXIDEFILMFORMATIONNOBLEMETALSASURFACECHEMICALPROCESS
+Journal: Progress in Surface Science
+Date: '2000-03-20'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: 0.2 to 0.45
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 0.2

@@ -1,0 +1,14 @@
+Name: Fe2O3–C composite
+Extracted_name: '[{''Fe'': ''2.0'', ''O'': ''3.0''}]'
+DOI: 10.1016/j.ceramint.2018.07.004
+Specifier: capacity
+Tag: CDE
+Info: '{''current_value'': ''1.0'', ''current_units'': ''Ag−1'', ''cycle_value'': ''300'', ''cycle_units'': ''cycles''}'
+Title: POROUSCOTIO3MICROBARSSUPERRATELONGLIFEANODESFORSODIUMIONBATTERIES
+Journal: Ceramics International
+Date: '2018-07-02'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: '812'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 812.0
