@@ -1,10 +1,13 @@
-#import ast  # Ensure ast is imported
+from __future__ import annotations
+
 import ast
 from typing import TYPE_CHECKING
 
 import numpy as np
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
+from nomad.datamodel.metainfo.basesections import ElementalComposition
+from nomad.datamodel.results import Material, Results
 from nomad.metainfo import Quantity, SchemaPackage, Section, SubSection
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -13,21 +16,60 @@ if TYPE_CHECKING:  # pragma: no cover
 
 m_package = SchemaPackage()
 
-class BatteryProperties(Schema):
-    """ Metadata extracted from **one** publication / **one** material."""
+# Helper – parse the Extracted_name field                                       #
+def _parse_composition(raw: str | list | None) -> tuple[list[str], list[float]] | None:
+    """Return (elements, counts) in Hill order or *None* if parsing fails."""
+    if raw is None:
+        return None
+    if isinstance(raw, str):
+        try:
+            parts = ast.literal_eval(raw)
+        except Exception:
+            return None
+    elif isinstance(raw, list):
+        parts = raw
+    else:
+        return None
+    if not all(isinstance(p, dict) for p in parts):
+        return None
 
-    # bibliographic
+    totals: dict[str, float] = {}
+    for part in parts:
+        for el, cnt in part.items():
+            try:
+                cnt_f = float(cnt)
+            except Exception:
+                cnt_f = 1.0
+            totals[el] = totals.get(el, 0.0) + cnt_f
+
+    elems = sorted(totals)
+    if "C" in elems:
+        elems.remove("C")
+        elems.insert(0, "C")
+    if "H" in elems:
+        elems.remove("H")
+        elems.insert(1 if elems[0] == "C" else 0, "H")
+
+    counts = [totals[e] for e in elems]
+    return elems, counts
+
+# BatteryProperties section                                                  #
+
+class BatteryProperties(Schema):
+    """Metadata extracted from one publication / one material."""
+
+    # --- bibliographic ---------------------------------------------------- #
     material_name = Quantity(type=str, 
                     a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity))
-    extracted_name = Quantity(type=str) # String representation of list of dicts
+    extracted_name = Quantity(type=str)
     chemical_formula_hill = Quantity(type=str)
-    elements = Quantity(type=str)
+    elements = Quantity(type=str, shape=["*"])
     title = Quantity(type=str)
     DOI = Quantity(type=str)
     journal = Quantity(type=str)
     date = Quantity(type=str)
 
-    # meta
+    # --- metadata --------------------------------------------------------- #
     specifier = Quantity(type=str)
     tag = Quantity(type=str)
     warning = Quantity(type=str)
@@ -35,7 +77,7 @@ class BatteryProperties(Schema):
     material_type = Quantity(type=str)
     info = Quantity(type=str)
 
-    # raw numbers
+    # --- raw numerical ---------------------------------------------------- #
     capacity_raw_value = Quantity(type=np.float64)
     capacity_raw_unit = Quantity(type=str)
     voltage_raw_value = Quantity(type=np.float64)
@@ -47,73 +89,58 @@ class BatteryProperties(Schema):
     conductivity_raw_value = Quantity(type=np.float64)
     conductivity_raw_unit = Quantity(type=str)
 
-    # aliases w/ units – mapped in normalize
+    # --- normalised numbers ---------------------------------------------- #
     capacity = Quantity(type=np.float64, unit="mA*hour/g")
     voltage = Quantity(type=np.float64, unit="V")
     coulombic_efficiency = Quantity(type=np.float64)
     energy_density = Quantity(type=np.float64, unit="W*hour/kg")
     conductivity = Quantity(type=np.float64, unit="S/cm")
 
-    elements = Quantity(
-        type=str,
-        shape=['*'],
-        description='A list of unique chemical elements present in the material, ' \
-                    'derived from extracted_name.',
-        a_eln=ELNAnnotation(label='Elements Present')
-    )
-
-    def _parse_elements(self, raw, entry_log_prefix, logger) -> list[str] | None:
-        """
-        Extract a list of unique element symbols from extracted_name.
-        Expects a stringified list of dicts or a list of dicts.
-        """
-        if not raw:
-            return None
-
-        try:
-            if isinstance(raw, str):
-                parts = ast.literal_eval(raw)
-            elif isinstance(raw, list):
-                parts = raw
-            else:
-                return None
-
-            totals = {}
-            for part in parts:
-                if isinstance(part, dict):
-                    for elem in part:
-                        totals[elem] = totals.get(elem, 0) + 1
-
-            return sorted(totals)
-        except Exception as e:
-            logger.warning(
-                f"{entry_log_prefix}Failed to parse elements from extracted_name: {e}"
-            )
-            return None
-
-    def normalize(
-        self,
-        archive: "EntryArchive",
-        logger: "BoundLogger",
-    ) -> None:  # noqa: D401
+    # normaliser                                                            #
+    def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:
         super().normalize(archive, logger)
 
-        # Build a short prefix once, then reuse it.
-        entry_id = archive.metadata.entry_id if archive.metadata else "N/A"
-        entry_log_prefix = f"[EntryID: {entry_id}] "
+        # --- 1) composition ---------------------------------------------- #
+        comp = _parse_composition(self.extracted_name)
+        if comp is not None:
+            elements, counts = comp
+            self.elements = elements
 
-        logger.info(
-            f"{entry_log_prefix}Starting normalization of BatteryProperties. "
-            f"Initial extracted_name: '{self.extracted_name}', "
-            f"type: {type(self.extracted_name)}"
-        )
+            # chemical_formula_hill (if missing)
+            if not self.chemical_formula_hill:
+                parts = []
+                for el, cnt in zip(elements, counts):
+                    if abs(cnt - 1.0) < 1e-6:
+                        parts.append(el)
+                    else:
+                        cnt_str=str(int(cnt)) if abs(cnt - int(cnt))<1e-6 else str(cnt)
+                        parts.append(f"{el}{cnt_str}")
+                self.chemical_formula_hill = "".join(parts)
 
-        # 1) Parse elements from extracted_name in one helper 
-        self.elements = self._parse_elements(self.extracted_name, 
-                                             entry_log_prefix, 
-                                             logger) or []
+            # --- NEW: results.material & elemental_composition ------------ #
+            if archive.results is None:
+                archive.results = Results()           # type: ignore
 
-        # 2) Bulk-assign all “_raw_value” → clean fields
+            mat = getattr(archive.results, "material", None)
+            if mat is None:
+                mat = Material()
+                archive.results.material = mat        # type: ignore
+
+            total = float(sum(counts))
+            mat.chemical_formula_hill = self.chemical_formula_hill
+            mat.elements            = elements        # type: ignore
+            mat.nelements           = len(elements)   # type: ignore
+            mat.elements_ratios     = [c / total for c in counts]  # type: ignore
+
+            ecs = []
+            for el, cnt in zip(elements, counts):
+                ec = ElementalComposition()
+                ec.element         = el
+                ec.atomic_fraction = cnt / total
+                ecs.append(ec)
+            archive.results.elemental_composition = ecs  # type: ignore
+
+        # --- copy *_raw_value → clean fields --------------------------- #
         for raw, clean in [
             ("capacity_raw_value", "capacity"),
             ("voltage_raw_value", "voltage"),
@@ -122,10 +149,10 @@ class BatteryProperties(Schema):
             ("conductivity_raw_value", "conductivity"),
         ]:
             val = getattr(self, raw, None)
-            if val is not None:
+            if val is not None and not np.isnan(val):
                 setattr(self, clean, val)
 
-        # 3) If you have “_raw_unit” fields, assign those too
+        # --- unit strings --------------------------------------------- #
         for raw_u, clean in [
             ("capacity_raw_unit", "capacity"),
             ("voltage_raw_unit", "voltage"),
@@ -134,9 +161,11 @@ class BatteryProperties(Schema):
         ]:
             unit = getattr(self, raw_u, None)
             if unit and getattr(self, clean, None) is not None:
-                getattr(self, clean).unit = unit
+                try:
+                    getattr(self, clean).unit = unit  # type: ignore[attr-defined]
+                except Exception:
+                    pass  # running outside real NOMAD context
 
-        logger.info(f"{entry_log_prefix}Finished normalization of BatteryProperties.")
 
 class BatteryDatabase(Schema):
     m_def = Section(label="Battery database", 
@@ -146,6 +175,4 @@ class BatteryDatabase(Schema):
 
 m_package.__init_metainfo__()
 
-__all__ = ["m_package", 
-           "BatteryProperties", 
-           "BatteryDatabase"]
+__all__ = ["m_package", "BatteryProperties", "BatteryDatabase"]
