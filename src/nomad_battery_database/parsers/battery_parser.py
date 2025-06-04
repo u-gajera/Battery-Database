@@ -89,7 +89,7 @@ class BatteryParser(MatchingParser):
         super().__init__(**kwargs)
 
     # ----------------------------------------------------------
-    # Mandatory parse       (MatchingParser already checks regex)
+    # Mandatory parse       
     # ----------------------------------------------------------
     def parse(
         self,
@@ -97,11 +97,11 @@ class BatteryParser(MatchingParser):
         archive: EntryArchive,
         logger=None,
         child_archives: dict[str, EntryArchive] | None = None,
-    ) -> None:  # noqa: D401, N802 – NOMAD API
+    ) -> None:
         path = Path(mainfile)
-        if path.suffix.lower() == ".csv":
+        if mainfile.endswith(".csv"): 
             self._parse_csv(path, archive, logger)
-        else:
+        elif mainfile.endswith((".yaml", ".yml")):
             self._parse_yaml(path, archive, logger)
 
     # ----------------------------------------------------------
@@ -236,6 +236,35 @@ class BatteryParser(MatchingParser):
             hill = _hill_from_extracted(props.extracted_name)
             if hill:
                 props.chemical_formula_hill = hill
+
+    # as it checks file *content*, not the filename pattern itself (which mainfile_name_re handles)
+    def does_match(self, mainfile: str, mainfile_content: bytes, logger):
+        """
+        Further check if the content of the file matches what this parser expects,
+        even if the filename pattern from mainfile_name_re matched.
+        """
+        logger.info(f"BatteryParser.does_match attempting to confirm match for {mainfile}")
+        try:
+            content_str = mainfile_content.decode('utf-8', errors='ignore')
+            # Check based on the actual extension confirmed by mainfile_name_re
+            if mainfile.endswith(('.yaml', '.yml')):
+                if "Extracted_name:" in content_str and "DOI:" in content_str: # Example check
+                    logger.info("BatteryParser.does_match confirmed for YAML.")
+                    return True
+                else:
+                    logger.info("BatteryParser.does_match rejected: Missing characteristic keys for battery YAML.")
+                    return False
+            elif mainfile.endswith('.csv'):
+                if "Name," in content_str.splitlines()[0] and \
+                   "Capacity_Raw_value," in content_str.splitlines()[0]: # Example check
+                    logger.info("BatteryParser.does_match confirmed for CSV.")
+                    return True
+                else:
+                    logger.info("BatteryParser.does_match rejected: Missing characteristic headers for battery CSV.")
+                    return False
+        except Exception as e:
+            logger.warning(f"BatteryParser.does_match encountered an error: {e}")
+        return False
 
 
 _ALIASES = {
