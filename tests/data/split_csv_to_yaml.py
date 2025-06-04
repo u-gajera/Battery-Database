@@ -37,7 +37,7 @@ import yaml
 def _collect_schema_names(schema_path: Path) -> set[str]:
     """Return *all* Quantity names found in the given schema file.
 
-    We scan the file textually so that **no import is necessary** 
+    We scan the file textually so that **no import is necessary**
     (avoids the need for the NOMAD SDK or any third‑party code).
     """
     pattern_q = re.compile(r"Quantity\s*\(\s*['\"](?P<name>[A-Za-z0-9_]+)['\"]")
@@ -91,7 +91,10 @@ def csv_to_yaml(
     # ------------------------------------------------------------------
     for idx, row in df.iterrows():
         row_number = idx + index_base
-        out_file = outdir / f"battery_{row_number:05d}.yaml"
+        # Previous line:
+        # out_file = outdir / f"battery_{row_number:05d}.yaml"
+        # New line:
+        out_file = outdir / f"entry{row_number}.extracted_battery.yaml"
 
         # Drop NaNs so the YAML stays clean and lightweight
         mapping = (
@@ -118,9 +121,9 @@ def csv_to_yaml(
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="CSV → one‑YAML‑per‑row converter")
     parser.add_argument("--csv", type=Path, required=True, help="Input CSV file")
-    parser.add_argument("--schema", type=Path, default=None, 
+    parser.add_argument("--schema", type=Path, default=None,
                         help="Schema .py file for name checks")
-    parser.add_argument("--outdir", type=Path, default=Path("entries"), 
+    parser.add_argument("--outdir", type=Path, default=Path("entries"),
                         help="Output directory")
     args = parser.parse_args(argv)
 
