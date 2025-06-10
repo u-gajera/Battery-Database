@@ -3,13 +3,13 @@ from __future__ import annotations
 
 import ast
 from numbers import Number
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
 from nomad.datamodel.metainfo.basesections import ElementalComposition
-from nomad.datamodel.results import Material, Results, Properties  
+from nomad.datamodel.results import Material, Results
 from nomad.metainfo import Quantity, SchemaPackage, Section, SubSection
 
 if TYPE_CHECKING:  
@@ -19,8 +19,10 @@ if TYPE_CHECKING:
 m_package = SchemaPackage()
 
 #  Helper utilities
-def _parse_composition(raw: str | list | None) -> Optional[tuple[list[str], 
-                                                                 list[float]]]:
+def _parse_composition(
+        raw: str | list | None
+    ) -> tuple[list[str], list[float]] | None:
+
     if raw is None:
         return None
     if isinstance(raw, str):
@@ -40,11 +42,13 @@ def _parse_composition(raw: str | list | None) -> Optional[tuple[list[str],
             totals[el] = totals.get(el, 0.0) + float(cnt or 1.0)
     elems = sorted(totals)
     if "C" in elems:
-        elems.remove("C"); elems.insert(0, "C")
+        elems.remove("C")
+        elems.insert(0, "C")
+
     if "H" in elems:
-        elems.remove("H"); elems.insert(1 if elems[0] == "C" else 0, "H")
-    counts = [totals[e] for e in elems]
-    return elems, counts
+        elems.remove("H")
+        insert_pos = 1 if elems[0] == "C" else 0
+        elems.insert(insert_pos, "H")
 
 
 def _to_number(val: Any) -> float | None:  
@@ -60,7 +64,7 @@ def _to_number(val: Any) -> float | None:
     return None
 
 # -----------------------------------------------------------------------------
-#  Sub‑sections for Results.properties
+#  Sub‑sections for Results.properties #needed to create
 # class BatterySummary(Schema):
 #     m_def = Section(label="Battery summary (curated DB)")
 #     capacity             = Quantity(type=np.float64, unit="mA*hour/g")
@@ -122,17 +126,21 @@ class BatteryProperties(Schema):
 
     # ------------------------------------------------------------------
     #  Normaliser
-    def normalize(self, archive: "EntryArchive", logger: "BoundLogger") -> None:  
+    def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:  
         super().normalize(archive, logger)
 
         # 1) composition & results.material -----------------------------
+        EPSILON = 1e-6
         comp = _parse_composition(self.extracted_name)
         if comp is not None:
             elements, counts = comp
             self.elements = elements
+
             if not self.chemical_formula_hill:
                 self.chemical_formula_hill = "".join(
-                    el if abs(cnt - 1.0) < 1e-6 else f"{el}{int(cnt) if float(cnt).is_integer() else cnt}"
+                    el if abs(cnt - 1.0) < EPSILON else (
+                        f"{el}{int(cnt) if float(cnt).is_integer() else cnt}"
+                    )
                     for el, cnt in zip(elements, counts)
                 )
             if archive.results is None:
@@ -181,7 +189,9 @@ class BatteryProperties(Schema):
         # props_sec: Properties = getattr(archive.results, "properties", None)  
         # if props_sec is None:
         #     props_sec = archive.results.m_create(Properties) 
-        # elec_sec: ElectrochemistryProps = getattr(props_sec, "electrochemistry", None)  
+        # elec_sec: ElectrochemistryProps = getattr(props_sec, 
+        #                                           "electrochemistry", 
+        #                                           None)  
         # if elec_sec is None:
         #     elec_sec = props_sec.m_create(ElectrochemistryProps) 
         #     props_sec.electrochemistry = elec_sec  # attach

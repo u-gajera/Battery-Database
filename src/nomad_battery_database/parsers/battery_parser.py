@@ -125,7 +125,7 @@ class BatteryParser(MatchingParser):
         db = archive.data = BatteryDatabase() 
 
         # Assuming a single YAML file corresponds to one material entry for now
-        # If a YAML can contain multiple entries, this part needs adjustment
+        # * a YAML can contain multiple entries, this part needs adjustment
         if isinstance(mapping, list) and all(isinstance(item, 
                                                         dict) for item in mapping):
             # This handles if the YAML root is a list of material entries
@@ -237,31 +237,53 @@ class BatteryParser(MatchingParser):
             if hill:
                 props.chemical_formula_hill = hill
 
-    # as it checks file *content*, not the filename pattern itself (which mainfile_name_re handles)
+    # checking file *content*, not the filename pattern itself 
+    # (which mainfile_name_re handles)
     def does_match(self, mainfile: str, mainfile_content: bytes, logger):
         """
         Further check if the content of the file matches what this parser expects,
         even if the filename pattern from mainfile_name_re matched.
         """
-        logger.info(f"BatteryParser.does_match attempting to confirm match for {mainfile}")
+        logger.info(
+                f"BatteryParser.does_match attempting to confirm "
+                f"match for {mainfile}"
+            )
         try:
             content_str = mainfile_content.decode('utf-8', errors='ignore')
             # Check based on the actual extension confirmed by mainfile_name_re
-            if mainfile.endswith(('.yaml', '.yml')):
-                if "Extracted_name:" in content_str and "DOI:" in content_str: # Example check
-                    logger.info("BatteryParser.does_match confirmed for YAML.")
+            if mainfile.endswith((".yaml", ".yml")):
+                if (
+                    "Extracted_name:" in content_str
+                    and "DOI:" in content_str
+                ):
+                    logger.info(
+                        "BatteryParser.does_match confirmed for YAML."
+                    )
                     return True
                 else:
-                    logger.info("BatteryParser.does_match rejected: Missing characteristic keys for battery YAML.")
+                    logger.info(
+                        "BatteryParser.does_match rejected: "
+                        "Missing characteristic keys for battery YAML."
+                    )
                     return False
-            elif mainfile.endswith('.csv'):
-                if "Name," in content_str.splitlines()[0] and \
-                   "Capacity_Raw_value," in content_str.splitlines()[0]: # Example check
-                    logger.info("BatteryParser.does_match confirmed for CSV.")
+
+            elif mainfile.endswith(".csv"):
+                first_line = content_str.splitlines()[0]
+                if (
+                    "Name," in first_line
+                    and "Capacity_Raw_value," in first_line
+                ):
+                    logger.info(
+                        "BatteryParser.does_match confirmed for CSV."
+                    )
                     return True
                 else:
-                    logger.info("BatteryParser.does_match rejected: Missing characteristic headers for battery CSV.")
+                    logger.info(
+                        "BatteryParser.does_match rejected: "
+                        "Missing characteristic headers for battery CSV."
+                    )
                     return False
+
         except Exception as e:
             logger.warning(f"BatteryParser.does_match encountered an error: {e}")
         return False
@@ -282,6 +304,3 @@ def _col_to_attr(column: str) -> str:
     key = column.strip().lower().replace(" ", "_")
     return _ALIASES.get(key, key)
 
-# Note on _parse_yaml: The provided example YAML seems to represent a single material.
-# If a YAML file could contain a list of materials at its root, _parse_yaml might need
-# to iterate through that list and create multiple BatteryProperties instances.
