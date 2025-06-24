@@ -8,6 +8,9 @@ from nomad.config.models.ui import (
     Layout,
     SearchQuantities,
     WidgetPeriodicTable,
+    WidgetHistogram,
+    WidgetPeriodicTable,
+    WidgetScatterPlot
 )
 
 SCHEMA = "nomad_battery_database.schema_packages.battery_schema.BatteryProperties"
@@ -85,6 +88,23 @@ battery_app = AppEntryPoint(
                     layout={"lg": Layout(w=12, h=8, x=0, y=0, minW=12, minH=8)},
                     show_statistics=True,
                 ),
+
+                # WidgetHistogram(
+                #     title="Capacity distribution",
+                #     x=f"data.Material_entries[*].capacity#{SCHEMA}",
+                #     n_bins=30,
+                #     autorange=True,
+                #     layout={"lg": Layout(w=6, h=8, x=0, y=8, minW=6, minH=6)},
+                # ),
+
+                # WidgetScatterPlot(
+                #     title="Voltage vs. Capacity",
+                #     x=f"data.Material_entries[*].capacity#{SCHEMA}",
+                #     y=f"data.Material_entries[*].voltage#{SCHEMA}",
+                #     size=800,
+                #     autorange=True,
+                #     layout={"lg": Layout(w=6, h=8, x=6, y=8, minW=6, minH=6)},
+                # ),
             ],
         ),
     ),
