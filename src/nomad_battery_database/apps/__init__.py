@@ -49,17 +49,17 @@ battery_app = AppEntryPoint(
             ),
             Column(
                 quantity=f"data.Material_entries[*].capacity#{SCHEMA}",
-                label="Capacity (mAh g⁻¹)",
+                label="Capacity",
                 selected=True,
             ),
             Column(
                 quantity=f"data.Material_entries[*].voltage#{SCHEMA}",
-                label="Voltage (V)",
+                label="Voltage",
                 selected=True,
             ),
             Column(
                 quantity=f"data.Material_entries[*].coulombic_efficiency#{SCHEMA}",
-                label="CE (%)",
+                label="CE",
             ),
             Column(
                 quantity=f"data.Material_entries[*].chemical_formula_hill#{SCHEMA}",
@@ -94,13 +94,13 @@ battery_app = AppEntryPoint(
                 MenuItemHistogram(
                     x=Axis(
                         search_quantity=f"data.Material_entries.capacity#{SCHEMA}",
-                        title="Capacity (mAh g⁻¹)",
+                        title="Capacity",
                     ),
                 ),
                 MenuItemHistogram(
                     x=Axis(
                         search_quantity=f"data.Material_entries.voltage#{SCHEMA}",
-                        title="Voltage (V)",
+                        title="Voltage",
                     ),
                 ),
             ],
@@ -159,11 +159,11 @@ battery_app = AppEntryPoint(
                     title="Voltage vs Capacity (by Specifier)",
                     x=Axis(
                         search_quantity=f"data.Material_entries[*].voltage#{SCHEMA}",
-                        title="Voltage (V)",
+                        title="Voltage",
                     ),
                     y=Axis(
                         search_quantity=f"data.Material_entries[*].capacity#{SCHEMA}",
-                        title="Capacity (mAh g⁻¹)",
+                        title="Capacity",
                     ),
                     markers=Markers(
                         color=Axis(

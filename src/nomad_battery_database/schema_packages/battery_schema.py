@@ -59,26 +59,6 @@ def _to_number(val: Any) -> float | None:
         return float(val)
     return None
 
-# -----------------------------------------------------------------------------
-#  Sub‑sections for Results.properties
-# class BatterySummary(Schema):
-#     m_def = Section(label="Battery summary (curated DB)")
-#     capacity             = Quantity(type=np.float64, unit="mA*hour/g")
-#     voltage              = Quantity(type=np.float64, unit="V")
-#     coulombic_efficiency = Quantity(type=np.float64)
-#     energy_density       = Quantity(type=np.float64, unit="W*hour/kg")
-#     conductivity         = Quantity(type=np.float64, unit="S/cm")
-
-# class ElectrochemistryProps(Schema):
-#     m_def = Section(label="Electrochemistry properties")
-#     battery = SubSection(sub_section=BatterySummary)
-
-# # Attach our new subsection definition to the *standard* Properties section
-# if not hasattr(Properties, "electrochemistry"):
-#     Properties.electrochemistry = SubSection(section_def=ElectrochemistryProps)
-
-# -----------------------------------------------------------------------------
-#  BatteryProperties (material‑level section)
 class BatteryProperties(Schema):
     """Metadata for one material extracted from the curated battery DB."""
 
@@ -175,32 +155,6 @@ class BatteryProperties(Schema):
                 except Exception:
                     pass
 
-        # 4) populating results.properties.electrochemistry.battery ------
-        # if archive.results is None:
-        #     archive.results = Results()  
-        # props_sec: Properties = getattr(archive.results, "properties", None)  
-        # if props_sec is None:
-        #     props_sec = archive.results.m_create(Properties) 
-        # elec_sec: ElectrochemistryProps = getattr(props_sec, "electrochemistry", None)  
-        # if elec_sec is None:
-        #     elec_sec = props_sec.m_create(ElectrochemistryProps) 
-        #     props_sec.electrochemistry = elec_sec  # attach
-        # batt: BatterySummary = getattr(elec_sec, "battery", None)  
-        # if batt is None:
-        #     batt = elec_sec.m_create(BatterySummary)
-        #     elec_sec.battery = batt
-        # for key in [
-        #     "capacity",
-        #     "voltage",
-        #     "coulombic_efficiency",
-        #     "energy_density",
-        #     "conductivity",
-        # ]:
-        #     num = _to_number(getattr(self, key, None))
-        #     if num is not None:
-        #         setattr(batt, key, num)
-
-# -----------------------------------------------------------------------------
 #  Top‑level container
 class BatteryDatabase(Schema):
     m_def = Section(label="Battery database", 
