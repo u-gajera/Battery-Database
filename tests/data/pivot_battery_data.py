@@ -47,5 +47,5 @@ if __name__ == "__main__":
     # Update file names/paths if necessary
     pivot_battery_data(
         input_file='test_battery_data.csv',
-        output_file='test_battery_data_pivot.csv'
+        output_file='battery_data_pivot.extracted_battery.csv'
     )
