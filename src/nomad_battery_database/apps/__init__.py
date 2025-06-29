@@ -81,6 +81,11 @@ battery_app = AppEntryPoint(
                     show_input=True,
                 ),
                 MenuItemTerms(
+                    quantity=f"data.Material_entries.material_type#{SCHEMA}",
+                    title="Material type",
+                    show_input=True,
+                ),
+                MenuItemTerms(
                     quantity=f"data.Material_entries.tag#{SCHEMA}",
                     title="Tag",
                     show_input=True,
