@@ -14,9 +14,9 @@ from nomad_battery_database.schema_packages.battery_schema import (
     BatteryProperties,
 )
 
-# ----------------------------------------------------------
-# Chemistry util – build Hill formula from the 'Extracted_name' column
-# ----------------------------------------------------------
+import numpy as np        
+from nomad_battery_database.parsers.utils import create_archive
+
 COUNT_TOLERANCE: float = 1e-2
 
 def _safe_literal_eval(raw: str) -> list[dict[str, Any]] | None:
@@ -99,24 +99,42 @@ class BatteryParser(MatchingParser):
         child_archives: dict[str, EntryArchive] | None = None,
     ) -> None:
         path = Path(mainfile)
-        if mainfile.endswith(".csv"): 
-            self._parse_csv(path, archive, logger)
-        elif mainfile.endswith((".yaml", ".yml")):
+        if mainfile.endswith(('.csv', '.xls', '.xlsx')):
+            self._parse_table(path, archive, logger)
+        elif mainfile.endswith(('.yaml', '.yml')):
             self._parse_yaml(path, archive, logger)
 
     # ----------------------------------------------------------
     # Helpers
     # ----------------------------------------------------------
     @staticmethod
-    def _parse_csv(path: Path, archive: EntryArchive, logger=None) -> None:
-        df = pd.read_csv(path)
-        db = archive.data = BatteryDatabase()
+    def _parse_table(
+        path: Path, archive: EntryArchive, logger=None
+    ) -> None:
+        ext = path.suffix.lower()
+        if ext in {'.xls', '.xlsx'}:
+            df = pd.read_excel(path).replace(np.nan, None)
+        else:                       # falls back to CSV
+            df = pd.read_csv(path).replace(np.nan, None)
+
+        # iterate rows → one BatteryDatabase per row
         for idx, row in df.iterrows():
             props = BatteryParser._row_to_props(row)
+            db = BatteryDatabase()
             db.Material_entries.append(props)
-            logger and logger.debug("added CSV row", 
-                                    row_index=idx, 
-                                    material=props.material_name)
+
+            # Create a child archive file
+            entry_name = (
+                (props.material_name or f'row_{idx}')
+                .replace(' ', '_')
+                .replace('/', '_')
+            )
+            file_name = f'{entry_name}.battery.archive.json'
+
+            create_archive(db, archive, file_name)
+            logger and logger.info(
+                'archive_created', file=file_name, row_index=idx
+            )
 
     @staticmethod
     def _parse_yaml(path: Path, archive: EntryArchive, logger=None) -> None:
@@ -124,8 +142,6 @@ class BatteryParser(MatchingParser):
             mapping = yaml.safe_load(fh) or {}
         db = archive.data = BatteryDatabase() 
 
-        # Assuming a single YAML file corresponds to one material entry for now
-        # * a YAML can contain multiple entries, this part needs adjustment
         if isinstance(mapping, list) and all(isinstance(item, 
                                                         dict) for item in mapping):
             # This handles if the YAML root is a list of material entries
@@ -185,15 +201,25 @@ class BatteryParser(MatchingParser):
     def _row_to_props(row: pd.Series) -> BatteryProperties:
         props = BatteryProperties()
         # strings --------------------------------------------------------
-        for col in [
-            "Name", "Extracted_name", "title", "DOI", "journal", "date",
-            "specifier", "tag", "warning", "correctness", "material_type", "info",
-        ]:
-            if col in row and pd.notna(row[col]):
-                setattr(props, _col_to_attr(col), str(row[col]).strip())
+        for col, value in row.items():
+            if pd.isna(value):
+                continue
+    
+            attr = _col_to_attr(col)
+            if not hasattr(props, attr):
+                continue
+    
+            # 1) numeric “*_raw_value” columns -----------------------------
+            if attr.endswith("_raw_value"):
+                num = BatteryParser._safe_float(value)
+                if num is not None:
+                    setattr(props, attr, num)
+                continue  
+    
+            # 2) everything else is left as text ---------------------------
+            setattr(props, attr, str(value).strip())
 
         # ---------- derived chemistry ----------
-        # This is called before Metainfo stringifies extracted_name if it was a list
         if props.extracted_name and not props.chemical_formula_hill:
             hill = _hill_from_extracted(props.extracted_name) 
             if hill:
@@ -224,26 +250,15 @@ class BatteryParser(MatchingParser):
                     num = BatteryParser._safe_float(value)
                     if num is not None:
                         setattr(props, attr, num)
-                    # else: value is kept as string if _safe_float returns None,
-                    # Metainfo will try to coerce or raise error if type is float64
                 else:
                     setattr(props, attr, value) # value can be list for extracted_name
 
-        # compute Hill formula once all attributes are set
-        # This is called before Metainfo stringifies extracted_name if it was a list
         if props.extracted_name and not props.chemical_formula_hill:
-            # props.extracted_name will be what was in 'value' from (str or list)
             hill = _hill_from_extracted(props.extracted_name)
             if hill:
                 props.chemical_formula_hill = hill
 
-    # checking file *content*, not the filename pattern itself 
-    # (which mainfile_name_re handles)
     def does_match(self, mainfile: str, mainfile_content: bytes, logger):
-        """
-        Further check if the content of the file matches what this parser expects,
-        even if the filename pattern from mainfile_name_re matched.
-        """
         logger.info(
                 f"BatteryParser.does_match attempting to confirm "
                 f"match for {mainfile}"
