@@ -60,52 +60,43 @@ def _to_number(val: Any) -> float | None:
     return None
 
 class BatteryProperties(Schema):
-    """Metadata for one material extracted from the curated battery DB."""
 
-    # bibliographic ------------------------------------------------------
-    material_name = Quantity(type=str, 
+    material_name        = Quantity(type=str, 
                     a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity))
-    extracted_name = Quantity(type=str)
+    extracted_name       = Quantity(type=str)
     chemical_formula_hill = Quantity(type=str)
-    elements = Quantity(type=str, shape=["*"])
-    title = Quantity(type=str)
-    DOI = Quantity(type=str)
-    journal = Quantity(type=str)
-    date = Quantity(type=str)
+    elements             = Quantity(type=str, shape=["*"])
+    title                = Quantity(type=str)
+    DOI                  = Quantity(type=str)
+    journal              = Quantity(type=str)
+    date                 = Quantity(type=str)
 
-    # meta ---------------------------------------------------------------
-    specifier = Quantity(type=str)
-    tag = Quantity(type=str)
-    warning = Quantity(type=str)
-    correctness = Quantity(type=str)
-    material_type = Quantity(type=str)
-    info = Quantity(type=str)
-
-    # raw numerical ------------------------------------------------------
+    specifier          = Quantity(type=str)
+    tag                = Quantity(type=str)
+    warning            = Quantity(type=str)
+    correctness        = Quantity(type=str)
+    info               = Quantity(type=str)
     capacity_raw_value = Quantity(type=np.float64)
     capacity_raw_unit  = Quantity(type=str)
     voltage_raw_value  = Quantity(type=np.float64)
     voltage_raw_unit   = Quantity(type=str)
     coulombic_efficiency_raw_value = Quantity(type=np.float64)
     coulombic_efficiency_raw_unit  = Quantity(type=str)
-    energy_density_raw_value = Quantity(type=np.float64)
-    energy_density_raw_unit  = Quantity(type=str)
-    conductivity_raw_value   = Quantity(type=np.float64)
-    conductivity_raw_unit    = Quantity(type=str)
+    energy_density_raw_value       = Quantity(type=np.float64)
+    energy_density_raw_unit        = Quantity(type=str)
+    conductivity_raw_value         = Quantity(type=np.float64)
+    conductivity_raw_unit          = Quantity(type=str)
 
-    # normalised numbers -------------------------------------------------
     capacity             = Quantity(type=np.float64, unit="mA*hour/g")
     voltage              = Quantity(type=np.float64, unit="V")
     coulombic_efficiency = Quantity(type=np.float64)
     energy_density       = Quantity(type=np.float64, unit="W*hour/kg")
     conductivity         = Quantity(type=np.float64, unit="S/cm")
 
-    # ------------------------------------------------------------------
     #  Normaliser
     def normalize(self, archive: "EntryArchive", logger: "BoundLogger") -> None:  
         super().normalize(archive, logger)
 
-        # 1) composition & results.material -----------------------------
         comp = _parse_composition(self.extracted_name)
         if comp is not None:
             elements, counts = comp
@@ -129,7 +120,6 @@ class BatteryProperties(Schema):
                 for el, cnt in zip(elements, counts)
             ]  
 
-        # 2) map *_raw_value → clean fields -----------------------------
         for raw, clean in [
             ("capacity_raw_value", "capacity"),
             ("voltage_raw_value", "voltage"),
@@ -137,17 +127,20 @@ class BatteryProperties(Schema):
             ("energy_density_raw_value", "energy_density"),
             ("conductivity_raw_value", "conductivity"),
         ]:
+            if getattr(self, clean, None) is not None:
+                continue
             val = getattr(self, raw, None)
             if val is not None and not np.isnan(val):
                 setattr(self, clean, val)
 
-        # 3) custom units (optional) -----------------------------------
         for raw_u, clean in [
             ("capacity_raw_unit", "capacity"),
             ("voltage_raw_unit", "voltage"),
             ("energy_density_raw_unit", "energy_density"),
             ("conductivity_raw_unit", "conductivity"),
         ]:
+            if getattr(self, clean, None) is None:      
+                continue
             unit = getattr(self, raw_u, None)
             if unit and getattr(self, clean, None) is not None:
                 try:

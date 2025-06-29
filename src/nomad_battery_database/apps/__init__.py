@@ -54,20 +54,33 @@ battery_app = AppEntryPoint(
             ),
             Column(
                 quantity=f"data.Material_entries[*].voltage#{SCHEMA}",
-                label="Voltage",
+                label="Open-circuit voltage",
                 selected=True,
             ),
             Column(
                 quantity=f"data.Material_entries[*].coulombic_efficiency#{SCHEMA}",
-                label="CE",
+                label="Coulombic efficiency",
+                selected=True,
+            ),
+            Column(
+                quantity=f"data.Material_entries[*].energy_density{SCHEMA}",
+                label="Energy density",
+                selected=True,
+            ),
+            Column(
+                quantity=f"data.Material_entries[*].conductivity#{SCHEMA}",
+                label="Conductivity",
+                selected=True,
             ),
             Column(
                 quantity=f"data.Material_entries[*].chemical_formula_hill#{SCHEMA}",
                 label="Formula (Hill)",
-                selected=True,
+                #selected=True,
             ),
-            Column(quantity="entry_id", label="Entry ID"),
-            Column(quantity="upload_create_time", label="Upload time"),
+            Column(quantity="entry_id", 
+                   label="Entry ID"),
+            Column(quantity="upload_create_time", 
+                   label="Upload time"),
         ],
 
         # ------------------------------ menu -----------------------------
@@ -81,28 +94,23 @@ battery_app = AppEntryPoint(
                     show_input=True,
                 ),
                 MenuItemTerms(
-                    quantity=f"data.Material_entries.material_type#{SCHEMA}",
-                    title="Material type",
-                    show_input=True,
-                ),
-                MenuItemTerms(
                     quantity=f"data.Material_entries.tag#{SCHEMA}",
                     title="Tag",
                     show_input=True,
                 ),
-                # numerical ­–––––––––––––––––––––––––––––––––––––––––––––––
-                MenuItemHistogram(
-                    x=Axis(
-                        search_quantity=f"data.Material_entries.capacity#{SCHEMA}",
-                        title="Capacity",
-                    ),
-                ),
-                MenuItemHistogram(
-                    x=Axis(
-                        search_quantity=f"data.Material_entries.voltage#{SCHEMA}",
-                        title="Voltage",
-                    ),
-                ),
+                # # numerical ­–––––––––––––––––––––––––––––––––––––––––––––––
+                # MenuItemHistogram(
+                #     x=Axis(
+                #         search_quantity=f"data.Material_entries.capacity#{SCHEMA}",
+                #         title="Capacity",
+                #     ),
+                # ),
+                # MenuItemHistogram(
+                #     x=Axis(
+                #         search_quantity=f"data.Material_entries.voltage#{SCHEMA}",
+                #         title="Voltage",
+                #     ),
+                # ),
             ],
         ),
 
@@ -130,28 +138,28 @@ battery_app = AppEntryPoint(
                     x=f"data.Material_entries.voltage#{SCHEMA}",
                     n_bins=100,
                     autorange=True,
-                    layout={"lg": Layout(w=6, h=6, x=0, y=16, minW=6, minH=6)},
+                    layout={"lg": Layout(w=6, h=8, x=6, y=8, minW=6, minH=6)},
                 ),
                 WidgetHistogram(  # Coulombic Efficiency
-                    title="CE distribution",
+                    title="Coulombic Efficiency distribution",
                     x=f"data.Material_entries.coulombic_efficiency#{SCHEMA}",
                     n_bins=100,
                     autorange=True,
-                    layout={"lg": Layout(w=6, h=6, x=6, y=16, minW=6, minH=6)},
+                    layout={"lg": Layout(w=6, h=8, x=12, y=8, minW=6, minH=6)},
                 ),
                 WidgetHistogram(  # Conductivity
                     title="Conductivity distribution",
                     x=f"data.Material_entries.conductivity#{SCHEMA}",
                     n_bins=100,
                     autorange=True,
-                    layout={"lg": Layout(w=6, h=6, x=0, y=22, minW=6, minH=6)},
+                    layout={"lg": Layout(w=6, h=8, x=18, y=8, minW=6, minH=6)},
                 ),
                 WidgetHistogram(  # Energy density
                     title="Energy-density distribution",
                     x=f"data.Material_entries.energy_density#{SCHEMA}",
                     n_bins=100,
                     autorange=True,
-                    layout={"lg": Layout(w=6, h=6, x=6, y=22, minW=6, minH=6)},
+                    layout={"lg": Layout(w=6, h=8, x=24, y=8, minW=6, minH=6)},
                 ),
 
                 # --- scatter plot (Voltage vs Capacity coloured by Specifier) --
@@ -167,13 +175,13 @@ battery_app = AppEntryPoint(
                     ),
                     markers=Markers(
                         color=Axis(
-                            search_quantity=f"data.Material_entries[*].specifier#{SCHEMA}",
+                            search_quantity=f"data.Material_entries.specifier#{SCHEMA}",
                             title="Specifier",
                         )
                     ),
                     size=800,
                     autorange=True,
-                    layout={"lg": Layout(w=6, h=8, x=6, y=8, minW=6, minH=6)},
+                    layout={"lg": Layout(w=6, h=8, x=12, y=0, minW=6, minH=6)},
                 ),
             ],
         ),

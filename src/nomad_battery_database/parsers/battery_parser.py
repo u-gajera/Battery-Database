@@ -210,13 +210,18 @@ class BatteryParser(MatchingParser):
                 continue
     
             # 1) numeric “*_raw_value” columns -----------------------------
-            if attr.endswith("_raw_value"):
+            if attr.endswith(("_value", "_raw_value")):
                 num = BatteryParser._safe_float(value)
                 if num is not None:
                     setattr(props, attr, num)
                 continue  
     
-            # 2) everything else is left as text ---------------------------
+            # 2) units ---------------------------
+            if attr.endswith(("_unit", "_raw_unit")):
+                setattr(props, attr, str(value).strip())
+                continue
+
+            # 3) everything else is left as text ---------------------------
             setattr(props, attr, str(value).strip())
 
         # ---------- derived chemistry ----------
@@ -232,6 +237,12 @@ class BatteryParser(MatchingParser):
             ("Energy_density", "energy_density"),
             ("Conductivity", "conductivity"),
         ]:
+            # (i)  prefer the processed value if present -------------------
+            val = row.get(f"{label}_Value")
+            num = BatteryParser._safe_float(val)
+            if num is not None:
+                setattr(props, attr, num)
+
             raw_val = row.get(f"{label}_Raw_value")
             raw_unit = row.get(f"{label}_Raw_unit")
             num = BatteryParser._safe_float(raw_val)
