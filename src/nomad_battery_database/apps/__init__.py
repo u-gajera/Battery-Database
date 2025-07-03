@@ -26,7 +26,7 @@ battery_app = AppEntryPoint(
         label='Curated Battery Database',
         path='batterydb',
         category='Experiments',
-        description=('Curated electro-chemical battery properties from the literature.'),
+        description=('Curated Experimental Battery properties from the literature.'),
         readme=(
             'Uploads are single YAML files parsed by the battery-database '
             'plugin. Use the filters on the left or the search bar on top.'
@@ -46,6 +46,7 @@ battery_app = AppEntryPoint(
                 quantity=f'data.capacity#{SCHEMA}',
                 label='Capacity',
                 selected=True,
+                unit='mA*hour/g'
             ),
             Column(
                 quantity=f'data.voltage#{SCHEMA}',
@@ -61,6 +62,7 @@ battery_app = AppEntryPoint(
                 quantity=f'data.energy_density#{SCHEMA}',
                 label='Energy density',
                 selected=True,
+                unit='W*hour/kg'
             ),
             Column(
                 quantity=f'data.conductivity#{SCHEMA}',
@@ -107,6 +109,7 @@ battery_app = AppEntryPoint(
                     x=f'data.capacity#{SCHEMA}',
                     n_bins=100,
                     autorange=True,
+                    unit='mA*hour/g',
                     layout={'lg': Layout(w=6, h=8, x=0, y=8, minW=6, minH=6)},
                 ),
                 WidgetHistogram(  # Voltage
@@ -135,6 +138,7 @@ battery_app = AppEntryPoint(
                     x=f'data.energy_density#{SCHEMA}',
                     n_bins=100,
                     autorange=True,
+                    unit='W*hour/kg',
                     layout={'lg': Layout(w=6, h=8, x=24, y=8, minW=6, minH=6)},
                 ),
                 # --- scatter plot (Voltage vs Capacity coloured by Specifier) --

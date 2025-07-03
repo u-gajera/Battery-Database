@@ -127,14 +127,16 @@ class BatteryParser(MatchingParser):
         with path.open('r', encoding='utf-8') as fh:
             mapping = yaml.safe_load(fh) or {}
 
-        if isinstance(mapping, list) and all(isinstance(item, dict) for item in mapping):
+        if isinstance(mapping, list) and all(isinstance(item, 
+                                                    dict) for item in mapping):
             # This handles if the YAML root is a list of material entries
             for idx, entry_map in enumerate(mapping):
                 db = BatteryDatabase()
                 BatteryParser._update_from_mapping(db, entry_map)
 
                 entry_name = (
-                    (db.material_name or f'entry_{idx}').replace(' ', '_').replace('/', '_')
+                    (db.material_name or f'entry_{idx}').replace(' ', 
+                                                    '_').replace('/', '_')
                 )
                 file_name = f'{entry_name}.battery.archive.json'
 
@@ -146,7 +148,6 @@ class BatteryParser(MatchingParser):
                     material=db.material_name,
                 )
         elif isinstance(mapping, dict):
-            # This handles if the YAML root is a single material entry, parsed into the mainfile entry
             db = archive.data = BatteryDatabase()
             BatteryParser._update_from_mapping(db, mapping)
             logger and logger.info(
@@ -168,10 +169,8 @@ class BatteryParser(MatchingParser):
         if isinstance(value, (int, float)):
             return float(value)
 
-        # Treat as str – normalise delimiters
         text = str(value)
         text = text.replace(';', ',').replace(' and ', ',')
-        # Split on everything that is *not* part of a float literal
         tokens = re.split(r'[^0-9eE+\-.]+', text)
         for tok in tokens:
             if tok in {'', '+', '-', '.'}:
@@ -245,7 +244,7 @@ class BatteryParser(MatchingParser):
                     if num is not None:
                         setattr(db, attr, num)
                 else:
-                    setattr(db, attr, value)  # value can be list for extracted_name
+                    setattr(db, attr, value)  
 
         if db.extracted_name and not db.chemical_formula_hill:
             hill = _hill_from_extracted(db.extracted_name)
@@ -302,7 +301,7 @@ _ALIASES = {
    'energy_value': 'energy_density',
    'energy_raw_value': 'energy_density_raw_value',
    'energy_raw_unit': 'energy_density_raw_unit',
-   'energy_unit': 'energy_density_raw_unit',   # CSV sometimes has this
+   'energy_unit': 'energy_density_raw_unit',   
  }
 
 

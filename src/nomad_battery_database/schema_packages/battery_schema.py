@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import ast
 from numbers import Number
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any  #, Optional
 
 import numpy as np
 from nomad.datamodel.data import EntryData
@@ -19,7 +19,8 @@ m_package = SchemaPackage()
 
 def _parse_composition(
     raw: str | list | None,
-) -> Optional[tuple[list[str], list[float]]]:
+    ) -> tuple[list[str], list[float]] | None:
+# ) -> Optional[tuple[list[str], list[float]]]:
     if raw is None:
         return None
     if isinstance(raw, str):
@@ -105,6 +106,7 @@ class BatteryDatabase(EntryData):
         super().normalize(archive, logger)
 
         comp = _parse_composition(self.extracted_name)
+        EPSILON = 1e-6
         if comp is not None:
             elements, counts = comp
             self.elements = elements
@@ -112,7 +114,7 @@ class BatteryDatabase(EntryData):
                 self.chemical_formula_hill = ''.join(
                     (
                         el
-                        if abs(cnt - 1.0) < 1e-6
+                        if abs(cnt - 1.0) < EPSILON
                         else f'{el}{int(cnt) if float(cnt).is_integer() else cnt}'
                     )
                     for el, cnt in zip(elements, counts)
