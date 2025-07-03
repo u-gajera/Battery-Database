@@ -152,12 +152,12 @@ battery_app = AppEntryPoint(
                         search_quantity=f'data.capacity#{SCHEMA}',
                         title='Capacity',
                     ),
-                    markers=Markers(
-                        color=Axis(
-                            search_quantity=f'data.specifier#{SCHEMA}',
-                            title='Specifier',
-                        )
-                    ),
+                    # markers=Markers(
+                    #     color=Axis(
+                    #         search_quantity=f'data.specifier#{SCHEMA}',
+                    #         title='Specifier',
+                    #     )
+                    # ),
                     size=800,
                     autorange=True,
                     layout={'lg': Layout(w=6, h=8, x=12, y=0, minW=6, minH=6)},
