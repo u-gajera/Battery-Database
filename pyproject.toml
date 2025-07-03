@@ -129,8 +129,8 @@ where = ["src"]
 # nomad plugin entry points
 # ======================
 [project.entry-points.'nomad.plugin']
-parser_entry_point = "nomad_battery_database.parsers.parser:BatteryParser"
-schema_package_entry_point = "nomad_battery_database.schema_packages.schema_package:BatteryProperties"
+parser_entry_point = "nomad_battery_database.parsers:battery_parser"
+schema_package_entry_point = "nomad_battery_database.schema_packages:battery"
 #app_entry_point = "nomad_battery_database.apps:app_entry_point"
 
 [tool.cruft]

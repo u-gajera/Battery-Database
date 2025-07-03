@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
+
 import numpy as np
+
 from nomad_battery_database.schema_packages.schema_package import BatteryProperties
 
 if TYPE_CHECKING:
