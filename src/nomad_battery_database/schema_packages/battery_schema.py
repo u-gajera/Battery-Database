@@ -9,7 +9,7 @@ import numpy as np
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
 from nomad.datamodel.metainfo.basesections import ElementalComposition
-from nomad.datamodel.results import Material, Results, Properties  
+from nomad.datamodel.results import Material, Results
 from nomad.metainfo import Quantity, SchemaPackage, Section, SubSection
 
 if TYPE_CHECKING:  
@@ -62,7 +62,7 @@ def _to_number(val: Any) -> float | None:
 class BatteryProperties(Schema):
 
     material_name        = Quantity(type=str, 
-                    a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity))
+                a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity))
     extracted_name       = Quantity(type=str)
     chemical_formula_hill = Quantity(type=str)
     elements             = Quantity(type=str, shape=["*"])
@@ -93,8 +93,12 @@ class BatteryProperties(Schema):
     energy_density       = Quantity(type=np.float64, unit="W*hour/kg")
     conductivity         = Quantity(type=np.float64, unit="S/cm")
 
+    # properties_included = Quantity(type=str,shape=["*"],                 
+    #             description="Names of measured properties that are present "
+    #                         "for this entry.",
+    #         )
     #  Normaliser
-    def normalize(self, archive: "EntryArchive", logger: "BoundLogger") -> None:  
+    def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:  
         super().normalize(archive, logger)
 
         comp = _parse_composition(self.extracted_name)
@@ -147,6 +151,20 @@ class BatteryProperties(Schema):
                     getattr(self, clean).unit = unit  
                 except Exception:
                     pass
+
+        # present = []
+        # if self.capacity is not None:
+        #     present.append("capacity")
+        # if self.voltage is not None:
+        #     present.append("voltage")
+        # if self.coulombic_efficiency is not None:
+        #     present.append("coulombic_efficiency")
+        # if self.energy_density is not None:
+        #     present.append("energy_density")
+        # if self.conductivity is not None:
+        #     present.append("conductivity")
+
+        # self.properties_included = present  
 
 #  Top‑level container
 class BatteryDatabase(Schema):

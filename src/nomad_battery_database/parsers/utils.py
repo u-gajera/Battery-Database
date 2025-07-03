@@ -1,5 +1,6 @@
 # nomad_battery_database/utils.py
 import json
+
 from nomad.datamodel.context import ClientContext
 from nomad.utils import hash as _hash
 

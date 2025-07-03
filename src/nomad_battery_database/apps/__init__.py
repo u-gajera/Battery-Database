@@ -2,18 +2,18 @@ from __future__ import annotations
 from nomad.config.models.plugins import AppEntryPoint
 from nomad.config.models.ui import (
     App,
-    Axis,                 
+    Axis,
     Column,
     Dashboard,
     Layout,
-    Markers,              
+    Markers,
+    Menu,
+    MenuItemHistogram,
+    MenuItemTerms,
     SearchQuantities,
     WidgetHistogram,
     WidgetPeriodicTable,
     WidgetScatterPlot,
-    Menu,               
-    MenuItemHistogram,  
-    MenuItemTerms,
 )
 
 SCHEMA = "nomad_battery_database.schema_packages.battery_schema.BatteryDatabase"
@@ -90,7 +90,7 @@ battery_app = AppEntryPoint(
                 # categorical ­––––––––––––––––––––––––––––––––––––––––––––
                 MenuItemTerms(
                     quantity=f"data.Material_entries.specifier#{SCHEMA}",
-                    title="Specifier",          # e.g. anode / cathode / electrolyte
+                    title="Specifier",          
                     show_input=True,
                 ),
                 MenuItemTerms(
@@ -98,6 +98,11 @@ battery_app = AppEntryPoint(
                     title="Tag",
                     show_input=True,
                 ),
+                # MenuItemTerms(
+                #     quantity=f"data.Material_entries.properties_included#{SCHEMA}",
+                #     title="List of properties",
+                #     show_input=False,   
+                # )
                 # # numerical ­–––––––––––––––––––––––––––––––––––––––––––––––
                 # MenuItemHistogram(
                 #     x=Axis(
