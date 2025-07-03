@@ -1,0 +1,13 @@
+Name: O′3 Na-NCA
+Extracted_name: '[{''Li'': ''1.0'', ''Ni'': ''1.0'', ''Co'': ''1.0'', ''Al'': ''1.0'', ''O'': ''2.0''}]'
+DOI: 10.1016/j.jpowsour.2019.226698
+Specifier: voltage
+Tag: CDE
+Title: HEXAGONALMONOCLINICNANI08CO015AL005O2NANCAFORSODIUMIONBATTERIES
+Journal: Journal of Power Sources
+Date: '2019-06-05'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: '1.5'
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 1.5

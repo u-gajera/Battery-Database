@@ -1,0 +1,12 @@
+Name: CeF3
+Extracted_name: '[{''Ce'': ''1.0'', ''F'': ''3.0''}]'
+DOI: 10.1039/C4TA02840F
+Tag: CDE
+Title: 'Development of new anode composite materials for fluoride ion batteries  '
+Journal: Journal of Materials Chemistry A
+Date: 2014/11/18
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: '265'
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 265.0

@@ -1,0 +1,13 @@
+Name: NiMoO4
+Extracted_name: '[{''Ni'': ''1.0'', ''Mo'': ''1.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.mtener.2018.08.004
+Specifier: discharge capacity
+Tag: CDE
+Title: EFFECTOXIDIZERINSYNTHESISNIOANCHOREDNANOSTRUCTURENICKELMOLYBDATEFORSODIUMIONBATTERY
+Journal: Materials Today Energy
+Date: '2018-08-23'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 510 and 550
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 510.0

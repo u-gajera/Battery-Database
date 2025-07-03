@@ -1,0 +1,13 @@
+Name: Fe(2-x)CrxF5·H2O
+Extracted_name: '[{''Fe'': ''2-x'', ''Cr'': ''x'', ''F'': ''5.0''}]'
+DOI: 10.1016/j.electacta.2018.02.159
+Specifier: discharge capacity
+Tag: CDE
+Title: CRDOPEDFE2F5H2OOPENFRAMEWORKSTRUCTUREAHIGHPERFORMANCECATHODEMATERIALSODIUMIONBATTERIES
+Journal: Electrochimica Acta
+Date: '2018-03-06'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 135 , 183 , 232 and 204
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 232.0

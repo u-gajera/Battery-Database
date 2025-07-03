@@ -1,0 +1,12 @@
+Name: Ti4O7
+Extracted_name: '[{''Ti'': ''4.0'', ''O'': ''7.0''}]'
+DOI: 10.1016/j.electacta.2014.11.178
+Tag: CDE
+Title: HIGHLYORDEREDMAGNELITI4O7NANOTUBEARRAYSEFFECTIVEANODICMATERIALFORELECTROOXIDATION
+Journal: Electrochimica Acta
+Date: '2014-11-28'
+Correctness: T
+Voltage_Raw_unit: Vvs.Ag
+Voltage_Raw_value: '2.4'
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 2.4

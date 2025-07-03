@@ -1,0 +1,13 @@
+Name: MgCo2O4
+Extracted_name: '[{''Mg'': ''1.0'', ''Co'': ''2.0'', ''O'': ''4.0''}]'
+DOI: 10.1016/j.materresbull.2015.09.025
+Specifier: voltage
+Tag: CDE
+Title: ANODICELECTROCHEMICALPERFORMANCESMGCO2O4SYNTHESIZEDBYOXALATEDECOMPOSITIONMETHODELECTROSPINNINGTECHNIQUEFORLIIONBATTERYAPPLICATION
+Journal: Materials Research Bulletin
+Date: '2015-09-25'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: '1.2'
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 1.2

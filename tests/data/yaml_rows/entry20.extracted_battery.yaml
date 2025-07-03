@@ -1,0 +1,14 @@
+Name: Glucose
+Extracted_name: '[{''C'': ''6.0'', ''H'': ''12.0'', ''O'': ''6.0''}]'
+DOI: 10.1016/j.jallcom.2017.02.126
+Specifier: capacities
+Tag: CDE
+Info: '{''current_value'': ''2.0'', ''current_units'': ''C''}'
+Title: APPRAISALCARBONCOATEDLI4TI5O12ACANTHOSPHERESOPTIMIZEDTWOSTEPHYDROTHERMALSYNTHESISASUPERIORANODEFORSODIUMIONBATTERIES
+Journal: Journal of Alloys and Compounds
+Date: '2017-02-13'
+Correctness: F3
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 186 , 141 and 68
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 68.0

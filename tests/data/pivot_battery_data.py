@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def pivot_battery_data(input_file: str, output_file: str) -> None:
     """
     Reads a CSV file with battery property records and pivots the
@@ -27,7 +28,11 @@ def pivot_battery_data(input_file: str, output_file: str) -> None:
     df_pivot = df_pivot.reset_index()
     
     # Extract metadata columns and drop duplicates to get one row per compound
-    meta_cols = [c for c in df.columns if c not in ['Property','Value','Raw_value','Raw_unit','Unit']]
+    meta_cols = [c for c in df.columns if c not in ['Property',
+                                                    'Value',
+                                                    'Raw_value',
+                                                    'Raw_unit',
+                                                    'Unit']]
     df_meta = df[meta_cols].drop_duplicates(subset='Name')
     
     # Merge metadata with pivoted measurements
@@ -42,5 +47,5 @@ if __name__ == "__main__":
     # Update file names/paths if necessary
     pivot_battery_data(
         input_file='test_battery_data.csv',
-        output_file='test_battery_data_pivot.csv'
+        output_file='battery_data_pivot.extracted_battery.csv'
     )

@@ -1,0 +1,19 @@
+Name: Silica
+Extracted_name: '[{''Si'': ''1.0'', ''O'': ''2.0''}]'
+DOI: 10.1016/j.carbon.2017.08.050
+Specifier: discharge capacity
+Tag: CDE
+Warning: R
+Info: '{''current_value'': ''100'', ''current_units'': ''mAg-1'', ''cycle_value'': ''216th'', ''cycle_units'': ''cycle''}'
+Title: SYNTHESISSIO2CARBONGRAPHENEHYBRIDSANODEMATERIALSLITHIUMIONBATTERIES
+Journal: Carbon
+Date: '2017-10-03'
+Correctness: F3
+Capacity_Raw_unit: mAhg-1
+Conductivity_Raw_unit: Scm−1
+Capacity_Raw_value: '906'
+Conductivity_Raw_value: 2.44 × 10 − 6
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Conductivity_Unit: CentiMeter^(-1.0)  Siemens^(1.0)
+Capacity_Value: 906.0
+Conductivity_Value: 2.44e-06

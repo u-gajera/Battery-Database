@@ -1,0 +1,14 @@
+Name: CVO anode
+Extracted_name: '[{''C'': ''1.0'', ''V'': ''1.0'', ''O'': ''1.0''}]'
+DOI: 10.1016/j.jcis.2017.04.048
+Specifier: reversible specific capacities
+Tag: CDE
+Info: '{''current_value'': ''10 , 5 , 2 , and 1'', ''current_units'': ''Ag−1''}'
+Title: FACILEGREENSYNTHESISACO3V2O8NANOPARTICLEELECTRODEFORHIGHENERGYLITHIUMIONBATTERYAPPLICATIONS
+Journal: Journal of Colloid and Interface Science
+Date: '2017-04-18'
+Correctness: T
+Capacity_Raw_unit: mAhg−1
+Capacity_Raw_value: 275 , 390 , 543 and 699
+Capacity_Unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+Capacity_Value: 390.0

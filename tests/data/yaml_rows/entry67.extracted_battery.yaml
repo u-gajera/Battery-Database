@@ -1,0 +1,13 @@
+Name: Polyindole
+Extracted_name: '[{''P'': ''1.0'', ''In'': ''1.0''}]'
+DOI: 10.1016/j.electacta.2015.10.129
+Tag: CDE
+Warning: L
+Title: ELECTROCHEMICALSYNTHESISINSITUSPECTROELECTROCHEMISTRYCONDUCTINGINDOLETITANIUMDIOXIDEZINCOXIDEPOLYMERNANOCOMPOSITESFORRECHARGEABLEBATTERIES
+Journal: Electrochimica Acta
+Date: '2015-10-28'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: -0.10 to 0.70
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 0.7

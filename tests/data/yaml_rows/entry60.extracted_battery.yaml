@@ -1,0 +1,14 @@
+Name: Ni2P
+Extracted_name: '[{''Ni'': ''2.0'', ''P'': ''1.0''}]'
+DOI: 10.1016/j.jpowsour.2017.09.052
+Specifier: coulombic
+Tag: CDE
+Warning: R
+Title: CROSSLINKEDHIERARCHICALARRAYSNI2PNANOFLAKESPREPAREDVIADIRECTIONALPHOSPHORIZATIONAPPLICATIONSFORADVANCEDALKALINEBATTERIES
+Journal: Journal of Power Sources
+Date: '2017-10-23'
+Correctness: T
+Coulombic Efficiency_Raw_unit: '%'
+Coulombic Efficiency_Raw_value: '98.8'
+Coulombic Efficiency_Unit: Percent^(1.0)
+Coulombic Efficiency_Value: 98.8

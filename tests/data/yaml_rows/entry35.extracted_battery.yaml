@@ -1,0 +1,13 @@
+Name: Li4.4Sn
+Extracted_name: '[{''Li'': ''4.4'', ''Sn'': ''1.0''}]'
+DOI: 10.1016/j.jpowsour.2019.227185
+Tag: CDE
+Warning: L
+Title: OXIDESOVERLAYERCONFINEDNI3SN2ALLOYENABLEENHANCEDLITHIUMSTORAGEPERFORMANCE
+Journal: Journal of Power Sources
+Date: '2019-09-20'
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: '0.4'
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 0.4

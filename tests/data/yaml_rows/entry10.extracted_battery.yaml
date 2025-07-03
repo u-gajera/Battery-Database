@@ -1,0 +1,12 @@
+Name: CoII(OH)2
+Extracted_name: '[{''O'': ''2.0'', ''H'': ''2.0'', ''Co'': ''1.0'', ''I'': ''2.0''}]'
+DOI: 10.1039/C5CC09361A
+Tag: CDE
+Title: 'Water oxidation catalysis: an amorphous quaternary Ba-Sr-Co-Fe oxide as a promising electrocatalyst for the oxygen-evolution reaction  '
+Journal: Chemical Communications
+Date: 2016/01/14
+Correctness: T
+Voltage_Raw_unit: V
+Voltage_Raw_value: 1.08 and 1.01
+Voltage_Unit: Volt^(1.0)
+Voltage_Value: 1.01
