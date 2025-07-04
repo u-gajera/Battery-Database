@@ -1,7 +1,6 @@
 import os
 
 from nomad.client import normalize_all, parse
-
 from nomad_battery_database.schema_packages.schema_package import BatteryProperties
 
 
