@@ -7,7 +7,7 @@ from nomad.config.models.ui import (
     Column,
     Dashboard,
     Layout,
-    Markers,
+    # Markers,
     Menu,
     MenuItemTerms,
     SearchQuantities,
@@ -83,6 +83,11 @@ battery_app = AppEntryPoint(
             items=[
                 # categorical ­––––––––––––––––––––––––––––––––––––––––––––
                 MenuItemTerms(
+                    quantity=f'data.chemical_formula_hill#{SCHEMA}',
+                    title='Material',
+                    show_input=True,
+                ),
+                MenuItemTerms(
                     quantity=f'data.specifier#{SCHEMA}',
                     title='Specifier',
                     show_input=True,
@@ -151,6 +156,7 @@ battery_app = AppEntryPoint(
                     y=Axis(
                         search_quantity=f'data.capacity#{SCHEMA}',
                         title='Capacity',
+                        unit='mA*hour/g',
                     ),
                     # markers=Markers(
                     #     color=Axis(
