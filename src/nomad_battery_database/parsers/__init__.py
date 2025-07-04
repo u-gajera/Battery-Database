@@ -1,6 +1,7 @@
 from nomad.config.models.plugins import ParserEntryPoint
 from pydantic import Field
 
+
 __all__ = ["battery_db_parser"]
 
 
@@ -13,10 +14,8 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
             description="Regex to match mainfiles.",
         )
 
-    def load(self):  # noqa: D401 – NOMAD API signature
+    def load(self): 
         from .battery_parser import BatteryParser
-
-        # Pass any configured Pydantic fields to the parser constructor
         return BatteryParser(**self.dict())
 
 

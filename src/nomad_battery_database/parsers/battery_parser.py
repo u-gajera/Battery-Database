@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import re
 from pathlib import Path
 from typing import Any
 
@@ -161,7 +162,6 @@ class BatteryParser(MatchingParser):
     @staticmethod
     def _safe_float(value: object) -> float | None:
         """Return *first* float found in a messy numeric cell."""
-        import re
 
         if value is None or (isinstance(value, float) and pd.isna(value)):
             return None
