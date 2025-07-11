@@ -43,10 +43,19 @@ battery_app = AppEntryPoint(
                 selected=True,
             ),
             Column(
+                quantity=f'data.publication.journal#{SCHEMA}',
+                label='Journal',
+                selected=True,
+            ),
+            Column(
+                quantity=f'data.publication_year#{SCHEMA}',
+                label='Publication Year',
+            ),
+            Column(
                 quantity=f'data.capacity#{SCHEMA}',
                 label='Capacity',
                 selected=True,
-                unit='mA*hour/g'
+                unit='mA*hour/g',
             ),
             Column(
                 quantity=f'data.voltage#{SCHEMA}',
@@ -62,7 +71,7 @@ battery_app = AppEntryPoint(
                 quantity=f'data.energy_density#{SCHEMA}',
                 label='Energy density',
                 selected=True,
-                unit='W*hour/kg'
+                unit='W*hour/kg',
             ),
             Column(
                 quantity=f'data.conductivity#{SCHEMA}',
@@ -72,7 +81,6 @@ battery_app = AppEntryPoint(
             Column(
                 quantity=f'data.chemical_formula_hill#{SCHEMA}',
                 label='Formula (Hill)',
-                # selected=True,
             ),
             Column(quantity='entry_id', label='Entry ID'),
             Column(quantity='upload_create_time', label='Upload time'),
@@ -87,6 +95,16 @@ battery_app = AppEntryPoint(
                     title='Material',
                     show_input=True,
                 ),
+                MenuItemTerms(
+                    quantity=f'data.publication.journal#{SCHEMA}',
+                    title='Journal',
+                    show_input=True,
+                ),
+                # MenuItemTerms(
+                #     # NOTE: this is not working
+                #     quantity=f'data.publication.publication_date#{SCHEMA}',
+                #     title='Publication Year',
+                # ),
                 MenuItemTerms(
                     quantity=f'data.specifier#{SCHEMA}',
                     title='Specifier',

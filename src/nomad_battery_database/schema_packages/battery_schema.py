@@ -2,14 +2,17 @@ from __future__ import annotations
 
 import ast
 from numbers import Number
-from typing import TYPE_CHECKING, Any  #, Optional
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 from nomad.datamodel.data import EntryData
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
-from nomad.datamodel.metainfo.basesections import ElementalComposition
+from nomad.datamodel.metainfo.basesections import (
+    ElementalComposition,
+    PublicationReference,
+)
 from nomad.datamodel.results import Material, Results
-from nomad.metainfo import Quantity, SchemaPackage
+from nomad.metainfo import Quantity, SchemaPackage, SubSection
 
 if TYPE_CHECKING:
     from nomad.datamodel import EntryArchive
@@ -19,8 +22,7 @@ m_package = SchemaPackage()
 
 def _parse_composition(
     raw: str | list | None,
-    ) -> tuple[list[str], list[float]] | None:
-# ) -> Optional[tuple[list[str], list[float]]]:
+) -> tuple[list[str], list[float]] | None:
     if raw is None:
         return None
     if isinstance(raw, str):
@@ -38,11 +40,9 @@ def _parse_composition(
     for part in parts:
         for el, cnt in part.items():
             try:
-                # Safely attempt to convert the count to a float
                 count = float(cnt or 1.0)
                 totals[el] = totals.get(el, 0.0) + count
             except (ValueError, TypeError):
-                # If conversion fails, ignore this component and continue
                 pass
     elems = sorted(totals)
     if 'C' in elems:
@@ -101,6 +101,14 @@ class BatteryDatabase(EntryData):
     coulombic_efficiency = Quantity(type=np.float64)
     energy_density = Quantity(type=np.float64, unit='W*hour/kg')
     conductivity = Quantity(type=np.float64, unit='S/cm')
+    publication_year = Quantity(
+        type=int,
+        description='The year of the publication, extracted for filtering.'
+    )
+    publication = SubSection(
+        section_def=PublicationReference,
+        description='The publication reference for this battery data entry.'
+    )
 
     def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:
         super().normalize(archive, logger)
@@ -161,6 +169,17 @@ class BatteryDatabase(EntryData):
                 except Exception:
                     pass
 
+        if self.DOI and not self.publication:
+            logger.info(f"Creating Publication Reference section for DOI: {self.DOI}")
+
+            pub = PublicationReference()
+            pub.DOI_number = self.DOI
+            self.publication = pub
+
+            self.publication.normalize(archive, logger)
+        
+        if self.publication and self.publication.publication_date:
+            self.publication_year = self.publication.publication_date.year
 
 m_package.__init_metainfo__()
 
