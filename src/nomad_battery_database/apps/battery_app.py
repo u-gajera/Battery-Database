@@ -106,6 +106,10 @@ battery_app = AppEntryPoint(
                     title='Publication Year',
                 ),
                 MenuItemTerms(
+                    quantity=f'data.available_properties#{SCHEMA}',
+                    title='Available Properties',
+                ),
+                MenuItemTerms(
                     quantity=f'data.specifier#{SCHEMA}',
                     title='Specifier',
                     show_input=True,

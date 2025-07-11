@@ -105,6 +105,10 @@ class BatteryDatabase(EntryData):
         type=str,
         description='The year of the publication, extracted for filtering.'
     )
+    available_properties = Quantity(
+        type=str,
+        description='A human-readable properties available in this entry.'
+    )
     publication = SubSection(
         section_def=PublicationReference,
         description='The publication reference for this battery data entry.'
@@ -180,6 +184,31 @@ class BatteryDatabase(EntryData):
         
         if self.publication and self.publication.publication_date:
             self.publication_year = self.publication.publication_date.year
+        
+        present_properties = []
+        property_map = {
+            'capacity': 'Capacity',
+            'voltage': 'Voltage',
+            'coulombic_efficiency': 'Coulombic Efficiency',
+            'energy_density': 'Energy Density',
+            'conductivity': 'Conductivity'
+        }
+
+        for prop_name, display_name in property_map.items():
+            if getattr(self, prop_name) is not None:
+                present_properties.append(display_name)
+
+        if not present_properties:
+            self.available_properties = 'No quantitative properties'
+        elif len(present_properties) == 1:
+            self.available_properties = present_properties[0]
+        elif len(present_properties) == 2:
+            self.available_properties = f'{present_properties[0]} and {present_properties[1]}'
+        else:
+            # For 3+ properties, join with commas and use 'and' for the last one
+            all_but_last = ', '.join(present_properties[:-1])
+            last = present_properties[-1]
+            self.available_properties = f'{all_but_last}, and {last}'
 
 m_package.__init_metainfo__()
 
