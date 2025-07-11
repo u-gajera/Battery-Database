@@ -102,7 +102,7 @@ class BatteryDatabase(EntryData):
     energy_density = Quantity(type=np.float64, unit='W*hour/kg')
     conductivity = Quantity(type=np.float64, unit='S/cm')
     publication_year = Quantity(
-        type=int,
+        type=str,
         description='The year of the publication, extracted for filtering.'
     )
     publication = SubSection(

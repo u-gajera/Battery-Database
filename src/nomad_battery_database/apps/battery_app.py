@@ -100,11 +100,11 @@ battery_app = AppEntryPoint(
                     title='Journal',
                     show_input=True,
                 ),
-                # MenuItemTerms(
-                #     # NOTE: this is not working
-                #     quantity=f'data.publication.publication_date#{SCHEMA}',
-                #     title='Publication Year',
-                # ),
+                MenuItemTerms(
+                    # NOTE: this is not working
+                    quantity=f'data.publication_year#{SCHEMA}',
+                    title='Publication Year',
+                ),
                 MenuItemTerms(
                     quantity=f'data.specifier#{SCHEMA}',
                     title='Specifier',
