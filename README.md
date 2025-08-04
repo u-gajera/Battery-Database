@@ -27,18 +27,8 @@ pip install uv
 
 Install the `nomad-lab` package:
 ```sh
-uv pip install '.[dev]' --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
+uv pip install -e '.[dev]'
 ```
-
-**Note!**
-Until we have an official pypi NOMAD release with the plugins functionality make
-sure to include NOMAD's internal package registry (via `--index-url` in the above command).
-
-The plugin is still under development. If you would like to contribute, install the package in editable mode (with the added `-e` flag):
-```sh
-uv pip install -e '.[dev]' --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
-```
-
 
 ### Run the tests
 
@@ -62,7 +52,6 @@ We use [Ruff](https://docs.astral.sh/ruff/) for linting and formatting the code.
 ruff check .
 ruff format . --check
 ```
-
 
 ### Debugging
 
@@ -94,7 +83,6 @@ where `<path-to-plugin-tests>` must be changed to the local path to the test mod
 
 The settings configuration file `.vscode/settings.json` automatically applies the linting and formatting upon saving the modified file.
 
-
 ### Documentation on Github pages
 
 To view the documentation locally, install the related packages using:
@@ -106,7 +94,6 @@ Run the documentation server:
 ```sh
 mkdocs serve
 ```
-
 
 ## Adding this plugin to NOMAD
 
