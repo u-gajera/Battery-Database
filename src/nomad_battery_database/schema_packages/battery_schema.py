@@ -1,7 +1,9 @@
 from __future__ import annotations
+
 import ast
 from numbers import Number
 from typing import TYPE_CHECKING, Any
+
 import numpy as np
 from nomad.datamodel.data import EntryData
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum

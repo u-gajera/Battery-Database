@@ -1,171 +1,102 @@
-# Battery-Database
+# Battery-Database Plugin for NOMAD
 
-App for battery database
+This NOMAD plugin provides a comprehensive tool for parsing, storing, and exploring curated experimental battery data from scientific literature. It defines a dedicated schema for battery properties and creates an interactive application within NOMAD for analyzing the collected data.
 
-This `nomad` plugin was generated with `Cookiecutter` along with `@nomad`'s [`cookiecutter-nomad-plugin`](https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin) template.
+## Key Features
 
+*   **Custom Parser:** Ingests battery data from common file formats, including CSV, Excel (`.xls`, `.xlsx`), and YAML.
+*   **Dedicated Data Schema:** Defines a `BatteryDatabase` schema that captures key performance metrics like capacity, voltage, coulombic efficiency, energy density, and conductivity, alongside rich bibliographic metadata.
+*   **Interactive Application:** Provides a dedicated search page at `/batterydb` with powerful filtering capabilities, a periodic table of elements, histograms for property distributions, and scatter plots for exploring relationships between key metrics.
 
-## Development
+## Data Formats
 
-If you want to develop locally this plugin, clone the project and in the plugin folder, create a virtual environment (you can use Python 3.9, 3.10, or 3.11):
-```sh
+To use this plugin, your data must be structured in one of the following formats.
+
+### YAML Format
+
+The parser accepts YAML files containing a list of entries, where each entry is a dictionary of key-value pairs. This format is ideal for structured, human-readable data.
+
+**Example (`entry1.extracted_battery.yaml`):**
+```yaml
+- Name: LiCoO2
+  DOI:
+    - "10.1016/j.electacta.2016.11.154"
+  Capacity_Raw_value: 140
+  Capacity_Raw_unit: mAh/g
+  Voltage_Raw_value: 3.7
+  Voltage_Raw_unit: V
+
+- Name: Na3V2(PO4)3
+  DOI: ["10.1039/C4NR06432A"]
+  Capacity_Raw_value: 105
+  Capacity_Raw_unit: mAh/g
+  Voltage_Raw_value: 3.4
+  Voltage_Raw_unit: V 
+  ```
+
+### CSV/Excel Format
+The parser can also process tabular data from CSV or Excel files. The file should contain one row per entry, with columns corresponding to the schema fields.
+
+Example (battery_data_pivot.extracted_battery.csv):
+
+```
+code
+csv
+Name,DOI,Capacity_Raw_value,Capacity_Raw_unit,Voltage_Raw_value,Voltage_Raw_unit
+LiCoO2,"10.1016/j.electacta.2016.11.154; 10.1038/s41597-020-00602-2",140,mAh/g,3.7,V
+"Na3V2(PO4)3","10.1039/C4NR06432A",105,mAh/g,3.4,V
+```
+
+## Development and Installation
+If you want to develop this plugin locally, clone the project and create a virtual environment (you can use Python 3.9, 3.10, or 3.11):
+
+```code
+Sh
 git clone https://github.com/u-gajera/Battery-Database.git
 cd Battery-Database
 python3.11 -m venv .pyenv
-. .pyenv/bin/activate
+source .pyenv/bin/activate
 ```
-
-Make sure to have `pip` upgraded:
-```sh
+Make sure to have pip upgraded:
+```code
+Sh
 pip install --upgrade pip
 ```
-
-We recommend installing `uv` for fast pip installation of the packages:
-```sh
+We recommend installing uv for fast package installation:
+```code
+Sh
 pip install uv
 ```
+Install the plugin in editable mode with its development dependencies:
 
-Install the `nomad-lab` package:
-```sh
-uv pip install '.[dev]' --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
+```code
+Sh
+uv pip install -e '....
+```
+### Run the Tests
+You can run the tests locally:
+```code
+Sh
+pytest -sv tests
 ```
 
-**Note!**
-Until we have an official pypi NOMAD release with the plugins functionality make
-sure to include NOMAD's internal package registry (via `--index-url` in the above command).
+To generate a local coverage report:
 
-The plugin is still under development. If you would like to contribute, install the package in editable mode (with the added `-e` flag):
-```sh
-uv pip install -e '.[dev]' --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
-```
-
-
-### Run the tests
-
-You can run locally the tests:
-```sh
-python -m pytest -sv tests
-```
-
-where the `-s` and `-v` options toggle the output verbosity.
-
-Our CI/CD pipeline produces a more comprehensive test report using the `pytest-cov` package. You can generate a local coverage report:
-```sh
+```code
+Sh
 uv pip install pytest-cov
-python -m pytest --cov=src tests
+pytest --cov=src tests
 ```
 
-### Run linting and auto-formatting
+### Auto-formatting
+We use Ruff for linting and formatting the code.
 
-We use [Ruff](https://docs.astral.sh/ruff/) for linting and formatting the code. Ruff auto-formatting is also a part of the GitHub workflow actions. You can run locally:
-```sh
+```code
+Sh
 ruff check .
-ruff format . --check
+ruff format .
 ```
 
-
-### Debugging
-
-For interactive debugging of the tests, use `pytest` with the `--pdb` flag. We recommend using an IDE for debugging, e.g., _VSCode_. If that is the case, add the following snippet to your `.vscode/launch.json`:
-```json
-{
-  "configurations": [
-      {
-        "name": "<descriptive tag>",
-        "type": "debugpy",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "program": "${workspaceFolder}/.pyenv/bin/pytest",
-        "justMyCode": true,
-        "env": {
-            "_PYTEST_RAISE": "1"
-        },
-        "args": [
-            "-sv",
-            "--pdb",
-            "<path-to-plugin-tests>",
-        ]
-    }
-  ]
-}
-```
-
-where `<path-to-plugin-tests>` must be changed to the local path to the test module to be debugged.
-
-The settings configuration file `.vscode/settings.json` automatically applies the linting and formatting upon saving the modified file.
-
-
-### Documentation on Github pages
-
-To view the documentation locally, install the related packages using:
-```sh
-uv pip install -r requirements_docs.txt
-```
-
-Run the documentation server:
-```sh
-mkdocs serve
-```
-
-
-## Adding this plugin to NOMAD
-
-Currently, NOMAD has two distinct flavors that are relevant depending on your role as an user:
-1. [A NOMAD Oasis](#adding-this-plugin-in-your-nomad-oasis): any user with a NOMAD Oasis instance.
-2. [Local NOMAD installation and the source code of NOMAD](#adding-this-plugin-in-your-local-nomad-installation-and-the-source-code-of-nomad): internal developers.
-
-### Adding this plugin in your NOMAD Oasis
-
-Read the [NOMAD plugin documentation](https://nomad-lab.eu/prod/v1/staging/docs/howto/oasis/plugins_install.html) for all details on how to deploy the plugin on your NOMAD instance.
-
-### Adding this plugin in your local NOMAD installation and the source code of NOMAD
-
-Modify the text file under `/nomad/default_plugins.txt` and add:
-```sh
-<other-content-in-default_plugins.txt>
-Battery-Database==x.y.z
-```
-where `x.y.z` represents the released version of this plugin.
-
-Then, go to your NOMAD folder, activate your NOMAD virtual environment and run:
-```sh
-deactivate
-cd <route-to-NOMAD-folder>/nomad
-source .pyenv/bin/activate
-./scripts/setup_dev_env.sh
-```
-
-Alternatively and only valid for your local NOMAD installation, you can modify `nomad.yaml` to include this plugin, see [NOMAD Oasis - Install plugins](https://nomad-lab.eu/prod/v1/staging/docs/howto/oasis/plugins_install.html).
-
-
-### Build the python package
-
-The `pyproject.toml` file contains everything that is necessary to turn the project
-into a pip installable python package. Run the python build tool to create a package distribution:
-
-```sh
-pip install build
-python -m build --sdist
-```
-
-You can install the package with pip:
-
-```sh
-pip install dist/Battery-Database-0.1.0
-```
-
-Read more about python packages, `pyproject.toml`, and how to upload packages to PyPI
-on the [PyPI documentation](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
-
-
-### Template update
-
-We use cruft to update the project based on template changes. A `cruft-update.yml` is included in Github workflows to automatically check for updates and create pull requests to apply updates. Follow the [instructions](https://github.blog/changelog/2022-05-03-github-actions-prevent-github-actions-from-creating-and-approving-pull-requests/) on how to enable Github Actions to create pull requests. 
-
-To run the check for updates locally, follow the instructions on [`cruft` website](https://cruft.github.io/cruft/#updating-a-project).
-
-
-## Main contributors
-| Name | E-mail     |
-|------|------------|
-| Uday Gajera | [uday.gajera@physik.hu-berlin.de](mailto:uday.gajera@physik.hu-berlin.de)
+Main Contributors
+Name	E-mail
+Uday Gajera	uday.gajera@physik.hu-berlin.de

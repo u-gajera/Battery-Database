@@ -4,12 +4,13 @@ import ast
 import re
 from pathlib import Path
 from typing import Any
+
 import numpy as np
 import pandas as pd
 import yaml
-
 from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
+
 from nomad_battery_database.parsers.utils import create_archive
 from nomad_battery_database.schema_packages.battery_schema import BatteryDatabase
 
