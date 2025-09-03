@@ -4,13 +4,12 @@ import ast
 import re
 from pathlib import Path
 from typing import Any
-
 import numpy as np
 import pandas as pd
 import yaml
+
 from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
-
 from nomad_battery_database.parsers.utils import create_archive
 from nomad_battery_database.schema_packages.battery_schema import BatteryDatabase
 
@@ -183,7 +182,6 @@ class BatteryParser(MatchingParser):
 
     @staticmethod
     def _populate_entry_from_row(db: BatteryDatabase, row: pd.Series) -> None:
-        # strings --------------------------------------------------------
         for col, value in row.items():
             if pd.isna(value):
                 continue
@@ -192,19 +190,16 @@ class BatteryParser(MatchingParser):
             if not hasattr(db, attr):
                 continue
 
-            # 1) numeric “*_raw_value” columns -----------------------------
             if attr.endswith(('_value', '_raw_value')):
                 num = BatteryParser._safe_float(value)
                 if num is not None:
                     setattr(db, attr, num)
                 continue
 
-            # 2) units ---------------------------
             if attr.endswith(('_unit', '_raw_unit')):
                 setattr(db, attr, str(value).strip())
                 continue
 
-            # 3) everything else is left as text ---------------------------
             setattr(db, attr, str(value).strip())
 
         # ---------- derived chemistry ----------
@@ -220,7 +215,6 @@ class BatteryParser(MatchingParser):
             ('Energy_density', 'energy_density'),
             ('Conductivity', 'conductivity'),
         ]:
-            # (i)  prefer the processed value if present -------------------
             val = row.get(f'{label}_Value')
             num = BatteryParser._safe_float(val)
             if num is not None:
@@ -258,7 +252,6 @@ class BatteryParser(MatchingParser):
         )
         try:
             content_str = mainfile_content.decode('utf-8', errors='ignore')
-            # Check based on the actual extension confirmed by mainfile_name_re
             if mainfile.endswith(('.yaml', '.yml')):
                 if 'Extracted_name:' in content_str and 'DOI:' in content_str:
                     logger.info('BatteryParser.does_match confirmed for YAML.')

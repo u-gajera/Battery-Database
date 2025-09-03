@@ -22,8 +22,8 @@ battery_app = AppEntryPoint(
     name='battery_app',
     description='Explore Properties from single-file YAML uploads.',
     app=App(
-        # ------------------------------------------------ overview ----------
-        label='Curated Battery Database',
+        # -------------- overview page ----------
+        label='Extracted Battery Database',
         path='batterydb',
         category='Experiments',
         description=('Curated Experimental Battery properties from the literature.'),

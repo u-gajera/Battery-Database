@@ -1,9 +1,7 @@
 from __future__ import annotations
-
 import ast
 from numbers import Number
 from typing import TYPE_CHECKING, Any
-
 import numpy as np
 from nomad.datamodel.data import EntryData
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
@@ -70,21 +68,40 @@ def _to_number(val: Any) -> float | None:
 
 class BatteryDatabase(EntryData):
     material_name = Quantity(
-        type=str, a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity)
+        type=str, 
+        a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity)
     )
+    # Materials and Elements
     extracted_name = Quantity(type=str)
     chemical_formula_hill = Quantity(type=str)
     elements = Quantity(type=str, shape=['*'])
+
+    # Bibliographic Information
     title = Quantity(type=str)
     DOI = Quantity(type=str)
     journal = Quantity(type=str)
     date = Quantity(type=str)
+    publication_year = Quantity(
+        type=str,
+        description='The year of the publication, extracted for filtering.'
+    )
+    available_properties = Quantity(
+        type=str,
+        description='A human-readable properties available in this entry.'
+    )
+    publication = SubSection(
+        section_def=PublicationReference,
+        description='The publication reference for this battery data entry.'
+    )
 
+    # Varification
     specifier = Quantity(type=str)
     tag = Quantity(type=str)
     warning = Quantity(type=str)
     correctness = Quantity(type=str)
     info = Quantity(type=str)
+
+    # Quantitative Properties
     capacity_raw_value = Quantity(type=np.float64)
     capacity_raw_unit = Quantity(type=str)
     voltage_raw_value = Quantity(type=np.float64)
@@ -101,18 +118,6 @@ class BatteryDatabase(EntryData):
     coulombic_efficiency = Quantity(type=np.float64)
     energy_density = Quantity(type=np.float64, unit='W*hour/kg')
     conductivity = Quantity(type=np.float64, unit='S/cm')
-    publication_year = Quantity(
-        type=str,
-        description='The year of the publication, extracted for filtering.'
-    )
-    available_properties = Quantity(
-        type=str,
-        description='A human-readable properties available in this entry.'
-    )
-    publication = SubSection(
-        section_def=PublicationReference,
-        description='The publication reference for this battery data entry.'
-    )
 
     def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:
         super().normalize(archive, logger)
