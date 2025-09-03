@@ -50,40 +50,34 @@ LiCoO2,"10.1016/j.electacta.2016.11.154; 10.1038/s41597-020-00602-2",140,mAh/g,3
 ## Development and Installation
 If you want to develop this plugin locally, clone the project and create a virtual environment (you can use Python 3.9, 3.10, or 3.11):
 
-```code
-Sh
+```
 git clone https://github.com/u-gajera/Battery-Database.git
 cd Battery-Database
 python3.11 -m venv .pyenv
 source .pyenv/bin/activate
 ```
 Make sure to have pip upgraded:
-```code
-Sh
+```
 pip install --upgrade pip
 ```
 We recommend installing uv for fast package installation:
-```code
-Sh
+```
 pip install uv
 ```
 Install the plugin in editable mode with its development dependencies:
 
-```code
-Sh
+```
 uv pip install -e '....
 ```
 ### Run the Tests
 You can run the tests locally:
-```code
-Sh
+```
 pytest -sv tests
 ```
 
 To generate a local coverage report:
 
-```code
-Sh
+```
 uv pip install pytest-cov
 pytest --cov=src tests
 ```
@@ -91,8 +85,7 @@ pytest --cov=src tests
 ### Auto-formatting
 We use Ruff for linting and formatting the code.
 
-```code
-Sh
+```
 ruff check .
 ruff format .
 ```
