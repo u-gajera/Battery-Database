@@ -35,7 +35,7 @@ The parser accepts YAML files containing a list of entries, where each entry is 
   ```
 
 ### CSV/Excel Format
-The parser can also process tabular data from CSV or Excel files. The file should contain one row per entry, with columns corresponding to the schema fields.
+The parser can also process tabular data from CSV or Excel files. The file should contain one row per entry, with columns corresponding to the schema fields. In addition to the properties mentioned here, we also support Coulombic Efficiency, Conductivity and Energy. Here, for fairness, we have provided _Raw_values and _Raw_units which are original units with values mentioned along with converted values into the standard units. 
 
 Example (battery_data_pivot.extracted_battery.csv):
 
