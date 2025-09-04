@@ -7,12 +7,12 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 from nomad.datamodel.data import EntryData
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
+from nomad.datamodel.results import Material, Results
+from nomad.metainfo import Quantity, SchemaPackage, SubSection
 from nomad.datamodel.metainfo.basesections import (
     ElementalComposition,
     PublicationReference,
 )
-from nomad.datamodel.results import Material, Results
-from nomad.metainfo import Quantity, SchemaPackage, SubSection
 
 if TYPE_CHECKING:
     from nomad.datamodel import EntryArchive
@@ -121,37 +121,40 @@ class BatteryDatabase(EntryData):
     energy_density = Quantity(type=np.float64, unit='W*hour/kg')
     conductivity = Quantity(type=np.float64, unit='S/cm')
 
-    def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:
-        super().normalize(archive, logger)
-
+    def _normalize_material(self, archive: EntryArchive) -> None:
+        """Parses composition and sets material properties in the results section."""
         comp = _parse_composition(self.extracted_name)
         EPSILON = 1e-6
-        if comp is not None:
-            elements, counts = comp
-            self.elements = elements
-            if not self.chemical_formula_hill:
-                self.chemical_formula_hill = ''.join(
-                    (
-                        el
-                        if abs(cnt - 1.0) < EPSILON
-                        else f'{el}{int(cnt) if float(cnt).is_integer() else cnt}'
-                    )
-                    for el, cnt in zip(elements, counts)
-                )
-            if archive.results is None:
-                archive.results = Results()
-            mat: Material = getattr(archive.results, 'material', None) or Material()
-            archive.results.material = mat
-            total = float(sum(counts))
-            mat.chemical_formula_hill = self.chemical_formula_hill
-            mat.elements = elements
-            mat.nelements = len(elements)
-            mat.elements_ratios = [c / total for c in counts]
-            archive.results.elemental_composition = [
-                ElementalComposition(element=el, atomic_fraction=cnt / total)
-                for el, cnt in zip(elements, counts)
-            ]
+        if comp is None:
+            return
 
+        elements, counts = comp
+        self.elements = elements
+        if not self.chemical_formula_hill:
+            self.chemical_formula_hill = ''.join(
+                (
+                    el
+                    if abs(cnt - 1.0) < EPSILON
+                    else f'{el}{int(cnt) if float(cnt).is_integer() else cnt}'
+                )
+                for el, cnt in zip(elements, counts)
+            )
+        if archive.results is None:
+            archive.results = Results()
+        mat: Material = getattr(archive.results, 'material', None) or Material()
+        archive.results.material = mat
+        total = float(sum(counts))
+        mat.chemical_formula_hill = self.chemical_formula_hill
+        mat.elements = elements
+        mat.nelements = len(elements)
+        mat.elements_ratios = [c / total for c in counts]
+        archive.results.elemental_composition = [
+            ElementalComposition(element=el, atomic_fraction=cnt / total)
+            for el, cnt in zip(elements, counts)
+        ]
+
+    def _normalize_quantitative_properties(self) -> None:
+        """Copies raw property values and units to their normalized counterparts."""
         for raw, clean in [
             ('capacity_raw_value', 'capacity'),
             ('voltage_raw_value', 'voltage'),
@@ -180,42 +183,57 @@ class BatteryDatabase(EntryData):
                 except Exception:
                     pass
 
+    def _normalize_publication(
+        self, archive: EntryArchive, logger: BoundLogger
+    ) -> None:
+        """Creates PublicationReference from DOI and extracts publication year."""
         if self.DOI and not self.publication:
             logger.info(f"Creating Publication Reference section for DOI: {self.DOI}")
 
             pub = PublicationReference()
             pub.DOI_number = self.DOI
             self.publication = pub
-
             self.publication.normalize(archive, logger)
-        
+
         if self.publication and self.publication.publication_date:
-            self.publication_year = self.publication.publication_date.year
-        
-        present_properties = []
+            self.publication_year = str(self.publication.publication_date.year)
+
+    def _set_available_properties(self) -> None:
+        """Sets a human-readable string listing the quantitative properties."""
         property_map = {
             'capacity': 'Capacity',
             'voltage': 'Voltage',
             'coulombic_efficiency': 'Coulombic Efficiency',
             'energy_density': 'Energy Density',
-            'conductivity': 'Conductivity'
+            'conductivity': 'Conductivity',
         }
+        present_properties = [
+            display_name
+            for prop_name, display_name in property_map.items()
+            if getattr(self, prop_name) is not None
+        ]
 
-        for prop_name, display_name in property_map.items():
-            if getattr(self, prop_name) is not None:
-                present_properties.append(display_name)
-
-        if not present_properties:
+        num_properties = len(present_properties)
+        # Using a named constant to avoid the "magic number" ruff error.
+        Pair_Count = 2
+        if not num_properties:
             self.available_properties = 'No quantitative properties'
-        elif len(present_properties) == 1:
+        elif num_properties == 1:
             self.available_properties = present_properties[0]
-        elif len(present_properties) == 2:
-            self.available_properties = f'{present_properties[0]} and {present_properties[1]}'
+        elif num_properties == Pair_Count:
+            self.available_properties = ' and '.join(present_properties)
         else:
             # For 3+ properties, join with commas and use 'and' for the last one
             all_but_last = ', '.join(present_properties[:-1])
             last = present_properties[-1]
             self.available_properties = f'{all_but_last}, and {last}'
+
+    def normalize(self, archive: EntryArchive, logger: BoundLogger) -> None:
+        super().normalize(archive, logger)
+        self._normalize_material(archive)
+        self._normalize_quantitative_properties()
+        self._normalize_publication(archive, logger)
+        self._set_available_properties()
 
 m_package.__init_metainfo__()
 
