@@ -1,48 +1,34 @@
-# Welcome to the `Battery-Database` documentation
+# Welcome to the `nomad-battery-database` documentation
 
-App for battery database
+A NOMAD plugin for parsing and visualizing curated/extracted experimental battery properties from the literature.
 
 ## Introduction
 
-!!! note "Attention"
-    TODO
-
-<div markdown="block" class="home-grid">
-<div markdown="block">
+This battery database plugin allows you to parse structured YAML or CSV files containing battery material properties and visualize them through a dedicated application within NOMAD. It automatically extracts key performance indicators like capacity, voltage, and energy density, links them to their source publications, and provides interactive plots and filters for easy data exploration. This is crucial for building a comprehensive and searchable database of battery materials to accelerate research and development.
 
 ### Tutorial
 
-TODO
+A step-by-step guide to preparing your data, uploading it to NOMAD, and exploring it using the battery app.
 
 - [Tutorial](tutorial/tutorial.md)
 
-</div>
-<div markdown="block">
-
 ### How-to guides
 
-How-to guides provide step-by-step instructions for a wide range of tasks, with the overarching topics:
+Step-by-step instructions for common tasks related to the plugin.
 
 - [Install this plugin](how_to/install_this_plugin.md)
-- [Use this plugin](how_to/use_this_plugin.md)
+- [Prepare and upload data](how_to/use_this_plugin.md)
 - [Contribute to this plugin](how_to/contribute_to_this_plugin.md)
 - [Contribute to the documentation](how_to/contribute_to_the_documentation.md)
 
-</div>
-
-<div markdown="block">
-
 ### Explanation
 
-The explanation [section](explanation/explanation.md) provides background knowledge on this plugin.
+Background and technical details on how the plugin works.
 
-</div>
-<div markdown="block">
+- [Plugin Explanation](explanation/explanation.md)
 
 ### Reference
 
-The reference [section](reference/references.md) includes all CLI commands and arguments, all configuration options,
-the possible schema annotations and their arguments, and a glossary of used terms.
+Detailed reference for the data schema used by the plugin.
 
-</div>
-</div>
+- [Schema Reference](reference/references.md)
