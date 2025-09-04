@@ -39,13 +39,10 @@ The parser can also process tabular data from CSV or Excel files. The file shoul
 
 Example (battery_data_pivot.extracted_battery.csv):
 
-```
-code
-csv
-Name,DOI,Capacity_Raw_value,Capacity_Raw_unit,Voltage_Raw_value,Voltage_Raw_unit
-LiCoO2,"10.1016/j.electacta.2016.11.154; 10.1038/s41597-020-00602-2",140,mAh/g,3.7,V
-"Na3V2(PO4)3","10.1039/C4NR06432A",105,mAh/g,3.4,V
-```
+| Name         | DOI                                                                 | Capacity_Raw_value | Capacity_Raw_unit | Voltage_Raw_value | Voltage_Raw_unit |
+|:-------------|:--------------------------------------------------------------------|:-------------------|:------------------|:------------------|:-----------------|
+| LiCoO2       | 10.1016/j.electacta.2016.11.154; 10.1038/s41597-020-00602-2         | 140                | mAh/g             | 3.7               | V                |
+| Na3V2(PO4)3  | 10.1039/C4NR06432A                                                  | 105                | mAh/g             | 3.4               | V                |
 
 ## Development and Installation
 If you want to develop this plugin locally, clone the project and create a virtual environment (you can use Python 3.9, 3.10, or 3.11):
@@ -91,5 +88,6 @@ ruff format .
 ```
 
 Main Contributors
-Name	E-mail
-Uday Gajera	uday.gajera@physik.hu-berlin.de
+Dr. Uday Gajera,	uday.gajera@physik.hu-berlin.de
+Current data source
+Data Source: https://doi.org/10.1038/s41597-020-00602-2
