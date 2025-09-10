@@ -7,12 +7,12 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 from nomad.datamodel.data import EntryData
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
-from nomad.datamodel.results import Material, Results
-from nomad.metainfo import Quantity, SchemaPackage, SubSection
 from nomad.datamodel.metainfo.basesections import (
     ElementalComposition,
     PublicationReference,
 )
+from nomad.datamodel.results import Material, Results
+from nomad.metainfo import Quantity, SchemaPackage, SubSection
 
 if TYPE_CHECKING:
     from nomad.datamodel import EntryArchive

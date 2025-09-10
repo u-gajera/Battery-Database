@@ -131,7 +131,7 @@ where = ["src"]
 [project.entry-points.'nomad.plugin']
 parser_entry_point = "nomad_battery_database.parsers:battery_db_parser"
 schema_package_entry_point = "nomad_battery_database.schema_packages:battery_schema"
-app_entry_point = "nomad_battery_database.apps.battery_app:battery_app"
+app_entry_point = "nomad_battery_database.apps:battery_app"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues

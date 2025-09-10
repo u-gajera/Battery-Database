@@ -194,5 +194,3 @@ battery_app = AppEntryPoint(
         ),
     ),
 )
-
-__all__ = ['battery_app']
