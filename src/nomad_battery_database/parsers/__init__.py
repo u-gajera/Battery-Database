@@ -12,7 +12,7 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
         )
 
     def load(self): 
-        from .battery_parser import BatteryParser  # noqa: E402
+        from .battery_parser import BatteryParser  # noqa: E402, PLC0415
         return BatteryParser(**self.dict())
 
 
