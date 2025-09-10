@@ -1,8 +1,6 @@
 from nomad.config.models.plugins import ParserEntryPoint
 from pydantic import Field
 
-from .battery_parser import BatteryParser
-
 
 class BatteryDBParserEntryPoint(ParserEntryPoint):
     """Entry‑point for the battery CSV/YAML parser."""
@@ -14,6 +12,7 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
         )
 
     def load(self): 
+        from .battery_parser import BatteryParser  # noqa: E402
         return BatteryParser(**self.dict())
 
 
