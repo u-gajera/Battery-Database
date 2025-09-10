@@ -236,5 +236,3 @@ class BatteryDatabase(EntryData):
         self._set_available_properties()
 
 m_package.__init_metainfo__()
-
-__all__ = ['m_package', 'BatteryDatabase']

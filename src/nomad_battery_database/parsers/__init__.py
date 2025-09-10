@@ -1,9 +1,6 @@
 from nomad.config.models.plugins import ParserEntryPoint
 from pydantic import Field
 
-__all__ = ["battery_db_parser"]
-
-
 class BatteryDBParserEntryPoint(ParserEntryPoint):
     """Entry‑point for the battery CSV/YAML parser."""
 

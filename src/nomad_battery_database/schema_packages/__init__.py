@@ -1,8 +1,5 @@
 from nomad.config.models.plugins import SchemaPackageEntryPoint
 
-__all__ = ["battery_schema"]
-
-
 class BatteryDBSchemaEntryPoint(SchemaPackageEntryPoint):
     """Entry‑point that returns the *battery* schema package instance."""
 
