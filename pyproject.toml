@@ -98,6 +98,8 @@ select = [
 
 ignore = [
     "F403", # 'from module import *' used; unable to detect undefined names
+    "UP007", # For use of `X | Y` for type annotations (instead of Union)
+    "UP045", # For use of `X | None` for type annotations (instead of Optional)
 ]
 
 fixable = ["ALL"]

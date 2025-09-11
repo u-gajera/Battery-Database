@@ -1,3 +1,5 @@
+from typing import Optional
+
 from nomad.config.models.plugins import ParserEntryPoint
 from pydantic import Field
 
@@ -6,7 +8,7 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
     """Entry‑point for the battery CSV/YAML parser."""
 
     # Allow overriding the regex via `pyproject.toml` if desired
-    mainfile_name_re: str | None = Field(
+    mainfile_name_re: Optional[str] = Field(
             default=r".*\.extracted_battery\.(csv|ya?ml)$",
             description="Regex to match mainfiles.",
         )
