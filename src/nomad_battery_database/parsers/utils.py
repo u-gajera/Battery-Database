@@ -1,5 +1,5 @@
-# nomad_battery_database/utils.py
 import json
+from typing import Optional
 
 from nomad.datamodel.context import ClientContext
 from nomad.utils import hash as _hash
@@ -13,7 +13,7 @@ def get_entry_id_from_file_name(file_name: str, archive) -> str:
     return _hash(archive.metadata.upload_id, file_name)
 
 
-def create_archive(section, parent_archive, file_name: str) -> str | None:
+def create_archive(section, parent_archive, file_name: str) -> Optional[str]:
     """
     Write *section* to ``file_name`` inside the current upload and register it
     as a **child archive**.  Returns a reference string that can be stored in
