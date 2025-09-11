@@ -3,7 +3,7 @@ from __future__ import annotations
 import ast
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -17,7 +17,7 @@ from nomad_battery_database.schema_packages.battery_schema import BatteryDatabas
 COUNT_TOLERANCE: float = 1e-2
 
 
-def _safe_literal_eval(raw: str) -> list[dict[str, Any]] | None:
+def _safe_literal_eval(raw: str) -> Optional[list[dict[str, Any]]]:
     try:
         evaluated = ast.literal_eval(raw)
         if isinstance(evaluated, list):
@@ -27,7 +27,7 @@ def _safe_literal_eval(raw: str) -> list[dict[str, Any]] | None:
     return None
 
 
-def _normalize_parts(raw: str | list | None) -> list[dict[str, Any]] | None:
+def _normalize_parts(raw: Optional[Union[str, list]]) -> Optional[list[dict[str, Any]]]:
     if raw is None:
         return None
     if isinstance(raw, str):
@@ -37,7 +37,7 @@ def _normalize_parts(raw: str | list | None) -> list[dict[str, Any]] | None:
     return None
 
 
-def _merge_element_counts(parts: list[dict[str, Any]]) -> dict[str, float] | None:
+def _merge_element_counts(parts: list[dict[str, Any]]) -> Optional[dict[str, float]]:
     totals: dict[str, float] = {}
     for part in parts:
         for elem, cnt in part.items():
@@ -47,10 +47,10 @@ def _merge_element_counts(parts: list[dict[str, Any]]) -> dict[str, float] | Non
                 # simply skip unparseable counts such as 'x-3'
                 continue
             totals[elem] = totals.get(elem, 0.0) + n
-    return totals or None   
+    return totals or None
 
 
-def _format_formula(totals: dict[str, float]) -> str | None:
+def _format_formula(totals: dict[str, float]) -> Optional[str]:
     elems = []
     if 'C' in totals:
         elems.append('C')
@@ -68,7 +68,7 @@ def _format_formula(totals: dict[str, float]) -> str | None:
     return formula or None
 
 
-def _hill_from_extracted(raw: str | list | None) -> str | None:
+def _hill_from_extracted(raw: Optional[Union[str, list]]) -> Optional[str]:
     """
     Convert the string representation of ``Extracted_name`` to a Hill-ordered formula.
     """
@@ -93,7 +93,7 @@ class BatteryParser(MatchingParser):
         mainfile: str,
         archive: EntryArchive,
         logger=None,
-        child_archives: dict[str, EntryArchive] | None = None,
+        child_archives: Optional[dict[str, EntryArchive]] = None,
     ) -> None:
         path = Path(mainfile)
         if mainfile.endswith(('.csv', '.xls', '.xlsx')):
@@ -160,7 +160,7 @@ class BatteryParser(MatchingParser):
             )
 
     @staticmethod
-    def _safe_float(value: object) -> float | None:
+    def _safe_float(value: object) -> Optional[float]:
         """Return *first* float found in a messy numeric cell."""
 
         if value is None or (isinstance(value, float) and pd.isna(value)):
