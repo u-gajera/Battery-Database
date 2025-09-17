@@ -25,7 +25,7 @@ battery_app = AppEntryPoint(
         # -------------- overview page ----------
         label='Extracted Battery Database',
         path='batterydb',
-        category='Experiments',
+        category='Use Cases',
         description=('Curated Experimental Battery properties from the literature.'),
         readme=(
             'Uploads are single YAML files parsed by the battery-database '
