@@ -1,0 +1,16 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Sb2O3
+  extracted_name:
+  - Sb: 2.0
+    O: 3.0
+  doi: 10.1016/j.matlet.2011.01.013
+  tag: CDE
+  title: LI3SBO4ANEWHIGHRATEANODEMATERIALFORLITHIUMIONBATTERIES
+  journal: Materials Letters
+  date: '2011-01-15'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: – 1.5
+  voltage_unit: Volt^(1.0)
+  voltage_value: 1.5

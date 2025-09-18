@@ -9,12 +9,13 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
 
     # Allow overriding the regex via `pyproject.toml` if desired
     mainfile_name_re: Optional[str] = Field(
-            default=r".*\.extracted_battery\.(csv|ya?ml)$",
+            default=r'.*\.extracted_battery\.(csv|xlsx?)$',
             description="Regex to match mainfiles.",
         )
 
     def load(self): 
         from .battery_parser import BatteryParser  # noqa: E402, PLC0415
+
         return BatteryParser(**self.dict())
 
 

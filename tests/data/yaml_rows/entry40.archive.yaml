@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: LiFePO4–CNT composite
+  extracted_name:
+  - Li: 1.0
+    Fe: 1.0
+    P: 1.0
+    O: 4.0
+  doi: 10.1039/C0CC01721C
+  tag: CDE
+  title: 'A porous LiFePO 4 and carbon nanotube composite  '
+  journal: Chemical Communications
+  date: 2010/09/21
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: 3.51 and 3.38
+  voltage_unit: Volt^(1.0)
+  voltage_value: 3.51

@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Ni / PCNFO-S cathodes
+  extracted_name:
+  - Ni: 1.0
+  - P: 1.0
+    C: 1.0
+    N: 1.0
+    F: 1.0
+    O: 1.0
+  doi: 10.1039/C8NR07220E
+  specifier: discharge capacities
+  tag: CDE
+  title: 'Porous nitrogen-doped carbon nanofibers assembled with nickel nanoparticles for lithium–sulfur batteries  '
+  journal: Nanoscale
+  date: 2019/01/03
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 1180 , 1075 , and 870
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 1180.0

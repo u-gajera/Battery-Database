@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Li1.2Mn0.4Ni0.16Co0.24O2
+  extracted_name:
+  - Li: 1.2
+    Mn: 0.4
+    Ni: 0.16
+    Co: 0.24
+    O: 2.0
+  doi: 10.1016/j.jpowsour.2013.09.052
+  specifier: capacity
+  tag: CDE
+  title: AREVIEWBLENDEDCATHODEMATERIALSFORUSEINLIIONBATTERIES
+  journal: Journal of Power Sources
+  date: '2013-10-05'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: ∼ 230
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 230.0

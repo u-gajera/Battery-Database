@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Nickel Tungstate
+  extracted_name:
+  - W: 3.0
+    O: 12.0
+    Ni: 2.0
+  doi: 10.1016/j.electacta.2016.11.154
+  tag: CDE
+  title: CONTROLGROWTHMESOPOROUSNICKELTUNGSTATENANOFIBERAPPLICATIONANODEMATERIALFORLITHIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2016-11-27'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: to 462
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 462.0

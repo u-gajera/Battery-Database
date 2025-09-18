@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: H2O2
+  extracted_name:
+  - H: 2.0
+    O: 2.0
+  doi: 10.1016/j.ssi.2009.09.010
+  specifier: capacity
+  tag: CDE
+  title: ULTRAFASTSYNTHESISLI1V3O8GELPRECURSORSFORLITHIUMBATTERYAPPLICATIONS
+  journal: Solid State Ionics
+  date: '2009-10-22'
+  correctness: F3
+  capacity_raw_unit: mAh/g
+  capacity_raw_value: '200'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 200.0

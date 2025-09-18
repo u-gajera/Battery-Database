@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: 40-CuO / C
+  extracted_name:
+  - Cu: 1.0
+    O: 1.0
+  - C: 1.0
+  doi: 10.1039/C4NR06432A
+  specifier: discharge capacity
+  tag: CDE
+  info:
+    cycle_value: 50
+    cycle_units: cycles
+  title: 'Micro-nanostructured CuO/C spheres as high-performance anode materials for Na-ion batteries  '
+  journal: Nanoscale
+  date: 2015/01/28
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '217'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 217.0

@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Li4.4Sn
+  extracted_name:
+  - Li: 4.4
+    Sn: 1.0
+  doi: 10.1016/j.jpowsour.2019.227185
+  tag: CDE
+  warning: L
+  title: OXIDESOVERLAYERCONFINEDNI3SN2ALLOYENABLEENHANCEDLITHIUMSTORAGEPERFORMANCE
+  journal: Journal of Power Sources
+  date: '2019-09-20'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: '0.4'
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.4

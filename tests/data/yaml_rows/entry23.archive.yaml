@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Iron trifluoride, FeF3
+  extracted_name:
+  - Fe: 1.0
+    F: 3.0
+  doi: 10.1039/C7TA00862G
+  specifier: capacity
+  tag: CDE
+  title: 'Nanocrystalline FeF 3 and MF 2 (M = Fe, Co, and Mn) from metal trifluoroacetates and their Li(Na)-ion storage properties  '
+  journal: Journal of Materials Chemistry A
+  date: 2017/04/18
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '237'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 237.0

@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: LCO
+  extracted_name:
+  - Li: 1.0
+    Co: 1.0
+    O: 2.0
+  doi: 10.1016/j.jpowsour.2019.226802
+  specifier: coulombic
+  tag: CDE
+  title: TOWARDSSUCCINONITRILEBASEDLITHIUMMETALBATTERIESLONGCYCLELIFEINFLUENCEFLUOROETHYLENECARBONATELOADINGSEPARATOR
+  journal: Journal of Power Sources
+  date: '2019-07-09'
+  correctness: T
+  coulombic efficiency_raw_unit: '%'
+  coulombic efficiency_raw_value: ~ 99.5
+  coulombic efficiency_unit: Percent^(1.0)
+  coulombic efficiency_value: 99.5

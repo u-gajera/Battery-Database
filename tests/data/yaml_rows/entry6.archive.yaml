@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Carbon / silicon / TiOx−3 composite
+  extracted_name:
+  - Si: 1.0
+  - Ti: 1.0
+    O: x-3
+  doi: 10.1016/j.compositesa.2017.06.028
+  specifier: discharge capacities
+  tag: CDE
+  info:
+    cycle_value: subsequent
+    cycle_units: cycles
+  title: BIOINSPIREDSANDWICHSTRUCTUREDCARBONSILICONTITANIUMOXIDENANOFIBERSCOMPOSITEANODEMATERIALFORLITHIUMIONBATTERIES
+  journal: 'Composites Part A: Applied Science and Manufacturing'
+  date: '2017-06-24'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 791.7 , 663.8 , 523.6 , 401.4 , 256.2 and 176.2
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 791.7

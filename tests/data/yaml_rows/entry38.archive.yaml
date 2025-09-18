@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: LiFePO4
+  extracted_name:
+  - Li: 1.0
+    Fe: 1.0
+    P: 1.0
+    O: 4.0
+  doi: 10.1016/j.jpowsour.2010.10.063
+  specifier: theoretical capacity
+  tag: CDE
+  info:
+    cycle_value: good
+    cycle_units: cycle
+  title: ACOMPARATIVESTUDYLOWTEMPERATUREPERFORMANCELIFEPO4CLI3V2PO43CCATHODESFORLITHIUMIONBATTERIES
+  journal: Journal of Power Sources
+  date: '2010-10-30'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '170'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 170.0

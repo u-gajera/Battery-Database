@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Li7P3S11
+  extracted_name:
+  - Li: 7.0
+    P: 3.0
+    S: 11.0
+  doi: 10.1039/C7RA09081A
+  tag: CDE
+  title: 'Instantaneous preparation of high lithium-ion conducting sulfide solid electrolyte Li 7 P 3 S 11 by a liquid phase process '
+  journal: RSC Advances
+  date: 2017/10/02
+  correctness: T
+  conductivity_raw_unit: Scm−1
+  conductivity_raw_value: 3.2 × 10 − 3
+  conductivity_unit: CentiMeter^(-1.0)  Siemens^(1.0)
+  conductivity_value: 0.0032

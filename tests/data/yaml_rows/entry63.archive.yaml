@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: NiO-GNS
+  extracted_name:
+  - Ni: 1.0
+    O: 1.0
+  doi: 10.1039/C1NR10070J
+  specifier: charge capacities
+  tag: CDE
+  info:
+    current_value: 718
+    current_units: mAg−1
+  title: 'NiO nanosheets grown on graphene  nanosheets as superior anode materials for Li-ion batteries '
+  journal: Nanoscale
+  date: 2011/06/08
+  correctness: T
+  capacity_raw_unit: mAh/g
+  capacity_raw_value: 872 , 657 , and 492
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 492.0

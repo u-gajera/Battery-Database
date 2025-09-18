@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Ni3N
+  extracted_name:
+  - Ni: 3.0
+    N: 2.0
+  doi: 10.1039/C0JM04144K
+  specifier: theoretical capacities
+  tag: CDE
+  title: 'Nickel nitride as negative electrode material for lithium ion batteries '
+  journal: Journal of Materials Chemistry
+  date: 2011/06/28
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 423 and 788
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 423.0

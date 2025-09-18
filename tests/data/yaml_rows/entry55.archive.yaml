@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: MoS2 composite
+  extracted_name:
+  - Mo: 1.0
+    S: 2.0
+  doi: 10.1039/C7QI00515F
+  specifier: specific capacity
+  tag: CDE
+  info:
+    current_value: 5
+    current_units: c
+    cycle_value: 50
+    cycle_units: cycles
+  title: 'A review of recent progress in molybdenum disulfide-based supercapacitors and batteries '
+  journal: Inorganic Chemistry Frontiers
+  date: 2017/10/10
+  correctness: F1
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '954'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 954.0

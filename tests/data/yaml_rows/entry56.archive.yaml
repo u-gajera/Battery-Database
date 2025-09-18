@@ -1,0 +1,19 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: MoSe2
+  extracted_name:
+  - Mo: 1.0
+    Se: 2.0
+  doi: 10.1016/j.jechem.2018.09.001
+  tag: CDE
+  info:
+    current_value: 1.0 and 1.5
+    current_units: Ag−1
+  title: MOLYBDENUMTUNGSTENCHALCOGENIDESFORLITHIUMSODIUMIONBATTERIESBEYONDMOS2
+  journal: Journal of Energy Chemistry
+  date: '2018-09-06'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 364 and 345
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 345.0

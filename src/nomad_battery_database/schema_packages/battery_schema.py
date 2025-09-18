@@ -12,7 +12,7 @@ from nomad.datamodel.metainfo.basesections import (
     PublicationReference,
 )
 from nomad.datamodel.results import Material, Results
-from nomad.metainfo import Quantity, SchemaPackage, SubSection
+from nomad.metainfo import Quantity, SchemaPackage, SubSection, JSON
 
 if TYPE_CHECKING:
     from nomad.datamodel import EntryArchive
@@ -70,56 +70,183 @@ def _to_number(val: Any) -> float | None:
 
 class BatteryDatabase(EntryData):
     material_name = Quantity(
-        type=str, 
+        type=str,
+        description='The chemical compound name as it was originally extracted from ' \
+        'the source scientific paper before any normalization or processing. ',
         a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity)
     )
     # Materials and Elements
-    extracted_name = Quantity(type=str)
-    chemical_formula_hill = Quantity(type=str)
-    elements = Quantity(type=str, shape=['*'])
+    extracted_name = Quantity(
+        type=JSON,
+        shape=['*'],
+        description='The normalized chemical name, processed by ChemDataExtractor. ' \
+        'It is stored as a list of dictionaries, where each dictionary represents a ' \
+        'chemical component of a composite material and contains its constituent ' \
+        'elements and their counts. This corresponds to `Extracted_name` in Table 4.',
+        a_browser=dict(render_value='JsonValue')
+    )
+    chemical_formula_hill = Quantity(
+        type=str,
+        description='The chemical formula of the material, derived from the ' \
+        '`extracted_name` and standardized into Hill notation for consistent querying '
+        'and analysis.'
+    )
+    elements = Quantity(
+        type=str,
+        shape=['*'],
+        description="A list of the unique chemical elements present in the material, " \
+        "derived from the normalized `extracted_name`."
+    )
 
     # Bibliographic Information
-    title = Quantity(type=str)
-    DOI = Quantity(type=str)
-    journal = Quantity(type=str)
-    date = Quantity(type=str)
+    title = Quantity(
+        type=str,
+        description='The title of the source scientific publication from which ' \
+        'the data was extracted.'
+    )
+    doi = Quantity(
+        type=str,
+        description='The Digital Object Identifier (doi) of the source publication, ' \
+        'providing a persistent link to the original article.'
+    )
+    journal = Quantity(
+        type=str,
+        description='The name of the journal in which the source article was published.'
+    )
+    date = Quantity(
+        type=str,
+        description='The full publication date of the source article.'
+    )
     publication_year = Quantity(
         type=str,
         description='The year of the publication, extracted for filtering.'
     )
     available_properties = Quantity(
         type=str,
-        description='A human-readable properties available in this entry.'
+        description='A human-readable list of the properties available in this entry.'
     )
     publication = SubSection(
         section_def=PublicationReference,
         description='The publication reference for this battery data entry.'
     )
 
-    # Varification
-    specifier = Quantity(type=str)
-    tag = Quantity(type=str)
-    warning = Quantity(type=str)
-    correctness = Quantity(type=str)
-    info = Quantity(type=str)
+    # Verification
+    specifier = Quantity(
+        type=str,
+        description="The property specifier recognized by the parser which provides " \
+        "context to the value, such as 'theoretical' or 'specific' for capacity. " 
+    )
+    tag = Quantity(
+        type=str,
+        description="Indicates the origin of the data. For example, energy data is " \
+        "tagged as 'CDE' if extracted directly from text using ChemDataExtractor, or "
+        "'Calculated' if derived from capacity and voltage measurements via the data " \
+        "augmentation process."
+    )
+    warning = Quantity(
+        type=str,
+        description="A flag indicating potential issues with the data record. 'S' "
+        "(Series) indicates the data is part of a data series; 'R' (Relevance) " \
+        "cautions that the source paper may not be primarily about battery materials; "
+        "'L' (Limit) indicates the property value is near the plausible physical limits."
+    )
+    correctness = Quantity(
+        type=str,
+        description="A manually assigned validation flag ('True' or 'False') " \
+        "indicating whether the extracted data correctly matches the source paper. " \
+        "This was used on a 500-record subset to evaluate the precision of the " \
+        "extraction process."
+    )
+    info = Quantity(
+        type=JSON,
+        description='Contains additional contextual information about a property ' \
+        'record. For capacity, this can include the cycle number and current value ' \
+        'at which the measurement was taken.',
+        a_browser=dict(render_value='JsonValue')
+    )
 
-    # Quantitative Properties
-    capacity_raw_value = Quantity(type=np.float64)
-    capacity_raw_unit = Quantity(type=str)
-    voltage_raw_value = Quantity(type=np.float64)
-    voltage_raw_unit = Quantity(type=str)
-    coulombic_efficiency_raw_value = Quantity(type=np.float64)
-    coulombic_efficiency_raw_unit = Quantity(type=str)
-    energy_density_raw_value = Quantity(type=np.float64)
-    energy_density_raw_unit = Quantity(type=str)
-    conductivity_raw_value = Quantity(type=np.float64)
-    conductivity_raw_unit = Quantity(type=str)
+    # Quantitative Properties (Raw)
+    capacity_raw_value = Quantity(
+        type=str,
+        description='The capacity value as a string, exactly as it was extracted ' \
+        'from the source text before any processing or unit conversion.'
+    )
+    capacity_raw_unit = Quantity(
+        type=str,
+        description='The capacity unit as a string, exactly as it was extracted from ' \
+        'the source text before normalization. '
+    )
+    voltage_raw_value = Quantity(
+        type=str,
+        description='The voltage value as a string, exactly as it was extracted from ' \
+        'the source text before any processing or unit conversion.'
+    )
+    voltage_raw_unit = Quantity(
+        type=str,
+        description='The voltage unit as a string, exactly as it was extracted from ' \
+        'the source text before normalization.'
+    )
+    coulombic_efficiency_raw_value = Quantity(
+        type=str,
+        description='The Coulombic efficiency value as a string, exactly as it was ' \
+        'extracted from the source text before any processing.'
+    )
+    coulombic_efficiency_raw_unit = Quantity(
+        type=str,
+        description='The Coulombic efficiency unit as a string, exactly as it was ' \
+        'extracted from the source text before normalization.'
+    )
+    energy_density_raw_value = Quantity(
+        type=str,
+        description='The energy value as a string, exactly as it was extracted from ' \
+        'the source text before any processing or unit conversion.'
+    )
+    energy_density_raw_unit = Quantity(
+        type=str,
+        description='The energy unit as a string, exactly as it was extracted from ' \
+        'the source text before normalization.'
+    )
+    conductivity_raw_value = Quantity(
+        type=str,
+        description='The conductivity value as a string, exactly as it was extracted ' \
+        'from the source text before any processing or unit conversion.'
+    )
+    conductivity_raw_unit = Quantity(
+        type=str,
+        description='The conductivity unit as a string, exactly as it was extracted ' \
+        'from the source text before normalization.'
+    )
 
-    capacity = Quantity(type=np.float64, unit='mA*hour/g')
-    voltage = Quantity(type=np.float64, unit='V')
-    coulombic_efficiency = Quantity(type=np.float64)
-    energy_density = Quantity(type=np.float64, unit='W*hour/kg')
-    conductivity = Quantity(type=np.float64, unit='S/cm')
+    # Quantitative Properties (Normalized)
+    capacity = Quantity(
+        type=np.float64,
+        unit='mA*hour/g',
+        description='The normalized specific capacity value after processing and ' \
+        'conversion to the standard unit of mAh/g.'
+    )
+    voltage = Quantity(
+        type=np.float64,
+        unit='V',
+        description='The normalized voltage value after processing and conversion ' \
+        'to the standard unit of Volts (V).'
+    )
+    coulombic_efficiency = Quantity(
+        type=np.float64,
+        description='The normalized Coulombic efficiency value. It is a dimensionless' \
+        ' quantity, often expressed as a percentage.'
+    )
+    energy_density = Quantity(
+        type=np.float64,
+        unit='W*hour/kg',
+        description='The normalized specific energy value after processing and' \
+        ' conversion to the standard unit of Wh/kg.'
+    )
+    conductivity = Quantity(
+        type=np.float64,
+        unit='S/cm',
+        description='The normalized conductivity value after processing and ' \
+        'conversion to the standard unit of S/cm.'
+    )
 
     def _normalize_material(self, archive: EntryArchive) -> None:
         """Parses composition and sets material properties in the results section."""
@@ -187,11 +314,11 @@ class BatteryDatabase(EntryData):
         self, archive: EntryArchive, logger: BoundLogger
     ) -> None:
         """Creates PublicationReference from DOI and extracts publication year."""
-        if self.DOI and not self.publication:
-            logger.info(f"Creating Publication Reference section for DOI: {self.DOI}")
+        if self.doi and not self.publication:
+            logger.info(f"Creating Publication Reference section for DOI: {self.doi}")
 
             pub = PublicationReference()
-            pub.DOI_number = self.DOI
+            pub.DOI_number = self.doi
             self.publication = pub
             self.publication.normalize(archive, logger)
 

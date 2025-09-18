@@ -1,0 +1,16 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: TiO2 electrodes
+  extracted_name:
+  - Ti: 1.0
+    O: 2.0
+  doi: 10.1016/j.jallcom.2018.01.359
+  tag: CDE
+  title: CTIO2NANOCOMPOSITESIMPRESSIVEELECTROCHEMICALPERFORMANCESANODEMATERIALFORLITHIUMIONBATTERIES
+  journal: Journal of Alloys and Compounds
+  date: '2018-02-01'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: – 3
+  voltage_unit: Volt^(1.0)
+  voltage_value: 3.0

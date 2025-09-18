@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Co3O4
+  extracted_name:
+  - Co: 2.0
+    O: 3.0
+  doi: 10.1016/j.electacta.2017.01.067
+  specifier: capacity
+  tag: CDE
+  title: POROUSCO3O4NANOFIBERSSURFACEMODIFIEDBYREDUCEDGRAPHENEOXIDEADURABLEHIGHRATEANODEFORLITHIUMIONBATTERY
+  journal: Electrochimica Acta
+  date: '2017-01-14'
+  correctness: T
+  capacity_raw_unit: mAh/g
+  voltage_raw_unit: V
+  capacity_raw_value: ∼ 400
+  voltage_raw_value: to 0.3
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  voltage_unit: Volt^(1.0)
+  capacity: 400.0
+  voltage_value: 0.3

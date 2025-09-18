@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: CVO anode
+  extracted_name:
+  - C: 1.0
+    V: 1.0
+    O: 1.0
+  doi: 10.1016/j.jcis.2017.04.048
+  specifier: reversible specific capacities
+  tag: CDE
+  info:
+    current_value: 10 , 5 , 2 , and 1
+    current_units: Ag−1
+  title: FACILEGREENSYNTHESISACO3V2O8NANOPARTICLEELECTRODEFORHIGHENERGYLITHIUMIONBATTERYAPPLICATIONS
+  journal: Journal of Colloid and Interface Science
+  date: '2017-04-18'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 275 , 390 , 543 and 699
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 390.0

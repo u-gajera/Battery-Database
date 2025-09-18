@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: CuO
+  extracted_name:
+  - O: 2.0
+    H: 2.0
+    Cu: 1.0
+  doi: 10.1016/j.ijhydene.2011.10.090
+  tag: CDE
+  title: CUOH2CUONANOTUBENETWORKSHEXAOXACYCLOOCTADECANELIKEPOSNJAKITEMICROPLATESSYNTHESISELECTROCHEMICALHYDROGENSTORAGE
+  journal: International Journal of Hydrogen Energy
+  date: '2011-11-25'
+  correctness: T
+  capacity_raw_unit: mAh/g
+  capacity_raw_value: and 160
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 160.0

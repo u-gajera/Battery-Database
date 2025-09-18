@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Fe(1−x)TixF3 / C nanocomposites
+  extracted_name:
+  - Fe: 1-x
+    Ti: x
+    F: 3.0
+  doi: 10.1016/j.nanoen.2015.08.006
+  specifier: discharge capacities
+  tag: CDE
+  info:
+    cycle_value: 30th
+    cycle_units: cycle
+  title: UNDERSTANDINGCOMBINEDEFFECTSMICROCRYSTALGROWTHBANDGAPREDUCTIONFORFE1XTIXF3NANOCOMPOSITESCATHODEMATERIALSFORLITHIUMIONBATTERIES
+  journal: Nano Energy
+  date: '2015-08-28'
+  correctness: T
+  capacity_raw_unit: mAh/g
+  capacity_raw_value: 141.0 , 173.6 and 152.5
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 173.6

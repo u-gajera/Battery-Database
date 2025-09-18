@@ -1,0 +1,27 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Silica
+  extracted_name:
+  - Si: 1.0
+    O: 2.0
+  doi: 10.1016/j.carbon.2017.08.050
+  specifier: discharge capacity
+  tag: CDE
+  warning: R
+  info:
+    current_value: 100
+    current_units: mAg-1
+    cycle_value: 216th
+    cycle_units: cycle
+  title: SYNTHESISSIO2CARBONGRAPHENEHYBRIDSANODEMATERIALSLITHIUMIONBATTERIES
+  journal: Carbon
+  date: '2017-10-03'
+  correctness: F3
+  capacity_raw_unit: mAhg-1
+  conductivity_raw_unit: Scm−1
+  capacity_raw_value: '906'
+  conductivity_raw_value: 2.44 × 10 − 6
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  conductivity_unit: CentiMeter^(-1.0)  Siemens^(1.0)
+  capacity: 906.0
+  conductivity_value: 2.44e-06

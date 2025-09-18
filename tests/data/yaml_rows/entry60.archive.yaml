@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Ni2P
+  extracted_name:
+  - Ni: 2.0
+    P: 1.0
+  doi: 10.1016/j.jpowsour.2017.09.052
+  specifier: coulombic
+  tag: CDE
+  warning: R
+  title: CROSSLINKEDHIERARCHICALARRAYSNI2PNANOFLAKESPREPAREDVIADIRECTIONALPHOSPHORIZATIONAPPLICATIONSFORADVANCEDALKALINEBATTERIES
+  journal: Journal of Power Sources
+  date: '2017-10-23'
+  correctness: T
+  coulombic efficiency_raw_unit: '%'
+  coulombic efficiency_raw_value: '98.8'
+  coulombic efficiency_unit: Percent^(1.0)
+  coulombic efficiency_value: 98.8

@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Fe2O3
+  extracted_name:
+  - Fe: 2.0
+    O: 3.0
+  doi: 10.1039/C7RA09723A
+  tag: CDE
+  warning: L
+  title: 'Hybridizing Fe 3 O 4 nanocrystals with nitrogen-doped carbon nanowires for high-performance supercapacitors  '
+  journal: RSC Advances
+  date: 2017/10/12
+  correctness: F1
+  energy_raw_unit: Whkg−1
+  energy_raw_value: 41.8
+  energy_unit: KiloGram^(-1.0)  WattHour^(1.0)
+  energy_value: 41.8

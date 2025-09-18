@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Li3.5Si
+  extracted_name:
+  - Li: 3.5
+    Si: 1.0
+  doi: 10.1016/j.electacta.2019.06.040
+  tag: CDE
+  warning: L
+  title: SELECTIVELEACHINGALHYPEREUTECTICALSIALLOYPRODUCENANOPOROUSSILICONNPSANODESFORLITHIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2019-06-10'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: '0.27'
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.27

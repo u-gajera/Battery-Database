@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Li3VO4-BM
+  extracted_name:
+  - Li: 3.0
+    V: 1.0
+    O: 4.0
+  doi: 10.1039/C5TA02094H
+  specifier: capacity
+  tag: CDE
+  info:
+    cycle_value: 50
+    cycle_units: cycles
+  title: 'Enhancing the performance of Li 3 VO 4 by combining nanotechnology and surface carbon coating for lithium ion batteries '
+  journal: Journal of Materials Chemistry A
+  date: 2015/05/19
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: to 143
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 143.0

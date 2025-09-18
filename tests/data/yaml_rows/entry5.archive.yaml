@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Carbon
+  extracted_name:
+  - C: 12.0
+    H: 22.0
+    O: 11.0
+  doi: 10.1016/j.jallcom.2014.06.050
+  specifier: discharge specific capacities
+  tag: CDE
+  info:
+    current_value: 0.1
+    current_units: Ag−1
+  title: EFFECTDIFFERENTCARBONSOURCESELECTROCHEMICALPROPERTIESLI2ZNTI3O8CANODEMATERIALINLITHIUMIONBATTERIES
+  journal: Journal of Alloys and Compounds
+  date: '2014-06-16'
+  correctness: F3
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 190.9 , 242.9 , 286.5 and 214.3
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 242.9

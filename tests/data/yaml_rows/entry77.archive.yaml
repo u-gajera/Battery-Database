@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: SrLi1.9Na0.1Ti6O14 electrode
+  extracted_name:
+  - Sr: 1.0
+    Li: 1.9
+    Na: 0.1
+    Ti: 6.0
+    O: 14.0
+  doi: 10.1016/j.electacta.2018.01.201
+  specifier: capacity
+  tag: CDE
+  title: EFFECTLITHIUMSITEDOPINGENHANCINGLITHIUMSTORAGEPERFORMANCESRLI2TI6O14
+  journal: Electrochimica Acta
+  date: '2018-02-01'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '261'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 261.0

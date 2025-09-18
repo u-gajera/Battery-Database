@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Mg / Mn
+  extracted_name:
+  - Mg: 1.0
+  - Mn: 1.0
+  doi: 10.1016/j.ssi.2012.01.019
+  specifier: discharge and charge capacities
+  tag: CDE
+  title: SYNTHESISELECTROCHEMICALBEHAVIORHOLLANDITEMNO2ACETYLENEBLACKCOMPOSITECATHODEFORSECONDARYMGIONBATTERIES
+  journal: Solid State Ionics
+  date: '2012-02-02'
+  correctness: F3
+  capacity_raw_unit: mAh/g
+  capacity_raw_value: 210 and 145
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 145.0

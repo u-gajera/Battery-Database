@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: SnSbCo-3 electrodes
+  extracted_name:
+  - Sn: 1.0
+    Sb: 1.0
+    Co: 1.0
+  doi: 10.1039/C2JM32162A
+  specifier: charge capacity
+  tag: CDE
+  title: 'Three-dimensional nanoarchitecture of Sn–Sb–Co alloy as an anode of lithium-ion batteries with excellent lithium storage performance  '
+  journal: Journal of Materials Chemistry
+  date: 2012/08/07
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 642.7 , 575.7 , 545.5 , 472.1 , 408.8 , 381.2 , and 345.0
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 642.7

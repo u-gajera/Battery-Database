@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Polyindole
+  extracted_name:
+  - P: 1.0
+    In: 1.0
+  doi: 10.1016/j.electacta.2015.10.129
+  tag: CDE
+  warning: L
+  title: ELECTROCHEMICALSYNTHESISINSITUSPECTROELECTROCHEMISTRYCONDUCTINGINDOLETITANIUMDIOXIDEZINCOXIDEPOLYMERNANOCOMPOSITESFORRECHARGEABLEBATTERIES
+  journal: Electrochimica Acta
+  date: '2015-10-28'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: -0.10 to 0.70
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.7

@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: Fe2O3–C composite
+  extracted_name:
+  - Fe: 2.0
+    O: 3.0
+  doi: 10.1016/j.ceramint.2018.07.004
+  specifier: capacity
+  tag: CDE
+  info:
+    current_value: 1.0
+    current_units: Ag−1
+    cycle_value: 300
+    cycle_units: cycles
+  title: POROUSCOTIO3MICROBARSSUPERRATELONGLIFEANODESFORSODIUMIONBATTERIES
+  journal: Ceramics International
+  date: '2018-07-02'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '812'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 812.0

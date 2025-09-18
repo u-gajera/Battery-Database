@@ -1,0 +1,24 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: LiFePO4 / C
+  extracted_name:
+  - Li: 1.0
+    Fe: 1.0
+    P: 1.0
+    O: 4.0
+  - C: 1.0
+  doi: 10.1016/j.micromeso.2014.11.024
+  specifier: discharge capacity
+  tag: CDE
+  title: INTERCONNECTEDPOROUSCARBONTUNABLEPORESIZEAMODELSUBSTRATECONFINELIFEPO4CATHODEMATERIALFORENERGYSTORAGE
+  journal: Microporous and Mesoporous Materials
+  date: '2014-12-04'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  voltage_raw_unit: V
+  capacity_raw_value: 161 , 165 and 135
+  voltage_raw_value: 3.45 , 3.6 , 3.7 , 4.1 , and 4.6
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  voltage_unit: Volt^(1.0)
+  capacity: 161.0
+  voltage_value: 3.45

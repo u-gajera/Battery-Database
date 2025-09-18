@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: NaFePO4
+  extracted_name:
+  - Na: 1.0
+    Fe: 1.0
+    P: 1.0
+    O: 4.0
+  doi: 10.1016/j.electacta.2017.02.107
+  specifier: theoretical capacity
+  tag: CDE
+  warning: R
+  title: INSITUPREPARATIONELECTROCHEMICALCHARACTERIZATIONSUBMICRONSIZEDNAFEPO4CATHODEMATERIALFORSODIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2017-03-02'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '154'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 154.0

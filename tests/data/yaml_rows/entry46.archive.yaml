@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  material_name: LiV3O8
+  extracted_name:
+  - Li: 1.0
+    V: 3.0
+    O: 8.0
+  doi: 10.1016/j.matchemphys.2008.05.013
+  tag: CDE
+  title: SYNTHESISLIV3O8BYIMPROVEDCITRICACIDASSISTEDSOLGELMETHODLOWTEMPERATURE
+  journal: Materials Chemistry and Physics
+  date: '2008-07-07'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: 2.46 and 2.84
+  voltage_unit: Volt^(1.0)
+  voltage_value: 2.84
