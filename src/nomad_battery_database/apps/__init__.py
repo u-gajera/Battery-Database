@@ -7,7 +7,6 @@ from nomad.config.models.ui import (
     Column,
     Dashboard,
     Layout,
-    # Markers,
     Menu,
     MenuItemTerms,
     SearchQuantities,
@@ -16,7 +15,8 @@ from nomad.config.models.ui import (
     WidgetScatterPlot,
 )
 
-SCHEMA = 'nomad_battery_database.schema_packages.battery_schema.BatteryDatabase'
+# need to update schema based on the battery_schema.py class name
+SCHEMA='nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery'
 
 battery_app = AppEntryPoint(
     name='battery_app',
@@ -180,12 +180,6 @@ battery_app = AppEntryPoint(
                         title='Capacity',
                         unit='mA*hour/g',
                     ),
-                    # markers=Markers(
-                    #     color=Axis(
-                    #         search_quantity=f'data.specifier#{SCHEMA}',
-                    #         title='Specifier',
-                    #     )
-                    # ),
                     size=800,
                     autorange=True,
                     layout={'lg': Layout(w=6, h=8, x=12, y=0, minW=6, minH=6)},

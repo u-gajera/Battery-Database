@@ -11,7 +11,9 @@ from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
 
 from nomad_battery_database.parsers.utils import create_archive
-from nomad_battery_database.schema_packages.battery_schema import BatteryDatabase
+from nomad_battery_database.schema_packages.battery_schema import (
+    ChemDataExtractorBattery,
+)
 
 COUNT_TOLERANCE: float = 1e-2
 
@@ -26,7 +28,9 @@ def _safe_literal_eval(raw: str) -> Optional[list[dict[str, Any]]]:
     return None
 
 
-def _normalize_parts(raw: Optional[Union[str, list]]) -> Optional[list[dict[str, Any]]]:
+def _normalize_parts(
+    raw: Optional[Union[str, list]]
+) -> Optional[list[dict[str, Any]]]:
     if raw is None:
         return None
     if isinstance(raw, str):
@@ -105,9 +109,8 @@ class BatteryParser(MatchingParser):
         else:  # falls back to CSV
             df = pd.read_csv(path).replace(np.nan, None)
 
-        # iterate rows → one BatteryDatabase per row
         for idx, row in df.iterrows():
-            db = BatteryDatabase()
+            db = ChemDataExtractorBattery()
             BatteryParser._populate_entry_from_row(db, row)
             
             # Create a child archive file
@@ -142,7 +145,9 @@ class BatteryParser(MatchingParser):
         return None
 
     @staticmethod
-    def _populate_entry_from_row(db: BatteryDatabase, row: pd.Series) -> None:
+    def _populate_entry_from_row(
+        db: ChemDataExtractorBattery, row: pd.Series
+    ) -> None:
         for col, value in row.items():
             if pd.isna(value):
                 continue
@@ -199,7 +204,9 @@ class BatteryParser(MatchingParser):
                 setattr(db, f'{attr}_raw_unit', str(raw_unit))
 
     def does_match(self, mainfile: str, mainfile_content: bytes, logger):
-        logger.info(f'BatteryParser.does_match attempting to confirm match for {mainfile}')
+        logger.info(
+            f'BatteryParser.does_match attempting to confirm match for {mainfile}'
+        )
         if mainfile.endswith('.csv'):
             try:
                 content_str = mainfile_content.decode('utf-8', errors='ignore')

@@ -1,5 +1,5 @@
 data:
-  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
   material_name: Carbon / silicon / TiOx−3 composite
   extracted_name:
   - Si: 1.0

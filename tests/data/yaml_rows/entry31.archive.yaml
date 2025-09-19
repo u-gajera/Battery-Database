@@ -1,5 +1,5 @@
 data:
-  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
   material_name: Li1.2Mn0.4Ni0.16Co0.24O2
   extracted_name:
   - Li: 1.2

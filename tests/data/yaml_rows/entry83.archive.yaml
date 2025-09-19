@@ -1,5 +1,5 @@
 data:
-  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
   material_name: VS4 @ Li7P3S11 nanocomposites
   extracted_name:
   - V: 1.0

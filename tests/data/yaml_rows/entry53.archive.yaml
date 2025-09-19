@@ -1,5 +1,5 @@
 data:
-  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
   material_name: MnO2 / e-CMG
   extracted_name:
   - Mn: 1.0

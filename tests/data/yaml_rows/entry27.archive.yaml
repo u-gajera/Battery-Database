@@ -1,5 +1,5 @@
 data:
-  m_def: nomad_battery_database.schema_packages.battery_schema.BatteryDatabase
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
   material_name: La0.4Sr0.6MnO3
   extracted_name:
   - La: 0.4
