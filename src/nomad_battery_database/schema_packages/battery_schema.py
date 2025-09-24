@@ -214,7 +214,7 @@ class ChemDataExtractorBattery(Battery):
         type=str,
         description="Indicates the origin of the data. For example, energy data is " \
         "tagged as 'CDE' if extracted directly from text using ChemDataExtractor, or "
-        "'Calculated' if derived from capacity and voltage measurements via the data " \
+        "'Calculated' if derived from capacity or voltage measurements via the data " \
         "augmentation process."
     )
     warning = Quantity(
@@ -222,7 +222,7 @@ class ChemDataExtractorBattery(Battery):
         description="A flag indicating potential issues with the data record. 'S' "
         "(Series) indicates the data is part of a data series; 'R' (Relevance) " \
         "cautions that the source paper may not be primarily about battery materials; "
-        "'L' (Limit) indicates the property value is near the plausible physical limits."
+        "'L' (Limit) indicates the value is near the plausible physical limits."
     )
     correctness = Quantity(
         type=str,

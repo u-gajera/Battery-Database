@@ -10,10 +10,10 @@ $ python split_csv_to_yaml.py --csv battery_data_pivot.extracted_battery.csv  \
         --schema ../../src/nomad_battery_database/schema_packages/battery_schema.py  \
         --outdir yaml_rows
 
-*   Every row becomes a structured YAML file like `entries/entry1.extracted_battery.yaml`.
+*   Every row becomes a structured YAML file `entries/entry1.extracted_battery.yaml`.
 *   Missing columns are reported once at the end.
 
-Dependencies
+Dependenciesc
 ------------
 - pandas
 - pyyaml
@@ -24,9 +24,10 @@ Install with e.g.  `pip install pandas pyyaml`
 from __future__ import annotations
 
 import argparse
+import ast
 import re
 from pathlib import Path
-import ast
+
 import pandas as pd
 import yaml
 
@@ -115,7 +116,7 @@ def transform_row_to_dict(row: pd.Series) -> dict:
                                 cleaned_dict[k] = v
                         data['info'] = cleaned_dict
                 except (ValueError, SyntaxError):
-                    print(f"[WARN] Could not parse 'Info' column as a dictionary: {value}")
+                    print(f"[WARN] Could not parse 'Info' as a dictionary: {value}")
 
         else:
             key = KEY_MAP.get(col, col.lower()) 
@@ -144,9 +145,9 @@ def csv_to_yaml(
         schema_names = _collect_schema_names(schema_path)
         print(f"[INFO] Schema parsed: {len(schema_names)} quantity names collected.")
 
-        handled_cols = set(KEY_MAP.keys()) | {'Info'} # 'Info' is now specially handled
+        handled_cols = set(KEY_MAP.keys()) | {'Info'} 
         unmapped_df_cols = set(df.columns) - handled_cols
-        schema_mapped_cols = {col.lower() for col in unmapped_df_cols} # keys are lowercased by default
+        schema_mapped_cols = {col.lower() for col in unmapped_df_cols} 
 
         unknown_cols = sorted(schema_mapped_cols - schema_names)
         if unknown_cols:

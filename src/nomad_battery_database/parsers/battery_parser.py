@@ -10,7 +10,7 @@ import pandas as pd
 from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
 
-from nomad_battery_database.parsers.utils import create_archive
+from nomad_battery_database.parsers.utils import create_archive #fix here
 from nomad_battery_database.schema_packages.battery_schema import (
     ChemDataExtractorBattery,
 )
@@ -146,7 +146,8 @@ class BatteryParser(MatchingParser):
 
     @staticmethod
     def _populate_entry_from_row(
-        db: ChemDataExtractorBattery, row: pd.Series
+        db: ChemDataExtractorBattery, 
+        row: pd.Series
     ) -> None:
         for col, value in row.items():
             if pd.isna(value):
@@ -216,7 +217,8 @@ class BatteryParser(MatchingParser):
                     return True
                 else:
                     logger.info(
-                        'BatteryParser.does_match rejected for CSV: Missing characteristic headers.'
+                        'BatteryParser.does_match rejected for CSV: ' \
+                        'Missing characteristic headers.'
                     )
                     return False
             except Exception as e:

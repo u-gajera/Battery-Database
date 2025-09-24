@@ -13,6 +13,7 @@ from nomad.config.models.ui import (
     WidgetHistogram,
     WidgetPeriodicTable,
     WidgetScatterPlot,
+    AxisQuantity
 )
 
 # need to update schema based on the battery_schema.py class name
@@ -133,10 +134,10 @@ battery_app = AppEntryPoint(
                 # --- histograms ------------------------------------------------
                 WidgetHistogram(  # Capacity )
                     title='Capacity distribution',
-                    x=f'data.capacity#{SCHEMA}',
+                    x=AxisQuantity(search_quantity= f'data.capacity#{SCHEMA}', 
+                                   unit='mA*hour/g'),
                     n_bins=100,
                     autorange=True,
-                    unit='mA*hour/g',
                     layout={'lg': Layout(w=6, h=8, x=0, y=8, minW=6, minH=6)},
                 ),
                 WidgetHistogram(  # Voltage
@@ -162,10 +163,9 @@ battery_app = AppEntryPoint(
                 ),
                 WidgetHistogram(  # Energy density
                     title='Energy-density distribution',
-                    x=f'data.energy_density#{SCHEMA}',
+                    x=AxisQuantity(search_quantity= f'data.energy_density#{SCHEMA}', unit='W*hour/kg'),
                     n_bins=100,
                     autorange=True,
-                    unit='W*hour/kg',
                     layout={'lg': Layout(w=6, h=8, x=24, y=8, minW=6, minH=6)},
                 ),
                 # --- scatter plot (Voltage vs Capacity coloured by Specifier) --
