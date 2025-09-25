@@ -1,7 +1,4 @@
-from typing import Optional
-
 from nomad.config.models.plugins import ParserEntryPoint
-from pydantic import Field
 
 
 class BatteryDBParserEntryPoint(ParserEntryPoint):

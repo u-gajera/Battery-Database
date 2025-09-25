@@ -90,7 +90,10 @@ def transform_row_to_dict(row: pd.Series) -> dict:
     Transforms a pandas Series (a row) into the target nested dictionary structure.
     """
     data = {
-        "m_def": "nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery"
+        "m_def": (
+        "nomad_battery_database.schema_packages."
+        "battery_schema.ChemDataExtractorBattery"
+        )
     }
 
     for col, value in row.dropna().items():

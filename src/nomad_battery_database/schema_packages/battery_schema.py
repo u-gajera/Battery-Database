@@ -1,15 +1,14 @@
 import ast
-from numbers import Number
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import numpy as np
 from ase.data import atomic_masses, atomic_numbers
 from nomad.datamodel.data import EntryData
 from nomad.datamodel.metainfo.annotations import ELNAnnotation, ELNComponentEnum
 from nomad.datamodel.metainfo.basesections import (
+    CompositeSystem,
     ElementalComposition,
     PublicationReference,
-    CompositeSystem,
     System,
 )
 from nomad.datamodel.results import Material, Results
@@ -208,8 +207,8 @@ class Battery(EntryData):
     chemical_composition = Quantity(
     type=JSON,
     shape=['*'],
-    description='A list of dictionaries defining the material composition as a JSON array.',
-    a_eln=ELNAnnotation(component=ELNComponentEnum.RichTextEditQuantity),  
+    description='A list of dictionaries defining the composition as a JSON array.',
+    a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity),  
     a_browser=dict(render_value='JsonValue'), 
     )
 

@@ -10,7 +10,7 @@ import pandas as pd
 from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
 
-from nomad_battery_database.parsers.utils import create_archive #fix here
+from nomad_battery_database.parsers.utils import create_archive
 from nomad_battery_database.schema_packages.battery_schema import (
     ChemDataExtractorBattery,
 )
@@ -101,8 +101,7 @@ class BatteryParser(MatchingParser):
         path = Path(mainfile)
         self._parse_table(path, archive, logger)
 
-    @staticmethod
-    def _parse_table(path: Path, archive: EntryArchive, logger=None) -> None:
+    def _parse_table(self, path: Path, archive: EntryArchive, logger=None) -> None:
         ext = path.suffix.lower()
         if ext in {'.xls', '.xlsx'}:
             df = pd.read_excel(path).replace(np.nan, None)
@@ -111,8 +110,8 @@ class BatteryParser(MatchingParser):
 
         for idx, row in df.iterrows():
             db = ChemDataExtractorBattery()
-            BatteryParser._populate_entry_from_row(db, row)
-            
+            self._populate_entry_from_row(db, row)
+
             # Create a child archive file
             entry_name = (
                 (db.material_name or f'row_{idx}').replace(' ', '_').replace('/', '_')
@@ -122,10 +121,8 @@ class BatteryParser(MatchingParser):
             create_archive(db, archive, file_name)
             logger and logger.info('archive_created', file=file_name, row_index=idx)
 
-    @staticmethod
-    def _safe_float(value: object) -> Optional[float]:
+    def _safe_float(self, value: object) -> Optional[float]:
         """Return *first* float found in a messy numeric cell."""
-
         if value is None or (isinstance(value, float) and pd.isna(value)):
             return None
 
@@ -144,65 +141,54 @@ class BatteryParser(MatchingParser):
                 continue
         return None
 
-    @staticmethod
-    def _populate_entry_from_row(
-        db: ChemDataExtractorBattery, 
-        row: pd.Series
+    def _populate_general_attributes(
+        self, db: ChemDataExtractorBattery, row: pd.Series
     ) -> None:
         for col, value in row.items():
             if pd.isna(value):
                 continue
 
-            attr = _col_to_attr(col)
+            key = col.strip().lower().replace(' ', '_')
+            attr = _col_to_attr(key)
+
             if not hasattr(db, attr):
                 continue
 
-            if attr in {'extracted_name', 'info'}:
+            if key in {'extracted_name', 'info'}:
                 if isinstance(value, str):
                     try:
                         parsed_value = ast.literal_eval(value)
                         setattr(db, attr, parsed_value)
                     except (ValueError, SyntaxError):
-                        pass
+                        setattr(db, attr, value)
+                else:
+                    setattr(db, attr, value)
                 continue
 
-            if attr.endswith(('_value', '_raw_value')):
-                num = BatteryParser._safe_float(value)
+            if key.endswith(('_value', '_raw_value')):
+                num = self._safe_float(value)
                 if num is not None:
                     setattr(db, attr, num)
                 continue
 
-            if attr.endswith(('_unit', '_raw_unit')):
+            if key.endswith(('_unit', '_raw_unit')):
                 setattr(db, attr, str(value).strip())
                 continue
 
+            # Default case: treat as a string
             setattr(db, attr, str(value).strip())
 
-        # ---------- derived chemistry ----------
+    def _populate_derived_attributes(self, db: ChemDataExtractorBattery) -> None:
         if db.extracted_name and not db.chemical_formula_hill:
             hill = _hill_from_extracted(db.extracted_name)
             if hill:
                 db.chemical_formula_hill = hill
-        # numbers --------------------------------------------------------
-        for label, attr in [
-            ('Capacity', 'capacity'),
-            ('Voltage', 'voltage'),
-            ('Coulombic_efficiency', 'coulombic_efficiency'),
-            ('Energy_density', 'energy_density'),
-            ('Conductivity', 'conductivity'),
-        ]:
-            val = row.get(f'{label}_Value')
-            num = BatteryParser._safe_float(val)
-            if num is not None:
-                setattr(db, attr, num)
 
-            raw_val = row.get(f'{label}_Raw_value')
-            raw_unit = row.get(f'{label}_Raw_unit')
-            num = BatteryParser._safe_float(raw_val)
-            if num is not None:
-                setattr(db, f'{attr}_raw_value', num)
-            if pd.notna(raw_unit):
-                setattr(db, f'{attr}_raw_unit', str(raw_unit))
+    def _populate_entry_from_row(
+        self, db: ChemDataExtractorBattery, row: pd.Series
+    ) -> None:
+        self._populate_general_attributes(db, row)
+        self._populate_derived_attributes(db)
 
     def does_match(self, mainfile: str, mainfile_content: bytes, logger):
         logger.info(
@@ -217,7 +203,7 @@ class BatteryParser(MatchingParser):
                     return True
                 else:
                     logger.info(
-                        'BatteryParser.does_match rejected for CSV: ' \
+                        'BatteryParser.does_match rejected for CSV: '
                         'Missing characteristic headers.'
                     )
                     return False
@@ -234,27 +220,24 @@ class BatteryParser(MatchingParser):
 
 _ALIASES = {
     'name': 'material_name',
-    #'doi': 'DOI',
-
-   # numeric “*_Value” columns → scalar quantities
-   'capacity_value': 'capacity',
-   'voltage_value': 'voltage',
-   'conductivity_value': 'conductivity',
-   'coulombic_efficiency_value': 'coulombic_efficiency',
-
-   # energy-density synonyms
-   'energy_value': 'energy_density',
-   'energy_raw_value': 'energy_density_raw_value',
-   'energy_raw_unit': 'energy_density_raw_unit',
-   'energy_unit': 'energy_density_raw_unit',   
- }
+    # 'doi': 'DOI',
+    # numeric “*_Value” columns → scalar quantities
+    'capacity_value': 'capacity',
+    'voltage_value': 'voltage',
+    'conductivity_value': 'conductivity',
+    'coulombic_efficiency_value': 'coulombic_efficiency',
+    # energy-density synonyms
+    'energy_value': 'energy_density',
+    'energy_raw_value': 'energy_density_raw_value',
+    'energy_raw_unit': 'energy_density_raw_unit',
+    'energy_unit': 'energy_density_raw_unit',
+}
 
 
-def _col_to_attr(column: str) -> str:
+def _col_to_attr(column_key: str) -> str:
     """
-    Map CSV/YAML column names → :class:`BatteryDatabase` attributes.
+    Map CSV/YAML column names → :class:`ChemDataExtractorBattery` attributes.
     Keeps the previous *lower-case/underscore* rule but honours explicit
     aliases first.
     """
-    key = column.strip().lower().replace(' ', '_')
-    return _ALIASES.get(key, key)
+    return _ALIASES.get(column_key, column_key)

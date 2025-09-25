@@ -4,6 +4,7 @@ from nomad.config.models.plugins import AppEntryPoint
 from nomad.config.models.ui import (
     App,
     Axis,
+    AxisQuantity,
     Column,
     Dashboard,
     Layout,
@@ -13,7 +14,6 @@ from nomad.config.models.ui import (
     WidgetHistogram,
     WidgetPeriodicTable,
     WidgetScatterPlot,
-    AxisQuantity
 )
 
 # need to update schema based on the battery_schema.py class name
@@ -163,7 +163,8 @@ battery_app = AppEntryPoint(
                 ),
                 WidgetHistogram(  # Energy density
                     title='Energy-density distribution',
-                    x=AxisQuantity(search_quantity= f'data.energy_density#{SCHEMA}', unit='W*hour/kg'),
+                    x=AxisQuantity(search_quantity= f'data.energy_density#{SCHEMA}', 
+                                   unit='W*hour/kg'),
                     n_bins=100,
                     autorange=True,
                     layout={'lg': Layout(w=6, h=8, x=24, y=8, minW=6, minH=6)},
