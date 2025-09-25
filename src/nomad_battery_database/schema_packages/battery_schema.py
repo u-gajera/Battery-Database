@@ -1,5 +1,5 @@
 import ast
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import numpy as np
 from ase.data import atomic_masses, atomic_numbers
@@ -49,8 +49,8 @@ def _format_composition_to_hill(
 
 
 def _process_composition(
-    raw: str | list | None,
-) -> tuple[dict[str, float], list[dict[str, float]]] | None:
+    raw: Union[str, list, None],
+) -> Union[tuple[dict[str, float], list[dict[str, float]]], None]:
     if raw is None:
         return None
     if isinstance(raw, str):
