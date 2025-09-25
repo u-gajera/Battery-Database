@@ -3,7 +3,9 @@ import os
 from nomad.client import normalize_all, parse
 from nomad.datamodel import EntryArchive
 
-from nomad_battery_database.schema_packages.battery_schema import BatteryDatabase
+from nomad_battery_database.schema_packages.battery_schema import (
+    ChemDataExtractorBattery,
+)
 
 CREATE_ARCHIVE_TARGET = 'nomad_battery_database.parsers.battery_parser.create_archive'
 EXPECTED_ARCHIVE_COUNT = 85
@@ -39,12 +41,15 @@ def test_schema_package(monkeypatch):
 
         battery_section = entry_archive.data
         assert battery_section is not None, f'Archive #{i} is missing a data section.'
-        assert isinstance(battery_section, BatteryDatabase), (
-            f'Archive #{i} data is not a BatteryDatabase instance.'
+
+        assert isinstance(battery_section, ChemDataExtractorBattery), (
+            f'Archive #{i} data is not a ChemDataExtractorBattery instance.'
         )
         assert battery_section.material_name is not None, (
             f'Archive #{i} is missing a material_name.'
         )
+
+        assert entry_archive.results is not None, f'Archive #{i} is missing results.'
         assert entry_archive.results.material is not None, (
             f'Archive #{i} is missing results.material.'
         )
@@ -53,11 +58,12 @@ def test_schema_package(monkeypatch):
         )
 
     print(f'All {captured_count} archives passed general health checks.')
+
     first_archive = captured_archives[0]
     first_section = first_archive.data
 
     assert first_section.material_name == '40-CuO / C'
-    assert first_section.DOI == '10.1039/C4NR06432A'
+    assert first_section.doi == '10.1039/C4NR06432A'
     assert first_archive.results.material.chemical_formula_hill == 'CCuO'
     print('Detailed spot-check on the first entry passed.')
     lco_archive = None
