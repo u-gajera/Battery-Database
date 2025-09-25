@@ -92,23 +92,11 @@ class Battery(EntryData):
     )
 
     # Bibliographic Information
-    title = Quantity(
-        type=str,
-        description='The title of the source scientific publication from which ' \
-        'the data was extracted.'
-    )
     doi = Quantity(
         type=str,
         description='The Digital Object Identifier (doi) of the source publication, ' \
-        'providing a persistent link to the original article.'
-    )
-    journal = Quantity(
-        type=str,
-        description='The name of the journal in which the source article was published.'
-    )
-    date = Quantity(
-        type=str,
-        description='The full publication date of the source article.'
+        'providing a persistent link to the original article.',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity),
     )
     publication_year = Quantity(
         type=str,
@@ -128,25 +116,30 @@ class Battery(EntryData):
         type=np.float64,
         unit='mA*hour/g',
         description='The normalized specific capacity value.',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     voltage = Quantity(
         type=np.float64,
         unit='V',
         description='The normalized voltage value.',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     coulombic_efficiency = Quantity(
         type=np.float64,
         description='The normalized Coulombic efficiency value (dimensionless).',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     energy_density = Quantity(
         type=np.float64,
         unit='W*hour/kg',
         description='The normalized specific energy value.',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     conductivity = Quantity(
         type=np.float64,
         unit='S/cm',
         description='The normalized conductivity value.',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
 
     def _normalize_publication(
