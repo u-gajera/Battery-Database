@@ -68,7 +68,15 @@ def _process_composition(
     merged_composition: dict[str, float] = {}
     component_compositions = []
     for part_dict in parts:
-        component_comp = {el: float(cnt or 1.0) for el, cnt in part_dict.items()}
+        component_comp = {}
+        for el, cnt in part_dict.items():
+            try:
+                numeric_cnt = float(cnt or 1.0)
+                component_comp[el] = numeric_cnt
+            except (ValueError, TypeError):
+                # If conversion fails (e.g., for 'x-3'), simply skip this element.
+                continue
+
         if component_comp:
             component_compositions.append(component_comp)
             for el, count in component_comp.items():

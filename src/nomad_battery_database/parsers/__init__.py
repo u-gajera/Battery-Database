@@ -6,7 +6,7 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
     def load(self): 
         from .battery_parser import BatteryParser  # noqa: E402, PLC0415
 
-        return BatteryParser(**self.model_dump())
+        return BatteryParser(**self.dict())
 
 
 battery_db_parser = BatteryDBParserEntryPoint(  
