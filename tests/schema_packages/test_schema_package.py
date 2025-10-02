@@ -1,7 +1,7 @@
 import os
 
 from nomad.client import normalize_all, parse
-from nomad.datamodel import EntryArchive
+from nomad.datamodel import EntryArchive, EntryMetadata
 
 from nomad_battery_database.schema_packages.battery_schema import (
     ChemDataExtractorBattery,
@@ -12,7 +12,7 @@ EXPECTED_ARCHIVE_COUNT = 85
 
 def test_schema_package(monkeypatch):
     """
-    Testing the extracted battery database shcema.
+    Testing the Battery Database shcema.
     """
     csv_file = os.path.join(
         'tests', 'data', 'battery_data_pivot.extracted_battery.csv'
@@ -22,7 +22,8 @@ def test_schema_package(monkeypatch):
     captured_archives = []
 
     def mock_create_archive(db_section, parent_archive, file_name):
-        new_archive = EntryArchive(data=db_section, metadata={})
+        metadata = EntryMetadata(entry_name=file_name) 
+        new_archive = EntryArchive(data=db_section, metadata=metadata)
         captured_archives.append(new_archive)
 
     monkeypatch.setattr(CREATE_ARCHIVE_TARGET, mock_create_archive)
