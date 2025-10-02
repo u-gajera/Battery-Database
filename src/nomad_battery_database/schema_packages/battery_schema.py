@@ -9,7 +9,8 @@ from nomad.datamodel.metainfo.basesections import (
     CompositeSystem,
     ElementalComposition,
     PublicationReference,
-    System,
+    PureSubstanceComponent,
+    PureSubstanceSection,
 )
 from nomad.datamodel.results import Material, Results
 from nomad.metainfo import JSON, Quantity, SchemaPackage, SubSection
@@ -20,10 +21,43 @@ if TYPE_CHECKING:
 
 m_package = SchemaPackage()
 
+def _process_composition(
+    raw: Union[str, list, None],
+) -> Union[list[dict[str, Union[float, str]]], None]:
+    """
+    Parses the raw composition input into a list of component compositions.
+    Coefficients are converted to float if possible, otherwise kept as strings.
+    """
+    if raw is None:
+        return None
+    try:
+        parts = ast.literal_eval(raw) if isinstance(raw, str) else raw
+    except (ValueError, SyntaxError):
+        return None
 
-def _format_composition_to_hill(
-    composition: dict[str, float],
+    if not isinstance(parts, list) or not all(isinstance(p, dict) for p in parts):
+        return None
+
+    component_compositions = []
+    for part_dict in parts:
+        component_comp = {}
+        for el, cnt in part_dict.items():
+            try:
+                component_comp[el] = float(cnt)
+            except (ValueError, TypeError):
+                component_comp[el] = str(cnt)
+        if component_comp:
+            component_compositions.append(component_comp)
+    return component_compositions
+
+
+def _format_composition_to_formula(
+    composition: dict[str, Union[float, str]],
 ) -> tuple[list[str], str]:
+    """
+    Formats a composition dictionary into a Hill notation formula string,
+    handling both numeric and string coefficients.
+    """
     EPSILON = 1e-6
     if not composition:
         return [], ''
@@ -36,170 +70,161 @@ def _format_composition_to_hill(
         elements.remove('H')
         elements.insert(1 if elements[0] == 'C' else 0, 'H')
 
-    counts = [composition[el] for el in elements]
-    formula = ''.join(
-        (
-            el
-            if abs(cnt - 1.0) < EPSILON
-            else f'{el}{int(cnt) if float(cnt).is_integer() else cnt}'
-        )
-        for el, cnt in zip(elements, counts)
-    )
-    return elements, formula
+    formula_parts = []
+    for el in elements:
+        cnt = composition[el]
+        part = el
+        is_one = False
+        if isinstance(cnt, (int, float)):
+            if abs(cnt - 1.0) < EPSILON:
+                is_one = True
+        elif str(cnt) in ['1', '1.0']:
+            is_one = True
 
+        if not is_one:
+            if isinstance(cnt, (int, float)):
+                part += f'{int(cnt) if float(cnt).is_integer() else cnt}'
+            else:
+                str_cnt = str(cnt)
+                part += f'({str_cnt})' if not str_cnt.isalnum() else str_cnt
+        formula_parts.append(part)
 
-def _process_composition(
-    raw: Union[str, list, None],
-) -> Union[tuple[dict[str, float], list[dict[str, float]]], None]:
-    if raw is None:
-        return None
-    if isinstance(raw, str):
-        try:
-            parts = ast.literal_eval(raw)
-        except Exception:
-            return None
-    elif isinstance(raw, list):
-        parts = raw
-    else:
-        return None
-    if not all(isinstance(p, dict) for p in parts):
-        return None
-
-    merged_composition: dict[str, float] = {}
-    component_compositions = []
-    for part_dict in parts:
-        component_comp = {}
-        for el, cnt in part_dict.items():
-            try:
-                numeric_cnt = float(cnt or 1.0)
-                component_comp[el] = numeric_cnt
-            except (ValueError, TypeError):
-                # If conversion fails (e.g., for 'x-3'), simply skip this element.
-                continue
-
-        if component_comp:
-            component_compositions.append(component_comp)
-            for el, count in component_comp.items():
-                merged_composition[el] = merged_composition.get(el, 0.0) + count
-
-    return merged_composition, component_compositions
+    return elements, ''.join(formula_parts)
 
 
 def _calculate_masses(
     composition: dict[str, float],
 ) -> tuple[float, dict[str, float]]:
+    """
+    Calculates the total mass and individual element masses from a composition dict."""
     total_mass = 0.0
     element_masses = {}
     for element, count in composition.items():
         Z = atomic_numbers.get(element)
-        if Z is None:
-            element_mass = 0.0
-        else:
-            element_mass = atomic_masses[Z]
-
+        element_mass = atomic_masses[Z] if Z is not None else 0.0
         total_mass_for_element = element_mass * count
         element_masses[element] = total_mass_for_element
         total_mass += total_mass_for_element
     return total_mass, element_masses
 
 
-def populate_battery_sample_info(sample: 'Battery', archive: 'EntryArchive') -> None:
-    """Populating the CompositeSystem in result section"""
-
-    composition_data = _process_composition(sample.chemical_composition)
-    if composition_data is None:
+def populate_battery_sample_info(sample: 'Battery',  archive: 'EntryArchive', 
+                                 logger: 'BoundLogger') -> None:
+    """
+    Processes the chemical composition from 'extracted_name' to populate the
+    sample section itself with PureSubstanceComponents.
+    """
+    component_compositions = _process_composition(sample.extracted_name)
+    if not component_compositions:
         return
 
-    merged_composition, component_compositions = composition_data
-    overall_elements, overall_formula = _format_composition_to_hill(
-        merged_composition
-    )
+    component_list = []
+    all_elements = set()
+    all_components_numeric = True
 
-    if not overall_elements:
-        return
-
-    if archive.results is None:
-        archive.results = Results()
-    mat: Material = getattr(archive.results, 'material', None) or Material()
-    archive.results.material = mat
-
-    sample.elements = overall_elements
-    if not sample.chemical_formula_hill:
-        sample.chemical_formula_hill = overall_formula
-
-    mat.chemical_formula_hill = sample.chemical_formula_hill
-    mat.elements = sample.elements
-    mat.nelements = len(sample.elements)
-
-    total_mass_overall, element_masses_overall = _calculate_masses(merged_composition)
-    total_atoms_overall = sum(merged_composition.values())
-
-    if total_atoms_overall > 0:
-        mat.elemental_composition = []
-        for element, count in merged_composition.items():
-            mass_frac = (
-                element_masses_overall.get(element, 0.0) / total_mass_overall
-                if total_mass_overall > 0
-                else 0.0
-            )
-            mat.elemental_composition.append(
-                ElementalComposition(
-                    element=element,
-                    atomic_fraction=count / total_atoms_overall,
-                    mass=element_masses_overall.get(element, 0.0),
-                    mass_fraction=mass_frac,
-                )
-            )
-
-    component_systems = []
     for comp_dict in component_compositions:
-        elements, formula = _format_composition_to_hill(comp_dict)
+        elements, formula = _format_composition_to_formula(comp_dict)
         if not elements:
             continue
+        all_elements.update(elements)
+        is_comp_numeric = all(isinstance(v, (int, float)) for v in comp_dict.values())
+        if not is_comp_numeric:
+            all_components_numeric = False
 
-        total_mass_component, element_masses_component = _calculate_masses(comp_dict)
-        total_atoms_component = sum(comp_dict.values())
         elemental_compositions_component = []
+        if is_comp_numeric:
+            numeric_comp_dict = {el: float(v) for el, v in comp_dict.items()}
+            total_mass, masses = _calculate_masses(numeric_comp_dict)
+            total_atoms = sum(numeric_comp_dict.values())
+            if total_atoms > 0:
+                for el, count in numeric_comp_dict.items():
+                    if total_mass > 0:
+                        mass_frac = masses.get(el, 0) / total_mass
+                    else:
+                        mass_frac = 0
+                    elemental_compositions_component.append(
+                        ElementalComposition(
+                            element=el,
+                            atomic_fraction=count / total_atoms,
+                            mass_fraction=mass_frac,
+                        )
+                    )
 
-        if total_atoms_component > 0:
-            for element, count in comp_dict.items():
-                mass_frac = (
-                    element_masses_component.get(element, 0.0) / total_mass_component
-                    if total_mass_component > 0
-                    else 0.0
-                )
-                elemental_compositions_component.append(
+        substance = PureSubstanceSection( 
+            molecular_formula=formula,    
+            elements=elements,
+            elemental_composition=elemental_compositions_component or None,
+        )
+
+        component = PureSubstanceComponent(pure_substance=substance)
+        component_list.append(component)
+
+    sample.components = component_list
+    sample.elements = sorted(list(all_elements))
+
+    formulas = [
+        comp.pure_substance.molecular_formula
+        for comp in component_list
+        if comp.pure_substance
+    ]
+    if not sample.chemical_formula_hill:
+        sample.chemical_formula_hill = ' & '.join(formulas)
+
+    if all_components_numeric:
+        merged_composition = {}
+        for comp_dict in component_compositions:
+            for el, count in comp_dict.items():
+                merged_composition[el] = merged_composition.get(el, 0.0) + float(count)
+
+        total_mass, masses = _calculate_masses(merged_composition)
+        total_atoms = sum(merged_composition.values())
+        if total_atoms > 0:
+            sample.elemental_composition = []
+            for el, count in merged_composition.items():
+                if total_mass > 0:
+                    mass_fraction = masses.get(el, 0) / total_mass
+                else:
+                    mass_fraction = 0
+
+                sample.elemental_composition.append(
                     ElementalComposition(
-                        element=element,
-                        atomic_fraction=count / total_atoms_component,
-                        mass=element_masses_component.get(element, 0.0),
-                        mass_fraction=mass_frac,
+                        element=el,
+                        atomic_fraction=count / total_atoms,
+                        mass_fraction=mass_fraction,
                     )
                 )
+    else:
+        sample.elemental_composition = [
+            ElementalComposition(element=el) for el in sample.elements
+        ]
+    
+    if sample.elemental_composition:
+        if archive.results is None:
+            archive.results = Results()
+        if archive.results.material is None:
+            archive.results.material = Material()
 
-        system_component = System(
-            elements=elements,
-            chemical_formula_hill=formula,
-            elemental_composition=elemental_compositions_component,
-        )
-        component_systems.append(system_component)
+        mat = archive.results.material
+        mat.elements = sample.elements
+        mat.nelements = len(sample.elements)
+        mat.chemical_formula_hill = sample.chemical_formula_hill
+        
+        element_to_fraction = {
+            comp.element: comp.atomic_fraction 
+            for comp in sample.elemental_composition 
+            if comp.atomic_fraction is not None
+        }
+        
+        if len(element_to_fraction) == len(mat.elements):
+             mat.elements_ratios = [element_to_fraction[el] for el in mat.elements]
 
-    if len(component_systems) > 1:
-        mat.system = CompositeSystem(components=component_systems)
-    elif len(component_systems) == 1:
-        mat.system = component_systems[0]
+        archive.results.elemental_composition = sample.elemental_composition
 
 
-class Battery(EntryData):
+class Battery(CompositeSystem, EntryData):
     """
     General schema for battery materials data, including bibliographic information
     """
-
-    material_name = Quantity(
-        type=str,
-        description='The chemical compound name of the battery material.',
-        a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity),
-    )
     chemical_formula_hill = Quantity(
         type=str,
         description='The chemical formula of the material, derived from the ' \
@@ -212,24 +237,12 @@ class Battery(EntryData):
         description="A list of the unique chemical elements present in the material, " \
         "derived from the normalized `extracted_name`."
     )
-    chemical_composition = Quantity(
-    type=JSON,
-    shape=['*'],
-    description='A list of dictionaries defining the composition as a JSON array.',
-    a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity),  
-    a_browser=dict(render_value='JsonValue'), 
-    )
 
-    # Bibliographic Information
-    doi = Quantity(
+    material_name = Quantity(
         type=str,
         description='The Digital Object Identifier (doi) of the source publication, ' \
         'providing a persistent link to the original article.',
         a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity),
-    )
-    publication_year = Quantity(
-        type=str,
-        description='The year of the publication, extracted for filtering.'
     )
     available_properties = Quantity(
         type=str,
@@ -239,8 +252,6 @@ class Battery(EntryData):
         section_def=PublicationReference,
         description='The publication reference for this battery data entry.',
     )
-
-    # Quantitative Properties (Normalized)
     capacity = Quantity(
         type=np.float64,
         unit='mA*hour/g',
@@ -271,17 +282,6 @@ class Battery(EntryData):
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
 
-    def _normalize_publication(
-        self, archive: 'EntryArchive', logger: 'BoundLogger'
-    ) -> None:
-        if self.doi and not self.publication:
-            logger.info(f'Creating Publication Reference section for DOI: {self.doi}')
-            pub = PublicationReference(DOI_number=self.doi)
-            self.publication = pub
-            self.publication.normalize(archive, logger)
-        if self.publication and self.publication.publication_date:
-            self.publication_year = str(self.publication.publication_date.year)
-
     def _set_available_properties(self) -> None:
         property_map = {
             'capacity': 'Capacity',
@@ -310,20 +310,21 @@ class Battery(EntryData):
             )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-        populate_battery_sample_info(self, archive)
-        self._normalize_publication(archive, logger)
         self._set_available_properties()
+        super().normalize(archive, logger)
+        
 
 
 class ChemDataExtractorBattery(Battery):
+    """
+    Schema for battery materials data extracted using ChemDataExtractor (CDE),
+    including bibliographic information and raw extracted values."""
     extracted_name = Quantity(
         type=JSON,
         shape=['*'],
         description='The normalized chemical name, processed by ChemDataExtractor.',
         a_browser=dict(render_value='JsonValue'),
     )
-
     specifier = Quantity(
         type=str,
         description="The property specifier recognized by the parser which provides " \
@@ -357,7 +358,6 @@ class ChemDataExtractorBattery(Battery):
         'at which the measurement was taken.',
         a_browser=dict(render_value='JsonValue'),
     )
-
     capacity_raw_value = Quantity(
         type=str,
         description='The capacity value as a string, exactly as it was extracted ' \
@@ -407,6 +407,30 @@ class ChemDataExtractorBattery(Battery):
         type=str,
         description='The conductivity unit as a string, as extracted from the source.',
     )
+    publication = SubSection(
+        section_def=PublicationReference,
+        description='The publication reference for this battery data entry.',
+    )
+    doi = Quantity(
+        type=str,
+        description='The Digital Object Identifier (doi) of the source publication, '
+        'providing a persistent link to the original article.',
+        a_eln=ELNAnnotation(component=ELNComponentEnum.StringEditQuantity),
+    )
+    publication_year = Quantity(
+        type=str, description='The year of the publication, extracted for filtering.'
+    )
+
+    def _normalize_publication(
+        self, archive: 'EntryArchive', logger: 'BoundLogger'
+    ) -> None:
+        if self.doi and not self.publication:
+            logger.info(f'Creating Publication Reference section for DOI: {self.doi}')
+            pub = PublicationReference(DOI_number=self.doi)
+            self.publication = pub
+            self.publication.normalize(archive, logger)
+        if self.publication and self.publication.publication_date:
+            self.publication_year = str(self.publication.publication_date.year)
 
     def _normalize_quantitative_properties(self) -> None:
         for raw, clean in [
@@ -428,11 +452,15 @@ class ChemDataExtractorBattery(Battery):
                     pass
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        if self.extracted_name and self.chemical_composition is None:
-            self.chemical_composition = self.extracted_name
-
-        self._normalize_quantitative_properties()
+        if self.material_name:
+            logger.info(f"Sanitizing material_name: '{self.material_name}'")
+            self.material_name = self.material_name.replace('\u2013', 
+                                                            '-').replace('\u2014', 
+                                                                         '-')
+            logger.info(f"Sanitized material_name to: '{self.material_name}'")
         super().normalize(archive, logger)
-
+        self._normalize_quantitative_properties()
+        populate_battery_sample_info(self, archive, logger)
+        self._normalize_publication(archive, logger)
 
 m_package.__init_metainfo__()

@@ -16,7 +16,6 @@ from nomad.config.models.ui import (
     WidgetScatterPlot,
 )
 
-# need to update schema based on the battery_schema.py class name
 SCHEMA='nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery'
 
 battery_app = AppEntryPoint(
@@ -24,7 +23,7 @@ battery_app = AppEntryPoint(
     description='Explore Properties from single-file YAML uploads.',
     app=App(
         # -------------- overview page ----------
-        label='Extracted Battery Database',
+        label='Battery Database',
         path='batterydb',
         category='Use Cases',
         description=('Curated Experimental Battery properties from the literature.'),
@@ -90,7 +89,6 @@ battery_app = AppEntryPoint(
         menu=Menu(
             title='Filters',
             items=[
-                # categorical ­––––––––––––––––––––––––––––––––––––––––––––
                 MenuItemTerms(
                     quantity=f'data.chemical_formula_hill#{SCHEMA}',
                     title='Material',
@@ -102,7 +100,6 @@ battery_app = AppEntryPoint(
                     show_input=True,
                 ),
                 MenuItemTerms(
-                    # NOTE: this is not working
                     quantity=f'data.publication_year#{SCHEMA}',
                     title='Publication Year',
                 ),
@@ -125,51 +122,69 @@ battery_app = AppEntryPoint(
         # ---------------------------- dashboard ----------------------------
         dashboard=Dashboard(
             widgets=[
-                # --- periodic table (unchanged) ---
+                # --- periodic table ---
                 WidgetPeriodicTable(
                     title='Elements present in selected entries',
                     search_quantity='results.material.elements',
-                    layout={'lg': Layout(w=12, h=8, x=0, y=0, minW=12, minH=8)},
+                    layout={
+                        'md': Layout(w=12, h=8, x=0, y=0, minW=12, minH=8),
+                        'lg': Layout(w=12, h=8, x=0, y=0, minW=12, minH=8)
+                    },
                 ),
-                # --- histograms ------------------------------------------------
-                WidgetHistogram(  # Capacity )
+                # --- histograms ---
+                WidgetHistogram(  # Capacity
                     title='Capacity distribution',
-                    x=AxisQuantity(search_quantity= f'data.capacity#{SCHEMA}', 
+                    x=AxisQuantity(search_quantity= f'data.capacity#{SCHEMA}',
                                    unit='mA*hour/g'),
                     n_bins=100,
                     autorange=True,
-                    layout={'lg': Layout(w=6, h=8, x=0, y=8, minW=6, minH=6)},
+                    layout={
+                        'md': Layout(w=6, h=4, x=0, y=8, minW=3, minH=3),
+                        'lg': Layout(w=6, h=5, x=0, y=8, minW=5, minH=4)
+                    },
                 ),
                 WidgetHistogram(  # Voltage
                     title='Voltage distribution',
                     x=f'data.voltage#{SCHEMA}',
                     n_bins=100,
                     autorange=True,
-                    layout={'lg': Layout(w=6, h=8, x=6, y=8, minW=6, minH=6)},
+                    layout={
+                        'md': Layout(w=6, h=4, x=6, y=8, minW=3, minH=3),
+                        'lg': Layout(w=6, h=5, x=6, y=8, minW=5, minH=4)
+                    },
                 ),
                 WidgetHistogram(  # Coulombic Efficiency
                     title='Coulombic Efficiency distribution',
                     x=f'data.coulombic_efficiency#{SCHEMA}',
                     n_bins=100,
                     autorange=True,
-                    layout={'lg': Layout(w=6, h=8, x=12, y=8, minW=6, minH=6)},
+                    layout={
+                        'md': Layout(w=6, h=3, x=12, y=12, minW=3, minH=3),
+                        'lg': Layout(w=6, h=5, x=12, y=8, minW=5, minH=4)
+                    },
                 ),
-                WidgetHistogram(  # Conductivity
+                WidgetHistogram( # Conductivity
                     title='Conductivity distribution',
                     x=f'data.conductivity#{SCHEMA}',
                     n_bins=100,
                     autorange=True,
-                    layout={'lg': Layout(w=6, h=8, x=18, y=8, minW=6, minH=6)},
+                    layout={
+                        'md': Layout(w=6, h=3, x=6, y=12, minW=3, minH=3),
+                        'lg': Layout(w=6, h=5, x=18, y=8, minW=5, minH=4)
+                    },
                 ),
                 WidgetHistogram(  # Energy density
                     title='Energy-density distribution',
-                    x=AxisQuantity(search_quantity= f'data.energy_density#{SCHEMA}', 
+                    x=AxisQuantity(search_quantity= f'data.energy_density#{SCHEMA}',
                                    unit='W*hour/kg'),
                     n_bins=100,
                     autorange=True,
-                    layout={'lg': Layout(w=6, h=8, x=24, y=8, minW=6, minH=6)},
+                    layout={
+                        'md': Layout(w=6, h=3, x=0, y=12, minW=3, minH=3),
+                        'lg': Layout(w=6, h=5, x=24, y=8, minW=5, minH=4)
+                    },
                 ),
-                # --- scatter plot (Voltage vs Capacity coloured by Specifier) --
+                # --- scatter plots ---
                 WidgetScatterPlot(
                     title='Voltage vs Capacity (by Specifier)',
                     x=Axis(
@@ -183,7 +198,28 @@ battery_app = AppEntryPoint(
                     ),
                     size=800,
                     autorange=True,
-                    layout={'lg': Layout(w=6, h=8, x=12, y=0, minW=6, minH=6)},
+                    layout={
+                        'md': Layout(w=6, h=6, x=12, y=0, minW=3, minH=3),
+                        'lg': Layout(w=9, h=8, x=12, y=0, minW=6, minH=6)
+                    },
+                ),
+                WidgetScatterPlot(
+                    title='Coulombic Efficiency vs Capacity',
+                    x=Axis(
+                        search_quantity=f'data.coulombic_efficiency#{SCHEMA}',
+                        title='Percentage',
+                    ),
+                    y=Axis(
+                        search_quantity=f'data.capacity#{SCHEMA}',
+                        title='Capacity',
+                        unit='mA*hour/g',
+                    ),
+                    size=800,
+                    autorange=True,
+                    layout={
+                        'md': Layout(w=6, h=6, x=12, y=6, minW=3, minH=3),
+                        'lg': Layout(w=9, h=8, x=21, y=0, minW=6, minH=6)
+                    },
                 ),
             ],
         ),
