@@ -108,8 +108,9 @@ def _calculate_masses(
     return total_mass, element_masses
 
 
-def populate_battery_sample_info(sample: 'Battery',  archive: 'EntryArchive', 
-                                 logger: 'BoundLogger') -> None:
+def populate_battery_sample_info(sample: 'Battery',  # noqa: PLR0912, PLR0915
+                                 archive: 'EntryArchive', 
+                                 logger: 'BoundLogger') -> None: 
     """
     Processes the chemical composition from 'extracted_name' to populate the
     sample section itself with PureSubstanceComponents.
@@ -152,7 +153,7 @@ def populate_battery_sample_info(sample: 'Battery',  archive: 'EntryArchive',
 
         substance = PureSubstanceSection( 
             molecular_formula=formula,    
-            elements=elements,
+            #elements=elements,
             elemental_composition=elemental_compositions_component or None,
         )
 
