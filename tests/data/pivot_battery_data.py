@@ -1,4 +1,31 @@
+import ast
+
 import pandas as pd
+
+
+def convert_tuple_to_list_string(value):
+    """
+    Safely evaluates a string from a DataFrame cell.
+    If the string represents a tuple (e.g., "({'a': 1}, {'b': 2})"),
+    it converts the tuple to a list and returns its string representation
+    (e.g., "[{'a': 1}, {'b': 2}]").
+    This is crucial for preparing data for JSON fields in a schema.
+    """
+    if pd.isna(value):
+        return value
+
+    try:
+        parsed_value = ast.literal_eval(str(value))
+
+        # If the parsed object is a tuple, convert it to a list
+        if isinstance(parsed_value, tuple):
+            return str(list(parsed_value))
+
+    except (ValueError, SyntaxError):
+        return value
+
+    # If the value was a valid literal but not a tuple, return it unchanged.
+    return value
 
 
 def pivot_battery_data(input_file: str, output_file: str) -> None:
@@ -37,6 +64,11 @@ def pivot_battery_data(input_file: str, output_file: str) -> None:
     
     # Merge metadata with pivoted measurements
     df_final = pd.merge(df_meta, df_pivot, on='Name', how='right')
+    json_like_columns = ['Info', 'extracted_name']
+    for col in json_like_columns:
+        if col in df_final.columns:
+            print(f"Cleaning column '{col}' to convert tuples to lists...")
+            df_final[col] = df_final[col].apply(convert_tuple_to_list_string)
     
     # Save the result
     df_final.to_csv(output_file, index=False)

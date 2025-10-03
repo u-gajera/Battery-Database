@@ -159,7 +159,7 @@ battery_app = AppEntryPoint(
                     n_bins=100,
                     autorange=True,
                     layout={
-                        'md': Layout(w=6, h=3, x=12, y=12, minW=3, minH=3),
+                        'md': Layout(w=6, h=4, x=12, y=12, minW=3, minH=3),
                         'lg': Layout(w=6, h=5, x=12, y=8, minW=5, minH=4)
                     },
                 ),
@@ -168,8 +168,9 @@ battery_app = AppEntryPoint(
                     x=f'data.conductivity#{SCHEMA}',
                     n_bins=100,
                     autorange=True,
+                    # scale='log',
                     layout={
-                        'md': Layout(w=6, h=3, x=6, y=12, minW=3, minH=3),
+                        'md': Layout(w=6, h=4, x=6, y=12, minW=3, minH=3),
                         'lg': Layout(w=6, h=5, x=18, y=8, minW=5, minH=4)
                     },
                 ),
@@ -180,7 +181,7 @@ battery_app = AppEntryPoint(
                     n_bins=100,
                     autorange=True,
                     layout={
-                        'md': Layout(w=6, h=3, x=0, y=12, minW=3, minH=3),
+                        'md': Layout(w=6, h=4, x=0, y=12, minW=3, minH=3),
                         'lg': Layout(w=6, h=5, x=24, y=8, minW=5, minH=4)
                     },
                 ),
@@ -207,7 +208,7 @@ battery_app = AppEntryPoint(
                     title='Coulombic Efficiency vs Capacity',
                     x=Axis(
                         search_quantity=f'data.coulombic_efficiency#{SCHEMA}',
-                        title='Percentage',
+                        title='Coulombic Efficiency (%)',
                     ),
                     y=Axis(
                         search_quantity=f'data.capacity#{SCHEMA}',

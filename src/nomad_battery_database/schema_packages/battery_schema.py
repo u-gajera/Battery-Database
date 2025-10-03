@@ -256,30 +256,58 @@ class Battery(CompositeSystem, EntryData):
     capacity = Quantity(
         type=np.float64,
         unit='mA*hour/g',
-        description='The normalized specific capacity value.',
+        description='Battery capacity is a measure of how much electrical charge a '
+        'cell (or electrode material) can deliver (or store) under a defined set of '
+        'operating conditions. In materials science, one often distinguishes '
+        'between specific capacity (gravimetric), which is charge per unit mass '
+        '(e.g., mAh/g), and volumetric capacity, which is charge per unit volume '
+        '(e.g., mAh/cm³). The reported capacity often depends on experimental '
+        'conditions like the number of cycles and current density. This schema '
+        'stores the normalized specific capacity.',
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     voltage = Quantity(
         type=np.float64,
         unit='V',
-        description='The normalized voltage value.',
+        description='Voltage in a battery is the electrical potential difference '
+        'between the two electrodes (cathode and anode), which drives the flow of '
+        'electrons. It can be reported as open-circuit voltage (no current), '
+        'operating/nominal voltage (under load), or as a voltage profile that '
+        'varies with the state of charge. This value reflects the thermodynamics '
+        'of the redox reactions and internal resistances of the battery.',
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     coulombic_efficiency = Quantity(
         type=np.float64,
-        description='The normalized Coulombic efficiency value (dimensionless).',
+        description='Coulombic efficiency, also known as Faradaic efficiency, is a '
+        'measure of charge transfer efficiency in a battery. It is the ratio of '
+        'the total charge extracted from the battery during discharging to the '
+        'total charge put into the battery during charging. An efficiency close '
+        'to 100% indicates minimal charge loss to side reactions, such as '
+        'electrolyte decomposition or irreversible capacity loss.',
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     energy_density = Quantity(
         type=np.float64,
         unit='W*hour/kg',
-        description='The normalized specific energy value.',
+        description='Specific energy (or gravimetric energy density) quantifies the '
+        'amount of energy a battery material can store per unit mass, typically '
+        'measured in watt-hours per kilogram (Wh/kg). It is a key performance '
+        'metric calculated from the specific capacity and operating voltage. This '
+        'schema also considers energy density per unit volume (volumetric energy '
+        'density), measured in watt-hours per liter (Wh/L).',
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
     conductivity = Quantity(
         type=np.float64,
         unit='S/cm',
-        description='The normalized conductivity value.',
+        description='Conductivity measures a material\'s ability to conduct electric '
+        'charge. In the context of batteries, this can refer to electronic '
+        'conductivity (movement of electrons through electrodes) or ionic '
+        'conductivity (movement of ions through the electrolyte or electrodes). '
+        'Good conductivity is crucial for efficient charge transport and overall '
+        'battery performance. This schema stores the normalized conductivity value, '
+        'without distinguishing between ionic and electronic contributions.',
         a_eln=ELNAnnotation(component=ELNComponentEnum.NumberEditQuantity),
     )
 
@@ -354,6 +382,7 @@ class ChemDataExtractorBattery(Battery):
     )
     info = Quantity(
         type=JSON,
+        shape=['*'],
         description='Contains additional contextual information about a property ' \
         'record. For capacity, this can include the cycle number and current value ' \
         'at which the measurement was taken.',
