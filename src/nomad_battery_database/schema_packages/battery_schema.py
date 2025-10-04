@@ -221,6 +221,25 @@ def populate_battery_sample_info(sample: 'Battery',  # noqa: PLR0912, PLR0915
 
         archive.results.elemental_composition = sample.elemental_composition
 
+def sanitize_string(input_str: Union[str, None]) -> Union[str, None]:
+    """
+    Replaces various Unicode dash and minus characters with a standard hyphen.
+    From the ChemDataExtractor, there are some instances of these characters
+    """
+    if input_str is None:
+        return None
+    
+    replacements = {
+        '\u2212': '-',  
+        '\u2013': '-', 
+        '\u2014': '-',
+    }
+    
+    sanitized_str = input_str
+    for old, new in replacements.items():
+        sanitized_str = sanitized_str.replace(old, new)
+    return sanitized_str
+
 
 class Battery(CompositeSystem, EntryData):
     """
@@ -430,7 +449,7 @@ class ChemDataExtractorBattery(Battery):
     )
     conductivity_raw_value = Quantity(
         type=str,
-        description='The conductivity value as a string, exactly as it was extracted ' \
+        description='The conductivity value as a string, exactly as it was extracted '\
         'from the source text before any processing or unit conversion.'
     )
     conductivity_raw_unit = Quantity(
@@ -484,10 +503,7 @@ class ChemDataExtractorBattery(Battery):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.material_name:
             logger.info(f"Sanitizing material_name: '{self.material_name}'")
-            self.material_name = self.material_name.replace('\u2013', 
-                                                            '-').replace('\u2014', 
-                                                                         '-')
-            logger.info(f"Sanitized material_name to: '{self.material_name}'")
+            self.material_name = sanitize_string(self.material_name)
         super().normalize(archive, logger)
         self._normalize_quantitative_properties()
         populate_battery_sample_info(self, archive, logger)
