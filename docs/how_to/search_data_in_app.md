@@ -7,7 +7,7 @@ The NOMAD Battery Materials Plugin provides a powerful, dedicated search and vis
 
 You can find the dedicated search page in the NOMAD UI by navigating to the **Explore** menu and selecting **Battery Database** under the **USE CASES** section, as highlighted below.
 
-![image of Battery Database App tab](ScreenshotBatterytab.png)
+![image of Battery Database App tab](Screenshots/ScreenshotBatterytab.png){width="500"}
 
 This will take you to the homepage for the battery database. The page provides an interactive environment composed of three main components, as seen in the screenshot below:
 
@@ -16,7 +16,7 @@ This will take you to the homepage for the battery database. The page provides a
 3.  **Results Table**: At the bottom, a detailed, sortable table of all entries matching your search criteria.
 
 *(insert ScreenshotBatteryHomepage.png here)*
-![image of Battery Database Homepage](ScreenshotBatteryHomepage.png)
+![image of Battery Database Homepage](Screenshots/ScreenshotBatteryHomepage.png)
 ---
 
 ### Key Features of the Search Interface
