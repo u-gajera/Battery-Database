@@ -15,7 +15,6 @@ This will take you to the homepage for the battery database. The page provides a
 2.  **Interactive Dashboard**: At the top, a series of plots and widgets that visualize the data from your current search results.
 3.  **Results Table**: At the bottom, a detailed, sortable table of all entries matching your search criteria.
 
-*(insert ScreenshotBatteryHomepage.png here)*
 <img src="Screenshots/ScreenshotBatteryHomepage.png" alt="image of Battery Database Homepage">
 ---
 
