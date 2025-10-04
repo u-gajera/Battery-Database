@@ -10,12 +10,12 @@ This guide will walk you through the process of creating a new entry and populat
 2.  On the uploads page, you can either add files (yaml format) to an existing upload or create a new one. Click the **CREATE A NEW UPLOAD** button to start a new, unpublished upload session.
 
 *(Image: The "Your uploads" page showing the "CREATE A NEW UPLOAD" button.)*
-![Your uploads page](Screenshots/ScreenshotCreateupload.png){width="500"}
+<img src="Screenshots/ScreenshotCreateupload.png" alt="Your uploads page">
 
 This will take you to a new "unnamed upload" page where you can add your data.
 
 *(Image: The new "unnamed upload" page interface.)*
-![New unnamed upload page](Screenshots/ScreenshotUploadpage.png)
+<img src="Screenshots/ScreenshotUploadpage.png" alt="New unnamed upload page" width="700">
 
 ### Step 2: Create an Entry from the Battery Schema
 
@@ -31,7 +31,7 @@ Instead of uploading a file, you can create a new entry directly in the browser 
 5.  Click **CREATE**.
 
 *(Image: The "Create new entry from schema" dialog, with "Battery" selected.)*
-![Create from schema dialog](Screenshots/ScreenshotSchemapage.png)
+<img src="Screenshots/ScreenshotSchemapage.png" alt="Create from schema dialog" width="700">
 
 ### Step 3: Add Battery Properties
 
@@ -47,7 +47,7 @@ After creating the entry, you will be directed to the **DATA** tab. This is wher
     *   `material name`
 
 *(Image: The data entry fields for battery properties.)*
-![Data entry fields](Screenshots/ScreenshotDatasection.png)
+<img src="Screenshots/ScreenshotDatasection.png" alt="Data entry fields" >
 
 ### Step 4: Define the Material using the Component System
 
@@ -64,7 +64,7 @@ To define the chemical components of your material, you can add a `PureSubstance
 This structured data is crucial for making your entry easy to find, filter, and compare with other materials in the database.
 
 *(Image: Detailed view of the PureSubstanceComponent section with various chemical identifiers.)*
-![Pure substance component view](Screenshots/ScreenshotComponentsystem.png)
+<img src="Screenshots/ScreenshotComponentsystem.png" alt="Pure substance component view">
 
 ### Step 5: Publish Your Data
 

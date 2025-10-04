@@ -16,7 +16,7 @@ A step-by-step guide to preparing your data, uploading it to NOMAD, and explorin
 
 Step-by-step instructions for common tasks related to the plugin.
 
-- [How to Upload Battery Data](how_to/how_to_add_own_batterydata.md)
+- [How to Upload Custom Battery Data](how_to/how_to_add_own_batterydata.md)
 - [Search through the Battery Database](how_to/search_data_in_app.md)
 - [Install this plugin](how_to/install_this_plugin.md)
 - [Prepare and upload data](how_to/use_this_plugin.md)
