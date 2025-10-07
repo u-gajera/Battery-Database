@@ -1,48 +1,52 @@
-# Battery-Database Plugin for NOMAD
 
-This NOMAD plugin provides a comprehensive tool for parsing, storing, and exploring curated experimental battery data from scientific literature. It defines a dedicated schema for battery properties and creates an interactive application within NOMAD for analyzing the collected data.
+# NOMAD Plugin for Battery Database
 
-## Key Features
+This repository contains the `nomad-battery-database` plugin, which allows you to parse, schematize, and visualize curated experimental battery properties from the literature within NOMAD. In addition to that, you can upload your own creation directly into the dataset. 
 
-*   **Custom Parser:** Ingests battery data from common file formats, including CSV, Excel (`.xls`, `.xlsx`), and YAML.
-*   **Dedicated Data Schema:** Defines a `BatteryDatabase` schema that captures key performance metrics like capacity, voltage, coulombic efficiency, energy density, and conductivity, alongside rich bibliographic metadata.
-*   **Interactive Application:** Provides a dedicated search page at `/batterydb` with powerful filtering capabilities, a periodic table of elements, histograms for property distributions, and scatter plots for exploring relationships between key metrics.
+The plugin provides schemas for storing battery data and includes a parser to automatically process and upload datasets from tabular files. It is designed for two primary workflows: manually entering single data points and batch-uploading large datasets.
 
-## Data Formats
+## Features
 
-To use this plugin, your data must be structured in one of the following formats.
+*   **Dual Schema System**: Includes a `Battery` schema for manual uploads and the more detailed `ChemDataExtractorBattery` schema for batch parsing.
+*   **Flexible Parser**: The `BatteryParser` automatically processes `.csv`, `.xls`, and `.xlsx` files.
+*   **Automated Normalization**: Automatically parses chemical compositions, generates Hill-ordered formulas, creates publication references from DOIs, and standardizes property values.
+*   **Dedicated Search Application**: Provides a powerful, interactive user interface within NOMAD for exploring and visualizing the battery data.
 
-### YAML Format
+## The Battery Database Application
 
-The parser accepts YAML files containing a list of entries, where each entry is a dictionary of key-value pairs. This format is ideal for structured, human-readable data.
+Once your data is uploaded and processed, you can explore it using a dedicated application within NOMAD. This interface, defined in the plugin's `__init__.py` file, is designed for intuitive data discovery and visualization.
 
-**Example (`entry1.extracted_battery.yaml`):**
-```yaml
-- Name: LiCoO2
-  DOI:
-    - "10.1016/j.electacta.2016.11.154"
-  Capacity_Raw_value: 140
-  Capacity_Raw_unit: mAh/g
-  Voltage_Raw_value: 3.7
-  Voltage_Raw_unit: V
+The application can be found by navigating to the **Explore** menu and selecting **Battery Database** under the "Use Cases" category.
 
-- Name: Na3V2(PO4)3
-  DOI: ["10.1039/C4NR06432A"]
-  Capacity_Raw_value: 105
-  Capacity_Raw_unit: mAh/g
-  Voltage_Raw_value: 3.4
-  Voltage_Raw_unit: V 
-  ```
+The interface consists of three main components:
 
-### CSV/Excel Format
-The parser can also process tabular data from CSV or Excel files. The file should contain one row per entry, with columns corresponding to the schema fields. In addition to the properties mentioned here, we also support Coulombic Efficiency, Conductivity and Energy. Here, for fairness, we have provided _Raw_values and _Raw_units which are original units with values mentioned along with converted values into the standard units. 
+1.  **Filter Panel**: On the left, you can narrow your search by key metadata. Filters include `Material` (chemical formula), `Journal`, `Publication Year`, `Available Properties`, and more.
+2.  **Interactive Dashboard**: A series of widgets at the top provide a visual summary of your search results. This includes a `Periodic Table` of a `Periodic Table` of the elements present, `Histograms` for the distribution of key properties (Capacity, Voltage, Energy Density), and `Scatter Plots` to visualize relationships between properties like Voltage vs. Capacity.
+3.  **Results Table**: A detailed and sortable table at the bottom displays the entries matching your criteria. Default columns include `Material`, `Journal`, `Capacity`, `Voltage`, and `Energy Density`.
 
-Example (battery_data_pivot.extracted_battery.csv):
+For a complete walkthrough of the application's features, see the [**Searching and Exploring Battery Data**](docs/how_to/search_data_in_app.md) guide.
 
-| Name         | DOI                                                                 | Capacity_Raw_value | Capacity_Raw_unit | Voltage_Raw_value | Voltage_Raw_unit |
-|:-------------|:--------------------------------------------------------------------|:-------------------|:------------------|:------------------|:-----------------|
-| LiCoO2       | 10.1016/j.electacta.2016.11.154; 10.1038/s41597-020-00602-2         | 140                | mAh/g             | 3.7               | V                |
-| Na3V2(PO4)3  | 10.1039/C4NR06432A                                                  | 105                | mAh/g             | 3.4               | V                |
+## Getting Started
+
+To get started with adding your own data, follow our step-by-step guides.
+
+*   For a complete walkthrough from a raw CSV file to the final visualization, see our [**Tutorial**](docs/tutorial/tutorial.md).
+*   To upload data in batches using the parser, refer to the guide on [**How to Prepare and Upload Data**](docs/how_to/use_this_plugin.md).
+*   To manually add a single data point through the NOMAD interface, see [**How to Add Your Own Battery Data**](docs/how_to/how_to_add_own_batterydata.md).
+
+## Documentation
+
+This README provides a high-level overview. For detailed information on the schemas, parser, and contribution guidelines, please refer to our full documentation.
+
+*   [**View the full documentation**](docs/index.md)
+
+## Installation
+
+To add this plugin to your NOMAD or NOMAD Oasis instance, please follow the official [**NOMAD plugin installation instructions**](https://nomad-lab.eu/prod/v1/staging/docs/plugins/plugins.html#add-a-plugin-to-your-nomad).
+
+## Contributing
+
+Contributions are very welcome! If you would like to help improve the plugin or its documentation, please read our [**contribution guide**](docs/how_to/contribute_to_this_plugin.md).
 
 ## Development and Installation
 If you want to develop this plugin locally, clone the project and create a virtual environment (you can use Python 3.9, 3.10, or 3.11):
