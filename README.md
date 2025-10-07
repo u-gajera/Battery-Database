@@ -42,7 +42,7 @@ This README provides a high-level overview. For detailed information on the sche
 
 ## Installation
 
-To add this plugin to your NOMAD or NOMAD Oasis instance, please follow the official [**NOMAD plugin installation instructions**](https://nomad-lab.eu/prod/v1/staging/docs/plugins/plugins.html#add-a-plugin-to-your-nomad).
+To add this plugin to your NOMAD or NOMAD Oasis instance, please follow the official [**NOMAD plugin installation instructions**](https://nomad-lab.eu/prod/v1/docs/howto/plugins/plugins.html).
 
 ## Contributing
 
