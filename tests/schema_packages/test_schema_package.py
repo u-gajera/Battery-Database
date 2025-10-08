@@ -67,9 +67,9 @@ def test_full_parsing_and_normalization_pipeline(monkeypatch):
     first_section = first_archive.data
     assert first_section.material_name == '40-CuO / C'
     assert first_section.doi == '10.1039/C4NR06432A'
-    expected_formula = 'CCuO' 
+    expected_formula = 'CCuO'
     actual_formula = first_archive.results.material.chemical_formula_hill
-    assert actual_formula == expected_formula, ( 
+    assert actual_formula == expected_formula, (
         f"Expected formula to be '{expected_formula}', but got '{actual_formula}'."
     )
     print('Detailed spot-check on the first entry passed.')
@@ -83,4 +83,5 @@ def test_full_parsing_and_normalization_pipeline(monkeypatch):
     assert lco_archive is not None, "Could not find the 'LCO' entry to test."
     assert lco_archive.results.material.elements == ['Co', 'Li', 'O']
     assert lco_archive.data.coulombic_efficiency is not None
+    assert lco_archive.data.coulombic_efficiency == 99.5
     print("Detailed spot-check on 'LCO' entry passed.")
