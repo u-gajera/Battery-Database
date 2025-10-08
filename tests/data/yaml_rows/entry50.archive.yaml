@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: MgFe2O4 / graphene
+  extracted_name:
+  - Mg: 1.0
+    Fe: 2.0
+    O: 4.0
+  doi: 10.1016/j.matchar.2014.06.024
+  specifier: coulombic
+  tag: CDE
+  title: COMBUSTIONSYNTHESISMGFE2O4GRAPHENENANOCOMPOSITEAHIGHPERFORMANCENEGATIVEELECTRODEFORLITHIUMIONBATTERIES
+  journal: Materials Characterization
+  date: '2014-06-28'
+  correctness: F3
+  coulombic efficiency_raw_unit: '%'
+  coulombic efficiency_raw_value: '100'
+  coulombic efficiency_unit: Percent^(1.0)
+  coulombic efficiency_value: 100.0

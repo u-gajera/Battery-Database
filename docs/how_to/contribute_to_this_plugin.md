@@ -10,7 +10,7 @@ Contributions are very welcome! Whether you're fixing a bug, adding a new featur
     git clone https://github.com/YOUR_USERNAME/Battery-Database.git
     cd Battery-Database
     ```
-3.  **Set up a development environment.** It is highly recommended to install the plugin using [destro]((https://github.com/FAIRmat-NFDI/nomad-distro-dev))in editable mode within your NOMAD environment:
+3.  **Set up a development environment.** It is highly recommended to install the plugin using [destro]((https://github.com/FAIRmat-NFDI/nomad-distro-dev)) in editable mode within your NOMAD environment:
     ```bash
     git submodule add https://github.com/u-gajera/Battery-Database.git
     uv add packages/nomad-battery-database

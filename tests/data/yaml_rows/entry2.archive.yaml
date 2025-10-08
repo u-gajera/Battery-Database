@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: AlCl3
+  extracted_name:
+  - Al: 1.0
+    Cl: 3.0
+  doi: 10.1016/j.apsusc.2018.02.003
+  specifier: capacity
+  tag: CDE
+  title: SUNLIGHTCHARGEDELECTROCHROMICBATTERYBASEDHYBRIDFILMTUNGSTENOXIDEPOLYANILINE
+  journal: Applied Surface Science
+  date: '2018-02-03'
+  correctness: F2
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 8.25 , 11.13 , 18.46 , 20.87 , 27.50 and 36.78
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 27.5

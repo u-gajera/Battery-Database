@@ -1,0 +1,19 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Ni1Co3 / CN-3
+  extracted_name:
+  - Ni: 1.0
+    Co: 3.0
+  - C: 1.0
+    N: 1.0
+  doi: 10.1016/j.electacta.2018.05.069
+  tag: CDE
+  warning: L
+  title: NICODOPEDCNNANOCOMPOSITESFORCATHODICCATALYSTSZNAIRBATTERIESINNEUTRALMEDIA
+  journal: Electrochimica Acta
+  date: '2018-05-11'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: – 0.6
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.6

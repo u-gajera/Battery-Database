@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: LiNi0.8Co0.2O2
+  extracted_name:
+  - Li: 1.0
+    Ni: 0.8
+    Co: 0.2
+    O: 2.0
+  doi: 10.1016/j.ssi.2006.11.017
+  specifier: discharge capacities
+  tag: CDE
+  info:
+    current_value: 25 , 100 and 200
+    current_units: mAg−1
+  title: EFFECTSSNDOPINGSTRUCTURALELECTROCHEMICALPROPERTIESLINI08CO02O2CATHODEMATERIALS
+  journal: Solid State Ionics
+  date: '2007-01-16'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 189 , 182 and 150
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 189.0

@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Li1.09Mn0.486Ni0.212Co0.212O2
+  extracted_name:
+  - Li: 1.09
+    Mn: 0.486
+    Ni: 0.212
+    Co: 0.212
+    O: 2.0
+  doi: 10.1016/j.jpowsour.2012.02.085
+  tag: CDE
+  info:
+    current_value: 200
+    current_units: mAg−1
+  title: INFLUENCELITHIUMCONTENTELECTROCHEMICALPERFORMANCELI1XMN0533NI0233CO02331XO2CATHODEMATERIALS
+  journal: Journal of Power Sources
+  date: '2012-03-03'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: and 186.9
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 186.9

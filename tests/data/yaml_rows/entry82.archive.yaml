@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: V2(PO4)O / C
+  extracted_name:
+  - P: 1.0
+    O: 5.0
+    V: 2.0
+  - C: 1.0
+  doi: 10.1039/C6TA02932A
+  specifier: discharge capacities
+  tag: CDE
+  info:
+    current_value: 0.5 , 0.8 , 1.0 , 1.5 , and 2.0
+    current_units: Ag−1
+  title: 'A new anode material for high performance lithium-ion batteries: V 2 (PO 4 )O/C  '
+  journal: Journal of Materials Chemistry A
+  date: 2016/06/21
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 541 , 480 , 445 , 409 and 382
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 409.0

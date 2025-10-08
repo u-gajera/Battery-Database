@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Fe3O4 composite
+  extracted_name:
+  - Fe: 3.0
+    O: 4.0
+  doi: 10.1039/C4RA14733B
+  specifier: capacities
+  tag: CDE
+  info:
+    cycle_value: 400
+    cycle_units: cycles
+  title: 'A sustainable iron-based sodium ion battery of porous carbon–Fe 3 O 4 /Na 2 FeP 2 O 7 with high performance '
+  journal: RSC Advances
+  date: 2015/01/08
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 225 , 168 , 127 , 103 , 98 and 90
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 90.0

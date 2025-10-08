@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: LiFeSO4F
+  extracted_name:
+  - Li: 1.0
+    Fe: 1.0
+    S: 1.0
+    O: 4.0
+    F: 1.0
+  doi: 10.1016/j.jpowsour.2019.02.039
+  specifier: potential
+  tag: CDE
+  warning: R
+  title: ELECTRONICCHANGESINPOLY34ETHYLENEDIOXYTHIOPHENECOATEDLIFESO4FDURINGELECTROCHEMICALLITHIUMEXTRACTION
+  journal: Journal of Power Sources
+  date: '2019-02-16'
+  correctness: T
+  voltage_raw_unit: V vs. Li+
+  voltage_raw_value: '3.6'
+  voltage_unit: Volt^(1.0)
+  voltage_value: 3.6

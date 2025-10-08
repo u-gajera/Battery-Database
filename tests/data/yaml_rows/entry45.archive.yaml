@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: LiSS
+  extracted_name:
+  - Li: 1.0
+    S: 2.0
+  doi: 10.1016/j.progpolymsci.2018.04.002
+  specifier: specific capacity
+  tag: CDE
+  info:
+    current_value: 60
+    current_units: C
+  title: RECENTADVANCESINSYNTHESISCATECHOLDERIVEDBIOPOLYMERSFORAPPLICATIONSINENERGYSTORAGEENVIRONMENT
+  journal: Progress in Polymer Science
+  date: '2018-05-06'
+  correctness: F2
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '137'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 137.0

@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: La0.4Sr0.6MnO3
+  extracted_name:
+  - La: 0.4
+    Sr: 0.6
+    Mn: 1.0
+    O: 3.0
+  doi: 10.1016/j.electacta.2017.02.155
+  tag: CDE
+  title: STRONTIUMDOPEDPEROVSKITEOXIDELA1XSRXMNO3X00206AHIGHLYEFFICIENTELECTROCATALYSTFORNONAQUEOUSLIO2BATTERIES
+  journal: Electrochimica Acta
+  date: '2017-03-01'
+  correctness: F3
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '1000'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 1000.0

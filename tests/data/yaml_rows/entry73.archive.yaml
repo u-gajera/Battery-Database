@@ -1,0 +1,16 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: SnCu @ C-Felt
+  extracted_name:
+  - Sn: 1.0
+    Cu: 1.0
+  doi: 10.1016/j.surfin.2018.09.007
+  tag: CDE
+  title: ELECTROCHEMICALPERFORMANCEHEATTREATEDSNO2SNCUCFELTANODEMATERIALSFORLITHIUMIONBATTERIES
+  journal: Surfaces and Interfaces
+  date: '2018-09-24'
+  correctness: T
+  capacity_raw_unit: mAh/g
+  capacity_raw_value: '83'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 83.0

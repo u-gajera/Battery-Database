@@ -1,0 +1,19 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: CoSe2 / Mo2C / C electrode
+  extracted_name:
+  - Co: 1.0
+    Se: 2.0
+  - Mo: 2.0
+    C: 1.0
+  - C: 1.0
+  doi: 10.1016/j.mtener.2018.10.002
+  tag: CDE
+  title: NANOCONFINEDCOSE2MO2CNANOPARTICLESENCAPSULATEDPOROUSCARBONNANOFIBERSFORSUPERIORLITHIUMSODIUMSTORAGE
+  journal: Materials Today Energy
+  date: '2018-11-02'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: and 2.23
+  voltage_unit: Volt^(1.0)
+  voltage_value: 2.23

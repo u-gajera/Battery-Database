@@ -80,7 +80,7 @@ NOMAD will automatically detect the csv/YAML files, match them to the battery pa
 Once the processing is complete (the upload status will change from "processing" to "finished"), you can explore the data.
 
 1. Navigate to the **EXPLORE** page.  
-2. From the **"Category"** dropdown, click on the **Extracted Battery Database** application.  
+2. From the **"Category"** dropdown, click on the **Battery Database** application.  
 
 You will see a dashboard with:
 

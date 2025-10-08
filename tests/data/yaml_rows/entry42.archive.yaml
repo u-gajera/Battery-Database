@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: LiFexMn1−xPO4
+  extracted_name:
+  - Li: 1.0
+    Fe: x
+    Mn: 1-x
+    P: 1.0
+    O: 4.0
+  doi: 10.1016/j.jpowsour.2010.12.045
+  specifier: capacity
+  tag: CDE
+  title: LIFEXMN1XPO4ACATHODEFORLITHIUMIONBATTERIES
+  journal: Journal of Power Sources
+  date: '2010-12-21'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '138.3'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 138.3
