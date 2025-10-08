@@ -153,7 +153,7 @@ def populate_battery_sample_info(sample: 'Battery',  # noqa: PLR0912, PLR0915
 
         substance = PureSubstanceSection( 
             molecular_formula=formula,    
-            elements=elements,
+            #elements=elements,
             #elemental_composition=elemental_compositions_component or None,
         )
 

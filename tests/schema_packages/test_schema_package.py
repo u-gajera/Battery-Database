@@ -83,5 +83,5 @@ def test_full_parsing_and_normalization_pipeline(monkeypatch):
     assert lco_archive is not None, "Could not find the 'LCO' entry to test."
     assert lco_archive.results.material.elements == ['Co', 'Li', 'O']
     assert lco_archive.data.coulombic_efficiency is not None
-    assert lco_archive.data.coulombic_efficiency == 99.5
+    assert lco_archive.data.coulombic_efficiency == 99.5 # noqa: PLR2004
     print("Detailed spot-check on 'LCO' entry passed.")
