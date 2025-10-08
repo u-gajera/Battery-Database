@@ -158,6 +158,8 @@ class BatteryParser(MatchingParser):
                 if isinstance(value, str):
                     try:
                         parsed_value = ast.literal_eval(value)
+                        if isinstance(parsed_value, dict):
+                            parsed_value = [parsed_value]
                         setattr(db, attr, parsed_value)
                     except (ValueError, SyntaxError):
                         setattr(db, attr, value)

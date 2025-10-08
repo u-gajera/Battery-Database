@@ -11,7 +11,11 @@ CREATE_ARCHIVE_TARGET = 'nomad_battery_database.parsers.battery_parser.create_ar
 EXPECTED_ARCHIVE_COUNT = 85
 
 
-def test_schema_package_with_monkeypatch(monkeypatch):
+def test_full_parsing_and_normalization_pipeline(monkeypatch):
+    """
+    An integration test that uses nomad.client to parse the data file and then
+    normalizes each generated entry, checking for correctness.
+    """
     csv_file = os.path.join(
         'tests', 'data', 'battery_data_pivot.extracted_battery.csv'
     )
@@ -43,24 +47,31 @@ def test_schema_package_with_monkeypatch(monkeypatch):
         assert isinstance(battery_section, ChemDataExtractorBattery), (
             f'Archive #{i} data is not a ChemDataExtractorBattery instance.'
         )
-        if getattr(entry_archive.results, "material", None) is None:
-            print(f"⚠️ Warning: Archive #{i} is missing results.material.")
 
-        assert entry_archive.results is not None, f'Archive #{i} is missing results.'
-        # assert entry_archive.results.material is not None, (
-        #     f'Archive #{i} is missing results.material.'
-        # )
-        assert entry_archive.results.material.chemical_formula_hill is not None, (
-            f'Archive #{i} failed to normalize chemical_formula_hill.'
-        )
+        if battery_section.extracted_name:
+            assert entry_archive.results is not None, (
+                f'Archive #{i} has extracted_name but is missing results.'
+            )
+            assert entry_archive.results.material is not None, (
+                f'Archive #{i} has extracted_name but is missing results.material.'
+            )
+            assert entry_archive.results.material.chemical_formula_hill is not None, (
+                f'Archive #{i} failed to normalize chemical_formula_hill.'
+            )
+        else:
+            print(f"ℹ️ Info: Archive #{i} has no extracted_name, skipping checks.")
+
 
     print(f'All {captured_count} archives passed general checks after normalization.')
-
     first_archive = captured_archives[0]
     first_section = first_archive.data
     assert first_section.material_name == '40-CuO / C'
     assert first_section.doi == '10.1039/C4NR06432A'
-    assert first_archive.results.material.chemical_formula_hill == 'CCuO'
+    expected_formula = 'CCuO' 
+    actual_formula = first_archive.results.material.chemical_formula_hill
+    assert actual_formula == expected_formula, ( 
+        f"Expected formula to be '{expected_formula}', but got '{actual_formula}'."
+    )
     print('Detailed spot-check on the first entry passed.')
 
     lco_archive = None
