@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: TiP2O7 / LiMn2O4
+  extracted_name:
+  - Ti: 1.0
+    P: 2.0
+    O: 7.0
+  - Li: 1.0
+    Mn: 2.0
+    O: 4.0
+  doi: 10.1016/j.electacta.2006.10.010
+  tag: CDE
+  warning: L
+  title: ELECTROCHEMICALPROPERTIESTIP2O7LITI2PO43ANODEMATERIALFORLITHIUMIONBATTERYAQUEOUSSOLUTIONELECTROLYTE
+  journal: Electrochimica Acta
+  date: '2006-11-27'
+  correctness: F3
+  voltage_raw_unit: V
+  voltage_raw_value: 0.90 and 1.85
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.9

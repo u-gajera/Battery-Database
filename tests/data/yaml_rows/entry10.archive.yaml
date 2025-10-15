@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: CoII(OH)2
+  extracted_name:
+  - O: 2.0
+    H: 2.0
+    Co: 1.0
+    I: 2.0
+  doi: 10.1039/C5CC09361A
+  tag: CDE
+  title: 'Water oxidation catalysis: an amorphous quaternary Ba-Sr-Co-Fe oxide as a promising electrocatalyst for the oxygen-evolution reaction  '
+  journal: Chemical Communications
+  date: 2016/01/14
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: 1.08 and 1.01
+  voltage_unit: Volt^(1.0)
+  voltage_value: 1.01

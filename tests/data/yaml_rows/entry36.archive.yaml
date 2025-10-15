@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Li4Mn5O12
+  extracted_name:
+  - Li: 4.0
+    Mn: 5.0
+    O: 12.0
+  doi: 10.1016/j.electacta.2010.08.060
+  specifier: discharge capacity
+  tag: CDE
+  title: ELECTROCHEMICALPERFORMANCELI4MN5O12NANOCRYSTALLITESPREPAREDBYSPRAYDRYINGASSISTEDSOLIDSTATEREACTIONS
+  journal: Electrochimica Acta
+  date: '2010-09-17'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '158.7'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 158.7

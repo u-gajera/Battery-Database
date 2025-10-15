@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Fe3O4
+  extracted_name:
+  - Fe: 3.0
+    O: 4.0
+  doi: 10.1039/C5TA09742H
+  specifier: reversible capacity
+  tag: CDE
+  info:
+    current_value: 100
+    current_units: mAg−1
+    cycle_value: 170
+    cycle_units: cycles
+  title: 'Hybridization of graphene nanosheets and carbon-coated hollow Fe 3 O 4 nanoparticles as a high-performance anode material for lithium-ion batteries  '
+  journal: Journal of Materials Chemistry A
+  date: 2016/02/09
+  correctness: F1
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '1039'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 1039.0

@@ -7,12 +7,13 @@ from typing import Any, Optional, Union
 
 import numpy as np
 import pandas as pd
-import yaml
 from nomad.datamodel import EntryArchive
 from nomad.parsing import MatchingParser
 
 from nomad_battery_database.parsers.utils import create_archive
-from nomad_battery_database.schema_packages.battery_schema import BatteryDatabase
+from nomad_battery_database.schema_packages.battery_schema import (
+    ChemDataExtractorBattery,
+)
 
 COUNT_TOLERANCE: float = 1e-2
 
@@ -27,7 +28,9 @@ def _safe_literal_eval(raw: str) -> Optional[list[dict[str, Any]]]:
     return None
 
 
-def _normalize_parts(raw: Optional[Union[str, list]]) -> Optional[list[dict[str, Any]]]:
+def _normalize_parts(
+    raw: Optional[Union[str, list]]
+) -> Optional[list[dict[str, Any]]]:
     if raw is None:
         return None
     if isinstance(raw, str):
@@ -96,23 +99,18 @@ class BatteryParser(MatchingParser):
         child_archives: Optional[dict[str, EntryArchive]] = None,
     ) -> None:
         path = Path(mainfile)
-        if mainfile.endswith(('.csv', '.xls', '.xlsx')):
-            self._parse_table(path, archive, logger)
-        elif mainfile.endswith(('.yaml', '.yml')):
-            self._parse_yaml(path, archive, logger)
+        self._parse_table(path, archive, logger)
 
-    @staticmethod
-    def _parse_table(path: Path, archive: EntryArchive, logger=None) -> None:
+    def _parse_table(self, path: Path, archive: EntryArchive, logger=None) -> None:
         ext = path.suffix.lower()
         if ext in {'.xls', '.xlsx'}:
             df = pd.read_excel(path).replace(np.nan, None)
         else:  # falls back to CSV
             df = pd.read_csv(path).replace(np.nan, None)
 
-        # iterate rows → one BatteryDatabase per row
         for idx, row in df.iterrows():
-            db = BatteryDatabase()
-            BatteryParser._populate_entry_from_row(db, row)
+            db = ChemDataExtractorBattery()
+            self._populate_entry_from_row(db, row)
 
             # Create a child archive file
             entry_name = (
@@ -123,46 +121,8 @@ class BatteryParser(MatchingParser):
             create_archive(db, archive, file_name)
             logger and logger.info('archive_created', file=file_name, row_index=idx)
 
-    @staticmethod
-    def _parse_yaml(path: Path, archive: EntryArchive, logger=None) -> None:
-        with path.open('r', encoding='utf-8') as fh:
-            mapping = yaml.safe_load(fh) or {}
-
-        if isinstance(mapping, list) and all(isinstance(item, 
-                                                    dict) for item in mapping):
-            # This handles if the YAML root is a list of material entries
-            for idx, entry_map in enumerate(mapping):
-                db = BatteryDatabase()
-                BatteryParser._update_from_mapping(db, entry_map)
-
-                entry_name = (
-                    (db.material_name or f'entry_{idx}').replace(' ', 
-                                                    '_').replace('/', '_')
-                )
-                file_name = f'{entry_name}.battery.archive.json'
-
-                create_archive(db, archive, file_name)
-                logger and logger.info(
-                    'created archive for YAML entry',
-                    file=path.name,
-                    entry_index=idx,
-                    material=db.material_name,
-                )
-        elif isinstance(mapping, dict):
-            db = archive.data = BatteryDatabase()
-            BatteryParser._update_from_mapping(db, mapping)
-            logger and logger.info(
-                'parsed YAML', file=path.name, material=db.material_name
-            )
-        else:
-            logger and logger.error(
-                'Unsupported YAML structure', file=path.name, type=type(mapping)
-            )
-
-    @staticmethod
-    def _safe_float(value: object) -> Optional[float]:
+    def _safe_float(self, value: object) -> Optional[float]:
         """Return *first* float found in a messy numeric cell."""
-
         if value is None or (isinstance(value, float) and pd.isna(value)):
             return None
 
@@ -181,129 +141,105 @@ class BatteryParser(MatchingParser):
                 continue
         return None
 
-    @staticmethod
-    def _populate_entry_from_row(db: BatteryDatabase, row: pd.Series) -> None:
+    def _populate_general_attributes(
+        self, db: ChemDataExtractorBattery, row: pd.Series
+    ) -> None:
         for col, value in row.items():
             if pd.isna(value):
                 continue
 
-            attr = _col_to_attr(col)
+            key = col.strip().lower().replace(' ', '_')
+            attr = _col_to_attr(key)
+
             if not hasattr(db, attr):
                 continue
 
-            if attr.endswith(('_value', '_raw_value')):
-                num = BatteryParser._safe_float(value)
+            if key in {'extracted_name', 'info'}:
+                if isinstance(value, str):
+                    try:
+                        parsed_value = ast.literal_eval(value)
+                        if isinstance(parsed_value, dict):
+                            parsed_value = [parsed_value]
+                        setattr(db, attr, parsed_value)
+                    except (ValueError, SyntaxError):
+                        setattr(db, attr, value)
+                else:
+                    setattr(db, attr, value)
+                continue
+
+            if key.endswith(('_value', '_raw_value')):
+                num = self._safe_float(value)
                 if num is not None:
                     setattr(db, attr, num)
                 continue
 
-            if attr.endswith(('_unit', '_raw_unit')):
+            if key.endswith(('_unit', '_raw_unit')):
                 setattr(db, attr, str(value).strip())
                 continue
 
+            # Default case: treat as a string
             setattr(db, attr, str(value).strip())
 
-        # ---------- derived chemistry ----------
+    def _populate_derived_attributes(self, db: ChemDataExtractorBattery) -> None:
         if db.extracted_name and not db.chemical_formula_hill:
             hill = _hill_from_extracted(db.extracted_name)
             if hill:
                 db.chemical_formula_hill = hill
-        # numbers --------------------------------------------------------
-        for label, attr in [
-            ('Capacity', 'capacity'),
-            ('Voltage', 'voltage'),
-            ('Coulombic_efficiency', 'coulombic_efficiency'),
-            ('Energy_density', 'energy_density'),
-            ('Conductivity', 'conductivity'),
-        ]:
-            val = row.get(f'{label}_Value')
-            num = BatteryParser._safe_float(val)
-            if num is not None:
-                setattr(db, attr, num)
 
-            raw_val = row.get(f'{label}_Raw_value')
-            raw_unit = row.get(f'{label}_Raw_unit')
-            num = BatteryParser._safe_float(raw_val)
-            if num is not None:
-                setattr(db, f'{attr}_raw_value', num)
-            if pd.notna(raw_unit):
-                setattr(db, f'{attr}_raw_unit', str(raw_unit))
-
-    @staticmethod
-    def _update_from_mapping(db: BatteryDatabase, mapping: dict) -> None:
-        for key, value in mapping.items():
-            attr = _col_to_attr(key)
-            if hasattr(db, attr):
-                if attr.endswith('_raw_value') and isinstance(value, str):
-                    num = BatteryParser._safe_float(value)
-                    if num is not None:
-                        setattr(db, attr, num)
-                else:
-                    setattr(db, attr, value)  
-
-        if db.extracted_name and not db.chemical_formula_hill:
-            hill = _hill_from_extracted(db.extracted_name)
-            if hill:
-                db.chemical_formula_hill = hill
+    def _populate_entry_from_row(
+        self, db: ChemDataExtractorBattery, row: pd.Series
+    ) -> None:
+        self._populate_general_attributes(db, row)
+        self._populate_derived_attributes(db)
 
     def does_match(self, mainfile: str, mainfile_content: bytes, logger):
         logger.info(
-            f'BatteryParser.does_match attempting to confirm '
-            f'match for {mainfile}'
+            f'BatteryParser.does_match attempting to confirm match for {mainfile}'
         )
-        try:
-            content_str = mainfile_content.decode('utf-8', errors='ignore')
-            if mainfile.endswith(('.yaml', '.yml')):
-                if 'Extracted_name:' in content_str and 'DOI:' in content_str:
-                    logger.info('BatteryParser.does_match confirmed for YAML.')
-                    return True
-                else:
-                    logger.info(
-                        'BatteryParser.does_match rejected: '
-                        'Missing characteristic keys for battery YAML.'
-                    )
-                    return False
-
-            elif mainfile.endswith('.csv'):
+        if mainfile.endswith('.csv'):
+            try:
+                content_str = mainfile_content.decode('utf-8', errors='ignore')
                 first_line = content_str.splitlines()[0]
                 if 'Name,' in first_line and 'Capacity_Raw_value,' in first_line:
                     logger.info('BatteryParser.does_match confirmed for CSV.')
                     return True
                 else:
                     logger.info(
-                        'BatteryParser.does_match rejected: '
-                        'Missing characteristic headers for battery CSV.'
+                        'BatteryParser.does_match rejected for CSV: '
+                        'Missing characteristic headers.'
                     )
                     return False
+            except Exception as e:
+                logger.warning(f'BatteryParser.does_match encountered an error: {e}')
+                return False
 
-        except Exception as e:
-            logger.warning(f'BatteryParser.does_match encountered an error: {e}')
+        if mainfile.endswith(('.xls', '.xlsx')):
+            logger.info('BatteryParser.does_match confirmed for Excel by extension.')
+            return True
+
         return False
 
 
 _ALIASES = {
     'name': 'material_name',
-    'doi': 'DOI',
-
-   # numeric “*_Value” columns → scalar quantities
-   'capacity_value': 'capacity',
-   'voltage_value': 'voltage',
-   'conductivity_value': 'conductivity',
-   'coulombic_efficiency_value': 'coulombic_efficiency',
-
-   # energy-density synonyms
-   'energy_value': 'energy_density',
-   'energy_raw_value': 'energy_density_raw_value',
-   'energy_raw_unit': 'energy_density_raw_unit',
-   'energy_unit': 'energy_density_raw_unit',   
- }
+    # 'doi': 'DOI',
+    # numeric “*_Value” columns → scalar quantities
+    'capacity_value': 'capacity',
+    'voltage_value': 'voltage',
+    'conductivity_value': 'conductivity',
+    'coulombic_efficiency_value': 'coulombic_efficiency',
+    # energy-density synonyms
+    'energy_value': 'energy_density',
+    'energy_raw_value': 'energy_density_raw_value',
+    'energy_raw_unit': 'energy_density_raw_unit',
+    'energy_unit': 'energy_density_raw_unit',
+}
 
 
-def _col_to_attr(column: str) -> str:
+def _col_to_attr(column_key: str) -> str:
     """
-    Map CSV/YAML column names → :class:`BatteryDatabase` attributes.
+    Map CSV/YAML column names → :class:`ChemDataExtractorBattery` attributes.
     Keeps the previous *lower-case/underscore* rule but honours explicit
     aliases first.
     """
-    key = column.strip().lower().replace(' ', '_')
-    return _ALIASES.get(key, key)
+    return _ALIASES.get(column_key, column_key)

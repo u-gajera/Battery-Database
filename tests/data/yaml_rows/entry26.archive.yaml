@@ -1,0 +1,19 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: LFP / PEG / ZnO
+  extracted_name:
+  - Li: 1.0
+    Fe: 1.0
+    P: 1.0
+    O: 4.0
+  doi: 10.1016/j.jallcom.2012.10.092
+  specifier: discharge capacity
+  tag: CDE
+  title: ZNOINCORPORATEDLIFEPO4FORHIGHRATEELECTROCHEMICALPERFORMANCEINLITHIUMIONRECHARGEABLEBATTERIES
+  journal: Journal of Alloys and Compounds
+  date: '2012-10-29'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '158.9'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 158.9

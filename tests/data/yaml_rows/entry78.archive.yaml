@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: SrLi2Ti6O14
+  extracted_name:
+  - Sr: 1.0
+    Li: 2.0
+    Ti: 6.0
+    O: 14.0
+  doi: 10.1016/j.jpowsour.2016.05.018
+  tag: CDE
+  title: SR095IN005LI2TI6O14AHIGHPERFORMANCELITHIUMHOSTMATERIAL
+  journal: Journal of Power Sources
+  date: '2016-05-12'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: '1.39'
+  voltage_unit: Volt^(1.0)
+  voltage_value: 1.39

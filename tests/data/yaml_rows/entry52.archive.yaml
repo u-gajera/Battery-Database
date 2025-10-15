@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: MnO2
+  extracted_name:
+  - Mn: 1.0
+    O: 2.0
+  doi: 10.1016/j.jtice.2019.01.019
+  tag: CDE
+  warning: L
+  title: DIRECTELECTROSYNTHESISMNO2NANOPARTICLESOVERNICKELFOAMSPENTALKALINEBATTERYCATHODESUPERCAPACITORPERFORMANCE
+  journal: Journal of the Taiwan Institute of Chemical Engineers
+  date: '2019-01-30'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: 0.8 and 0.5
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.8

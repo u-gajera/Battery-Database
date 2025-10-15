@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: ZnGa2O4
+  extracted_name:
+  - Zn: 1.0
+    Ga: 2.0
+    O: 4.0
+  doi: 10.1016/j.electacta.2017.03.122
+  specifier: coulombic
+  tag: CDE
+  title: STRUCTURALREGULATIONZNGA2O4NANOCUBESFORACHIEVINGHIGHCAPACITYSTABLERATECAPABILITYANODEMATERIALLITHIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2017-03-18'
+  correctness: T
+  coulombic efficiency_raw_unit: '%'
+  coulombic efficiency_raw_value: 98.64 98.08 97.49
+  coulombic efficiency_unit: Percent^(1.0)
+  coulombic efficiency_value: 98.08

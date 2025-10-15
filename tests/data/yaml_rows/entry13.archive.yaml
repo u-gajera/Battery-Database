@@ -1,0 +1,19 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Dimethyl carbonate
+  extracted_name:
+  - O: 3.0
+    C: 3.0
+    H: 6.0
+  doi: 10.1016/j.jpowsour.2005.03.106
+  specifier: reversible capacity
+  tag: CDE
+  warning: R
+  title: BEHAVIOURHIGHLYCRYSTALLINEGRAPHITESINLITHIUMIONCELLSPROPYLENECARBONATECONTAININGELECTROLYTES
+  journal: Journal of Power Sources
+  date: '2005-04-25'
+  correctness: F1
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '372'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 372.0

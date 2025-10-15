@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: SnO2 @ C
+  extracted_name:
+  - Sn: 1.0
+    O: 2.0
+  doi: 10.1039/C6TA06622D
+  specifier: reversible discharge capacities
+  tag: CDE
+  info:
+    current_value: 0.2 , 0.4 , 0.8 , 1.0 , 2.0 , 4.0 , 6.0 and 8.0
+    current_units: Ag−1
+  title: 'Hierarchically structured C@SnO 2 @C nanofiber bundles with high stability and effective ambipolar diffusion kinetics for high-performance Li-ion batteries  '
+  journal: Journal of Materials Chemistry A
+  date: 2016/12/06
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 674 , 472 , 365 , 319 , 216 , 136 , 88 and 62
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 674.0

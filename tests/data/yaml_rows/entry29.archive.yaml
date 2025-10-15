@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Li1.05Mn1.95O4 / Li
+  extracted_name:
+  - Li: 1.05
+    Mn: 1.95
+    O: 4.0
+  - Li: 1.0
+  doi: 10.1016/j.electacta.2012.07.086
+  specifier: specific capacity
+  tag: CDE
+  info:
+    current_value: 5
+    current_units: C
+  title: FACILESYNTHESISMICROMETERLI105MN195O4LOWTEMPERATUREPERFORMANCEFORHIGHPOWERLITHIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2012-07-28'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '98.4'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 98.4

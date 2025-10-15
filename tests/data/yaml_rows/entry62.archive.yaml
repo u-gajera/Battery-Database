@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: NiMoO4
+  extracted_name:
+  - Ni: 1.0
+    Mo: 1.0
+    O: 4.0
+  doi: 10.1016/j.mtener.2018.08.004
+  specifier: discharge capacity
+  tag: CDE
+  title: EFFECTOXIDIZERINSYNTHESISNIOANCHOREDNANOSTRUCTURENICKELMOLYBDATEFORSODIUMIONBATTERY
+  journal: Materials Today Energy
+  date: '2018-08-23'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 510 and 550
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 510.0

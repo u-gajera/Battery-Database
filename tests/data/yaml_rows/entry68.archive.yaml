@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Pt oxide
+  extracted_name:
+  - Pt: 1.0
+    O: 2.0
+  doi: 10.1016/0079-6816(95)00040-6
+  tag: CDE
+  warning: L
+  title: ELECTROCHEMICALOXIDEFILMFORMATIONNOBLEMETALSASURFACECHEMICALPROCESS
+  journal: Progress in Surface Science
+  date: '2000-03-20'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: 0.2 to 0.45
+  voltage_unit: Volt^(1.0)
+  voltage_value: 0.2

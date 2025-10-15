@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: SnO2 / C composites
+  extracted_name:
+  - Sn: 1.0
+    O: 2.0
+  - C: 1.0
+  doi: 10.1039/C3CE42659A
+  specifier: voltage
+  tag: CDE
+  title: 'SnO 2 /C composites fabricated by a biotemplating method from cotton and their electrochemical performances '
+  journal: CrystEngComm
+  date: 2014/03/24
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: 0.01 and 3.0
+  voltage_unit: Volt^(1.0)
+  voltage_value: 3.0

@@ -1,0 +1,22 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: LiMn2O4
+  extracted_name:
+  - Li: 1.0
+    Mn: 2.0
+    O: 4.0
+  doi: 10.1016/j.apt.2013.05.015
+  specifier: capacity
+  tag: CDE
+  title: SOLUTIONCOMBUSTIONSYNTHESISLIMN2O4FINEPOWDERSFORLITHIUMIONBATTERIES
+  journal: Advanced Powder Technology
+  date: '2013-06-05'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  voltage_raw_unit: V
+  capacity_raw_value: '80'
+  voltage_raw_value: '4.5'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  voltage_unit: Volt^(1.0)
+  capacity: 80.0
+  voltage_value: 4.5

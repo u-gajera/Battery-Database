@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Fe(2-x)CrxF5·H2O
+  extracted_name:
+  - Fe: 2-x
+    Cr: x
+    F: 5.0
+  doi: 10.1016/j.electacta.2018.02.159
+  specifier: discharge capacity
+  tag: CDE
+  title: CRDOPEDFE2F5H2OOPENFRAMEWORKSTRUCTUREAHIGHPERFORMANCECATHODEMATERIALSODIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2018-03-06'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 135 , 183 , 232 and 204
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 232.0

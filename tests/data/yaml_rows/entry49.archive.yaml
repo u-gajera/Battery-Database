@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: MgCo2O4
+  extracted_name:
+  - Mg: 1.0
+    Co: 2.0
+    O: 4.0
+  doi: 10.1016/j.materresbull.2015.09.025
+  specifier: voltage
+  tag: CDE
+  title: ANODICELECTROCHEMICALPERFORMANCESMGCO2O4SYNTHESIZEDBYOXALATEDECOMPOSITIONMETHODELECTROSPINNINGTECHNIQUEFORLIIONBATTERYAPPLICATION
+  journal: Materials Research Bulletin
+  date: '2015-09-25'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: '1.2'
+  voltage_unit: Volt^(1.0)
+  voltage_value: 1.2

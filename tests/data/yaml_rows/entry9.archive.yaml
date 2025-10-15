@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Co3O4 / graphene
+  extracted_name:
+  - Co: 3.0
+    O: 4.0
+  doi: 10.1039/C2JM16315B
+  specifier: discharge capacities
+  tag: CDE
+  info:
+    current_value: 5
+    current_units: c
+  title: 'One-step electrochemical preparation of graphene -based heterostructures for Li storage  '
+  journal: Journal of Materials Chemistry
+  date: 2012/04/03
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 770 , 696 , 644 , 598 and 528
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 528.0

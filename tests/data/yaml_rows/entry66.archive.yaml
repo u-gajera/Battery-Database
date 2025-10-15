@@ -1,0 +1,20 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: O′3 Na-NCA
+  extracted_name:
+  - Li: 1.0
+    Ni: 1.0
+    Co: 1.0
+    Al: 1.0
+    O: 2.0
+  doi: 10.1016/j.jpowsour.2019.226698
+  specifier: voltage
+  tag: CDE
+  title: HEXAGONALMONOCLINICNANI08CO015AL005O2NANCAFORSODIUMIONBATTERIES
+  journal: Journal of Power Sources
+  date: '2019-06-05'
+  correctness: T
+  voltage_raw_unit: V
+  voltage_raw_value: '1.5'
+  voltage_unit: Volt^(1.0)
+  voltage_value: 1.5

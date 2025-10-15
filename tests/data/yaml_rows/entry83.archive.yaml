@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: VS4 @ Li7P3S11 nanocomposites
+  extracted_name:
+  - V: 1.0
+    S: 4.0
+  doi: 10.1016/j.nanoen.2019.01.004
+  specifier: Coulombic
+  tag: CDE
+  warning: L
+  title: RATIONALDESIGNMULTICHANNELCONTINUOUSELECTRONICIONICCONDUCTIVENETWORKSFORROOMTEMPERATUREVANADIUMTETRASULFIDEBASEDALLSOLIDSTATELITHIUMSULFURBATTERIES
+  journal: Nano Energy
+  date: '2019-01-03'
+  correctness: F3
+  coulombic efficiency_raw_unit: '%'
+  coulombic efficiency_raw_value: '10'
+  coulombic efficiency_unit: Percent^(1.0)
+  coulombic efficiency_value: 10.0

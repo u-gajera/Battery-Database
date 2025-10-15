@@ -1,0 +1,18 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Zn2SnO4 anodes
+  extracted_name:
+  - Zn: 2.0
+    Sn: 1.0
+    O: 4.0
+  doi: 10.1016/j.electacta.2012.04.121
+  specifier: charge capacities
+  tag: CDE
+  title: PREPARATIONELECTROCHEMICALPROPERTIESSURFACECHARGEMODIFIEDZN2SNO4NANOPARTICLESANODESFORLITHIUMIONBATTERIES
+  journal: Electrochimica Acta
+  date: '2012-05-14'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 521.4 and 448.0
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 448.0

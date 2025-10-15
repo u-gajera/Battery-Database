@@ -1,0 +1,21 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: Glucose
+  extracted_name:
+  - C: 6.0
+    H: 12.0
+    O: 6.0
+  doi: 10.1016/j.jallcom.2017.02.126
+  specifier: capacities
+  tag: CDE
+  info:
+    current_value: 2.0
+    current_units: C
+  title: APPRAISALCARBONCOATEDLI4TI5O12ACANTHOSPHERESOPTIMIZEDTWOSTEPHYDROTHERMALSYNTHESISASUPERIORANODEFORSODIUMIONBATTERIES
+  journal: Journal of Alloys and Compounds
+  date: '2017-02-13'
+  correctness: F3
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: 186 , 141 and 68
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 68.0

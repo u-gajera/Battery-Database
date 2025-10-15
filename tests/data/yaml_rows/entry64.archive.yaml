@@ -1,0 +1,17 @@
+data:
+  m_def: nomad_battery_database.schema_packages.battery_schema.ChemDataExtractorBattery
+  material_name: NiS
+  extracted_name:
+  - Ni: 2.0
+    S: 3.0
+  doi: 10.1016/j.matlet.2016.04.204
+  specifier: specific capacity
+  tag: CDE
+  title: SYNTHESISNICKELSULFIDEMONOLAYERHOLLOWSPHERESARRAYSCATHODEMATERIALSFORALKALINEBATTERIES
+  journal: Materials Letters
+  date: '2016-04-27'
+  correctness: T
+  capacity_raw_unit: mAhg−1
+  capacity_raw_value: '65'
+  capacity_unit: Gram^(-1.0)  Hour^(1.0)  MilliAmpere^(1.0)
+  capacity: 65.0
