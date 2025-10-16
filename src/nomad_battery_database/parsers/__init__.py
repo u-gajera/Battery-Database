@@ -6,7 +6,7 @@ class BatteryDBParserEntryPoint(ParserEntryPoint):
     def load(self): 
         from nomad_battery_database.parsers.battery_parser import BatteryParser
 
-        return BatteryParser(**self.model_dump())
+        return BatteryParser(**self.dict())
 
 
 battery_db_parser = BatteryDBParserEntryPoint(  
