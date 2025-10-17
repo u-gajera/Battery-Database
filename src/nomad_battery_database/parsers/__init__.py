@@ -4,7 +4,7 @@ from nomad.config.models.plugins import ParserEntryPoint
 class BatteryDBParserEntryPoint(ParserEntryPoint):
 
     def load(self): 
-        from .battery_parser import BatteryParser  # noqa: E402, PLC0415
+        from nomad_battery_database.parsers.battery_parser import BatteryParser
 
         return BatteryParser(**self.dict())
 

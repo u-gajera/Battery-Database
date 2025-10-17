@@ -1,12 +1,11 @@
 from nomad.config.models.plugins import SchemaPackageEntryPoint
 
-from .battery_schema import m_package
-
 
 class BatteryDBSchemaEntryPoint(SchemaPackageEntryPoint):
     """Entry‑point that returns the *battery* schema package instance."""
 
-    def load(self):  # noqa: D401 – NOMAD API
+    def load(self):
+        from nomad_battery_database.schema_packages.battery_schema import m_package
         return m_package
 
 
