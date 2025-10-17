@@ -1,0 +1,745 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="App for battery database">
+      
+      
+        <meta name="author" content="Uday Gajera">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-8.1.1">
+    
+    
+      
+        <title>Tutorial - Battery-Database</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.23b6d78a.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font:"Titillium Web";--md-code-font:""}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="#2a4cdf" data-md-color-accent="#008a67">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-from-raw-data-to-interactive-visualization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://nomad-lab.eu" title="Battery-Database" class="md-header__button md-logo" aria-label="Battery-Database" data-md-component="logo">
+      
+  <img src="../assets/nomad-plugin-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Battery-Database
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/u-gajera/Battery-Database" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://nomad-lab.eu" title="Battery-Database" class="md-nav__button md-logo" aria-label="Battery-Database" data-md-component="logo">
+      
+  <img src="../assets/nomad-plugin-logo.png" alt="logo">
+
+    </a>
+    Battery-Database
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/u-gajera/Battery-Database" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="tutorial.html" class="md-nav__link md-nav__link--active">
+        Tutorial
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-initial-data-format" class="md-nav__link">
+    1. Initial Data Format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pivoting-the-data" class="md-nav__link">
+    2. Pivoting the Data
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Pivoting the Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-the-script" class="md-nav__link">
+    Run the script:
+  </a>
+  
+    <nav class="md-nav" aria-label="Run the script:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note-the-new-pivoted-script-also-pivots-raw_value-raw_unit-and-unit-columns" class="md-nav__link">
+    Note: The new pivoted script also pivots Raw_value, Raw_unit, and Unit columns.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-splitting-csv-into-individual-yaml-entries" class="md-nav__link">
+    3. Splitting CSV into Individual YAML Entries
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Splitting CSV into Individual YAML Entries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-the-script_1" class="md-nav__link">
+    Run the script:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-uploading-to-nomad" class="md-nav__link">
+    4. Uploading to NOMAD
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exploring-the-data-in-the-battery-app" class="md-nav__link">
+    5. Exploring the Data in the Battery App
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          How-to guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How-to guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          How-to guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/how_to_add_own_batterydata.html" class="md-nav__link">
+        How to upload custom battery data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/search_data_in_app.html" class="md-nav__link">
+        How to search through battery database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/install_this_plugin.html" class="md-nav__link">
+        Install this Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/use_this_plugin.html" class="md-nav__link">
+        Use this Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/contribute_to_this_plugin.html" class="md-nav__link">
+        Contribute to this plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/contribute_to_the_documentation.html" class="md-nav__link">
+        Contribute to the documentation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../explanation/explanation.html" class="md-nav__link">
+        Explanation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/references.html" class="md-nav__link">
+        Reference
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-initial-data-format" class="md-nav__link">
+    1. Initial Data Format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pivoting-the-data" class="md-nav__link">
+    2. Pivoting the Data
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Pivoting the Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-the-script" class="md-nav__link">
+    Run the script:
+  </a>
+  
+    <nav class="md-nav" aria-label="Run the script:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note-the-new-pivoted-script-also-pivots-raw_value-raw_unit-and-unit-columns" class="md-nav__link">
+    Note: The new pivoted script also pivots Raw_value, Raw_unit, and Unit columns.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-splitting-csv-into-individual-yaml-entries" class="md-nav__link">
+    3. Splitting CSV into Individual YAML Entries
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Splitting CSV into Individual YAML Entries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-the-script_1" class="md-nav__link">
+    Run the script:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-uploading-to-nomad" class="md-nav__link">
+    4. Uploading to NOMAD
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exploring-the-data-in-the-battery-app" class="md-nav__link">
+    5. Exploring the Data in the Battery App
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+<h1 id="tutorial-from-raw-data-to-interactive-visualization">Tutorial: From Raw Data to Interactive Visualization<a class="headerlink" href="#tutorial-from-raw-data-to-interactive-visualization" title="Permanent link">&para;</a></h1>
+<p>This tutorial will guide you through the complete workflow of preparing experimental battery data, converting it into a NOMAD-compatible format, uploading it, and exploring it using the interactive GUI.</p>
+<p>We will use the utility scripts provided in the project to process the data.</p>
+<h3 id="1-initial-data-format">1. Initial Data Format<a class="headerlink" href="#1-initial-data-format" title="Permanent link">&para;</a></h3>
+<p>Let's assume your raw data is in a "long" CSV format, where each row represents a single property for a given material. This format is common for aggregating data from different sources (Format provided in the https://doi.org/10.1038/s41597-020-00602-2 paper).</p>
+<p>Create a file named <code>raw_battery_data.csv</code> with the following content:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Name,Extracted_name,DOI,Specifier,Property,Value,Raw_value,Raw_unit,Unit
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>40-CuO / C,&quot;[{&#39;Cu&#39;: &#39;1.0&#39;, &#39;O&#39;: &#39;1.0&#39;}, {&#39;C&#39;: &#39;1.0&#39;}]&quot;,10.1039/C4NR06432A,discharge capacity,Capacity,217.0,217,mAhg−1,&quot;Gram^(-1.0) Hour(1.0) MilliAmpere(1.0)&quot;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>40-CuO / C,&quot;[{&#39;Cu&#39;: &#39;1.0&#39;, &#39;O&#39;: &#39;1.0&#39;}, {&#39;C&#39;: &#39;1.0&#39;}]&quot;,10.1039/C4NR06432A,discharge voltage,Voltage,1.5,1.5,V,Volt(1.0)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>LixMn2O4,&quot;[{&#39;Li&#39;: &#39;x&#39;, &#39;Mn&#39;: &#39;2.0&#39;, &#39;O&#39;: &#39;4.0&#39;}]&quot;,10.1016/j.jpowsour.2014.07.191,charge capacity,Capacity,120.0,120,mAh/g,&quot;Gram^(-1.0) Hour(1.0) MilliAmpere(1.0)&quot;
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>LixMn2O4,&quot;[{&#39;Li&#39;: &#39;x&#39;, &#39;Mn&#39;: &#39;2.0&#39;, &#39;O&#39;: &#39;4.0&#39;}]&quot;,10.1016/j.jpowsour.2014.07.191,charge voltage,Voltage,4.1,4.1,V,Volt(1.0)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>LixMn2O4,&quot;[{&#39;Li&#39;: &#39;x&#39;, &#39;Mn&#39;: &#39;2.0&#39;, &#39;O&#39;: &#39;4.0&#39;}]&quot;,10.1016/j.jpowsour.2014.07.191,efficiency,Coulombic_efficiency,98.5,98.5,%,Percent(1.0)
+</code></pre></div>
+<h3 id="2-pivoting-the-data">2. Pivoting the Data<a class="headerlink" href="#2-pivoting-the-data" title="Permanent link">&para;</a></h3>
+<p>The NOMAD parser expects the data in a "wide" format, where each row contains all properties for a single material. We use the pivot_battery_data.py script to perform this transformation.</p>
+<h4 id="run-the-script">Run the script:<a class="headerlink" href="#run-the-script" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python pivot_battery_data.py --input_file raw_battery_data.csv --output_file pivoted.extracted_battery.csv
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>This will create a new file, pivoted.extracted_battery.csv, with the following structure:
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Name,Extracted_name,DOI,Capacity_Value,Voltage_Value,Coulombic_efficiency_Value,...
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>&quot;40-CuO / C&quot;,&quot;[{&#39;Cu&#39;: &#39;1.0&#39;, &#39;O&#39;: &#39;1.0&#39;}, {&#39;C&#39;: &#39;1.0&#39;}]&quot;,10.1039/C4NR06432A,217.0,1.5,,...
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>LixMn2O4,&quot;[{&#39;Li&#39;: &#39;x&#39;, &#39;Mn&#39;: &#39;2.0&#39;, &#39;O&#39;: &#39;4.0&#39;}]&quot;,10.1016/j.jpowsour.2014.07.191,120.0,4.1,98.5,...
+</code></pre></div>
+<h5 id="note-the-new-pivoted-script-also-pivots-raw_value-raw_unit-and-unit-columns">Note: The new pivoted script also pivots Raw_value, Raw_unit, and Unit columns.<a class="headerlink" href="#note-the-new-pivoted-script-also-pivots-raw_value-raw_unit-and-unit-columns" title="Permanent link">&para;</a></h5>
+<h3 id="3-splitting-csv-into-individual-yaml-entries">3. Splitting CSV into Individual YAML Entries<a class="headerlink" href="#3-splitting-csv-into-individual-yaml-entries" title="Permanent link">&para;</a></h3>
+<p>If you feel comfortable with individual file, each material entry can be in its own file. This allows for independent processing and referencing. The parser is optimized for YAML files. We'll use the split_csv_to_yaml.py script.</p>
+<h4 id="run-the-script_1">Run the script:<a class="headerlink" href="#run-the-script_1" title="Permanent link">&para;</a></h4>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python split_csv_to_yaml.py --csv pivoted.extracted_battery.csv --outdir entries
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>This command will create an entries directory and populate it with YAML files, one for each row in the pivoted CSV.
+</code></pre></div>
+For example, entries/entry1.extracted_battery.yaml will contain:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Name: 40-CuO / C
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Extracted_name: &#39;[{&#39;&#39;Cu&#39;&#39;: &#39;&#39;1.0&#39;&#39;, &#39;&#39;O&#39;&#39;: &#39;&#39;1.0&#39;&#39;}, {&#39;&#39;C&#39;&#39;: &#39;&#39;1.0&#39;&#39;}]&#39;
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>DOI: 10.1039/C4NR06432A
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Specifier: discharge capacity
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Capacity_Value: 217.0
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Capacity_Raw_value: 217.0
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Capacity_Raw_unit: mAhg−1
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Capacity_Unit: Gram^(-1.0) Hour(1.0) MilliAmpere(1.0)
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Voltage_Value: 1.5
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>Voltage_Raw_value: 1.5
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Voltage_Raw_unit: V
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>Voltage_Unit: Volt(1.0)
+</code></pre></div>
+<h3 id="4-uploading-to-nomad">4. Uploading to NOMAD<a class="headerlink" href="#4-uploading-to-nomad" title="Permanent link">&para;</a></h3>
+<p>Now that the data is prepared, you can upload it to your NOMAD instance.</p>
+<ol>
+<li>Navigate to the <strong>UPLOAD</strong> page in NOMAD.  </li>
+<li>Click the <strong>"New Upload"</strong> button.  </li>
+<li>You can either drag-and-drop the <code>entries</code> directory (zipped) or select it using the file browser.  </li>
+<li>Add a name for your upload (e.g., <em>"My Battery Data"</em>) and click <strong>UPLOAD</strong>.  </li>
+</ol>
+<p>NOMAD will automatically detect the csv/YAML files, match them to the battery parser, process them, and create the corresponding entries.
+ ##### Note: It is important to have following extension in order to detect by Nomad: *.extracted_battery.csv or *..extracted_battery.yaml</p>
+<hr />
+<h3 id="5-exploring-the-data-in-the-battery-app">5. Exploring the Data in the Battery App<a class="headerlink" href="#5-exploring-the-data-in-the-battery-app" title="Permanent link">&para;</a></h3>
+<p>Once the processing is complete (the upload status will change from "processing" to "finished"), you can explore the data.</p>
+<ol>
+<li>Navigate to the <strong>EXPLORE</strong> page.  </li>
+<li>From the <strong>"Category"</strong> dropdown, click on the <strong>Battery Database</strong> application.  </li>
+</ol>
+<p>You will see a dashboard with:</p>
+<ul>
+<li>An interactive periodic table showing the elements present in your data.  </li>
+<li>Histograms for the distribution of Capacity, Voltage, and other quantitative properties.  </li>
+<li>A scatter plot of Voltage vs. Capacity.  </li>
+<li>A results table showing key data for each entry.  </li>
+</ul>
+<p>On the left-hand side as well as below, you can use the filters to narrow down your search, for example, by <strong>Journal</strong>, <strong>Publication Year</strong>, or <strong>Available Properties</strong>. This allows you to quickly find and compare the materials you are interested in.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../how_to/how_to_add_own_batterydata.html" class="md-footer__link md-footer__link--next" aria-label="Next: How to upload custom battery data" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to upload custom battery data
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant"], "search": "../assets/javascripts/workers/search.c7dec7e7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.da79ceb7.min.js"></script>
+      
+        <script src="../javascript.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
